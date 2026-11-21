@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "createdAt": "2026-11-21T16:59:50.110730+00:00",
-  "sourceSha256": "840346d28f5808603bd9376026a2281a8d3e80e954af5e7e0bf91c08c9fe3d1c",
+  "createdAt": "2026-11-21T17:04:48.749981+00:00",
+  "sourceSha256": "b83d83feafd22a8e176b0f63d3b466471db9cb4e8a67b7fe2d44bdacb8ed677e",
   "scope": "Local platform tests only; no real NS build or proof execution; no remote connection",
   "budgetCapUsd": 0,
   "checks": {

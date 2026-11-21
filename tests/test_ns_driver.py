@@ -221,6 +221,7 @@ class AddonInstallerTests(unittest.TestCase):
         plan = self.installer.install(self.root)
         self.assertEqual(plan['budgetCapUsd'], 0)
         self.assertTrue(plan['dryRun'])
+        self.assertEqual(plan['commands'][0],['groupadd','--system','--gid','10001','lean-observatory-ns'])
         commands = plan['commands']
         compose = [cmd for cmd in commands if cmd[:2] == ['docker', 'compose']]
         self.assertEqual(len(compose), 1)

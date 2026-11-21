@@ -6,6 +6,7 @@ An exact local acceptance receipt is required even to produce a reviewed plan.
 """
 import argparse
 import hashlib
+import grp
 import json
 import os
 import platform
@@ -71,6 +72,7 @@ def installation_plan(source_sha, execute=False):
     return {'dryRun': not execute, 'sourceSha256': source_sha, 'installRoot': str(INSTALL),
             'dataRoot': str(DATA), 'budgetCapUsd': 0,
             'commands': [
+                ['groupadd', '--system', '--gid', '10001', 'lean-observatory-ns'],
                 ['apparmor_parser', '-r', '/etc/apparmor.d/' + PROFILE],
                 ['python3', '-m', 'ns_queue.control', '--root', str(DATA), 'init', '--budget', '0', '--rh-run', '20565ace60c2'],
                 [*compose, 'up', '-d', '--build', '--wait', 'api', 'nginx'],
@@ -99,7 +101,7 @@ def preflight(root):
         raise RuntimeError('Existing NS installation state: refusing first-install overwrite')
     if Path('/sys/module/apparmor/parameters/enabled').read_text().strip() != 'Y':
         raise RuntimeError('AppArmor must already be enabled')
-    for binary in ('docker', 'apparmor_parser', 'systemctl', 'python3'):
+    for binary in ('docker', 'apparmor_parser', 'systemctl', 'python3', 'groupadd'):
         if shutil.which(binary) is None:
             raise RuntimeError('Missing prerequisite: ' + binary)
     for name in ('fullchain.pem', 'privkey.pem'):
@@ -141,6 +143,12 @@ def install(root, execute=False):
     env = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'NS_SOURCE_SHA256': receipt['sourceSha256'],
            'NS_DATA_ROOT': str(DATA)}
     for command in plan['commands']:
+        if command[0] == 'groupadd':
+            try:
+                grp.getgrgid(10001)
+                continue
+            except KeyError:
+                pass
         subprocess.run(command, cwd=root, env=env, check=True,
                        timeout=900 if command[:2] == ['docker', 'compose'] else 60)
         if command[0] == 'apparmor_parser':
