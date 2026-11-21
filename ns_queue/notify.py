@@ -25,7 +25,7 @@ def build_payload(alert):
                 message=str(alert.get('message') or '验证状态更新')[:900],
                 source='Lean Observatory / NS queue', level=level,
                 timestamp=datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                fields=fields, url='https://lean.tano.asia:9443/ns/')
+                fields=fields, url='https://lean.tano.asia/ns/')
     # Stay below the receiver's 1900-character composed-input limit even for CJK.
     while len(json.dumps(body, ensure_ascii=False).encode()) > 1500:
         if len(body['message']) > 40:

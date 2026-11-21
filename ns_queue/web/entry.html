@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>项目入口 · Lean Observatory</title>
+  <link rel="stylesheet" href="/ns/assets/app.css">
+  <link rel="stylesheet" href="/ns/assets/entry.css">
+  <script src="/ns/assets/entry.js" defer></script>
+</head>
+<body class="entry-page">
+  <a class="entry-skip" href="#projects">跳到验证项目</a>
+  <header class="entry-header">
+    <a class="wordmark" href="/" aria-label="Lean Observatory 首页">Lean<span>·</span>Observatory</a>
+    <button id="entry-theme" type="button" aria-label="切换深色主题" aria-pressed="false"><span aria-hidden="true">◐</span></button>
+  </header>
+  <main class="entry-main">
+    <h1 class="entry-sr-only">验证项目</h1>
+    <p id="entry-connection" class="entry-connection" role="status" data-online="false" hidden></p>
+    <section id="projects" class="entry-projects" aria-label="验证项目">
+      <a class="entry-project" id="entry-rh-card" href="/rh/" aria-labelledby="entry-rh-title entry-rh-action">
+        <div class="entry-project-name"><p>黎曼猜想</p><h2 id="entry-rh-title">Riemann<br>Hypothesis</h2></div>
+        <div class="entry-project-data">
+          <div class="entry-data-heading"><span>编译进度</span><span class="entry-badge" id="entry-rh-status" data-state="unknown">读取中</span></div>
+          <strong class="entry-progress" id="entry-rh-progress">—</strong>
+          <progress id="entry-rh-bar" max="100" value="0" aria-label="RH 全仓编译进度"></progress>
+          <span id="entry-rh-count">— / —</span>
+        </div>
+        <div class="entry-project-bottom"><b id="entry-rh-action">进入 RH <span aria-hidden="true">↗</span></b></div>
+      </a>
+      <a class="entry-project" id="entry-ns-card" href="/ns/" aria-labelledby="entry-ns-title entry-ns-action">
+        <div class="entry-project-name"><p>纳维–斯托克斯方程</p><h2 id="entry-ns-title">Navier–Stokes<br>Equations</h2></div>
+        <div class="entry-project-data entry-queue-data">
+          <span>任务状态</span>
+          <strong id="entry-ns-status" data-state="unknown">读取中</strong>
+          <span id="entry-ns-count" hidden></span>
+        </div>
+        <div class="entry-project-bottom"><b id="entry-ns-action">进入 NS <span aria-hidden="true">↗</span></b></div>
+      </a>
+    </section>
+    <section class="entry-budget" aria-label="共享服务器计时">
+      <div class="entry-budget-stat"><span>计划时长</span><strong id="entry-budget-cap">—</strong></div>
+      <div class="entry-budget-stat"><span>服务器已用</span><strong id="entry-budget-used">—</strong></div>
+      <div class="entry-budget-stat entry-remaining"><span>服务器剩余</span><strong id="entry-budget-remaining">—</strong></div>
+      <div class="entry-budget-time"><span>提醒时间（北京时间）</span><time id="entry-budget-deadline">等待配置</time></div>
+    </section>
+  </main>
+</body>
+</html>

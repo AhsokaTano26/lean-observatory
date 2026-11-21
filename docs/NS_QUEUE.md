@@ -1,6 +1,6 @@
 # NS successor queue
 
-This add-on preserves the deployed RH stack. It has a separate Compose project, database, systemd controller, AppArmor profile and HTTPS listener on port 9443. The original RH files and containers are never redeployed by the installer.
+This add-on preserves the deployed RH stack. It has a separate Compose project, database, systemd controller, AppArmor profile and a shared HTTPS route at /ns/. The original RH files and containers are never redeployed by the installer.
 
 ## Current authorization
 
@@ -13,7 +13,7 @@ The UI is GET-only. Host CLI operations are not exposed publicly.
 ## Isolation and evidence
 
 - `/opt/lean-observatory-ns`: additive deployment; `/var/lib/lean-observatory-queue`: durable SQLite WAL queue, events, alerts, checkpoints and evidence.
-- Light services: API 0.10 CPU/96 MiB, Nginx 0.10 CPU/32 MiB, controller 0.05 CPU/128 MiB. No existing RH service restart or Nginx reload.
+- Light services: API 0.10 CPU/96 MiB, Nginx 0.10 CPU/32 MiB, controller 0.05 CPU/128 MiB. RH verification/API are not restarted; the router is gracefully reloaded when routes change.
 - Future NS worker: separate image, 60 vCPU, CPUs 4–63, 250 GB decimal (232.83 GiB), no swap; no Docker socket or RH mounts. It only starts after fresh RH success, matching durable report/log hashes, no other active verification, and the configured startup policy. In notify_only mode, time/resource preflight only warns. Legacy hard mode requires a five-minute reserve.
 - The controller rechecks RH after evidence persistence and again after image build immediately before worker creation or resume. A deterministic container name, owner labels and exclusive controller lock prevent duplicate launches. Completed stages are skipped only if source, implementation, prior checkpoint and recorded output hashes still match.
 - Explicit RH failure or a stopped RH worker pauses NS and preserves logs. A stale heartbeat alone is not proof of RH failure. Temporary API loss keeps the queue blocked; API loss plus a stopped RH worker pauses it.
@@ -52,7 +52,7 @@ python3 deploy/ns/install.py --execute
 python3 -m ns_queue.control --root /var/lib/lean-observatory-queue status
 ```
 
-Page: `https://lean.tano.asia:9443/ns/` (also `lean.lanunion.org.cn:9443`). The original RH page remains on port 443. Only the new certificate-path watcher may reload the new Nginx after certificate renewal.
+Project entrance: `https://lean.tano.asia/`; RH: `https://lean.tano.asia/rh/`; NS: `https://lean.tano.asia/ns/` (same paths on `lean.lanunion.org.cn`). Both projects use80/443, HTTP redirectsHTTPS, and9443 is not published. Only the new certificate-path watcher may reload the new Nginx after certificate renewal.
 
 Configure the confirmed shared window on the host:
 
@@ -65,3 +65,5 @@ The rental origin locks once set. Repeating the same settings is idempotent and 
 Both RH and NS are configured for60vCPU and250000000000 bytes (250GB decimal), cpuset4-63, no swap. RH live resizing uses `deploy/ns/update_resources.py --expected-id ... --execute`; it checks identity and uses only `docker update`, preserving PID/start/image/command/mounts. It saves `/opt/lean-observatory/.data/ops/compose.resources.runtime.yaml` for future Compose recreations. The current RH compiler process keeps its original48-thread scheduler, while resource ceilings become60 and new tasks/NS use60 threads. Updating the ceilings does not rebuild/restart the running RH image.
 
 Shared host metrics, per-NS Docker usage, elapsed rental hours and costs remain distinct. NS estimated cost is0 until its own start; total server cost includes the rental interval. Unavailable measurements display as unknown.
+
+Shared routing is activated with `deploy/ns/activate_proxy.py --execute`: validate candidate using the existing trusted Nginx image and certificates, keep a backup, write the mounted config in place, graceful reload then attach the NS network. Full container hostnames avoid conflicting Docker `api` aliases; failed activation restores the previous config/network. `/api` and `/assets` remain RH compatibility paths, while NS uses only `/ns/api` and `/ns/assets`. Root entrance assets are served from the NS namespace. The network override is saved at `/opt/lean-observatory/.data/ops/compose.ns-route.runtime.yaml` for future router recreations.

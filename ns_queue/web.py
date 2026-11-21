@@ -50,11 +50,14 @@ def make_server(store, address, host_file=None):
             self.end_headers(); self.wfile.write(body)
 
         def do_GET(self):
-            path=urllib.parse.urlsplit(self.path);q=urllib.parse.parse_qs(path.query)
+            path=urllib.parse.urlsplit(self.path)
+            if path.path.startswith('/ns/'):path=path._replace(path=path.path[3:])
+            q=urllib.parse.parse_qs(path.query)
             try:
+                if path.path=='/entry':return self.respond(200,(ASSETS/'entry.html').read_bytes(),'text/html; charset=utf-8')
                 if path.path=='/healthz':return self.respond(200,{'ok':True,'service':'lean-observatory-ns'})
                 if path.path in ('/','/ns','/ns/','/projects'):return self.respond(200,(ASSETS/'index.html').read_bytes(),'text/html; charset=utf-8')
-                if path.path in ('/assets/app.css','/assets/app.js'):
+                if path.path in ('/assets/app.css','/assets/app.js','/assets/entry.css','/assets/entry.js'):
                     name=path.path.rsplit('/',1)[1];mime='text/css' if name.endswith('.css') else 'text/javascript'
                     return self.respond(200,(ASSETS/name).read_bytes(),mime+'; charset=utf-8')
                 if path.path in ('/api/state','/api/report.json'):

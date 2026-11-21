@@ -1,2 +1,18 @@
-(node:27572) Warning: node:test run() is being called recursively within a test file. skipping running files.
-(Use `node --trace-warnings ...` to show where the warning was created)
+✔ normalize preserves missing measurements, sorts times and deduplicates snapshots (0.657417ms)
+✔ time spacing reflects elapsed time rather than sample order (0.081958ms)
+✔ domains use calm readable bounds and preserve percent scale (0.356667ms)
+✔ axis labels are compact, no fractional large-rate noise (35.504ms)
+✔ missing data and outages break paths instead of spanning the gap (0.369542ms)
+✔ pointer inspection picks nearest timestamp including null (0.102917ms)
+✔ a sparse outage cannot become the inferred sampling cadence (0.110667ms)
+✔ one-second history retains the full thirty-minute selectable window (0.545584ms)
+✔ live and polled history merge without duplicate points or losing newer samples (0.177417ms)
+✔ stale history breaks every resource trace without discarding real compile progress (0.133584ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 222.285416

@@ -50,6 +50,17 @@ class WebTests(unittest.TestCase):
         self.assertAlmostEqual(data['serverEstimatedUsd'],13.44)
         self.assertIn('剩余时长',self.get('/ns/').decode())
 
+    def test_ns_namespace_serves_all_resources_without_global_api_links(self):
+        self.assertEqual(json.loads(self.get('/ns/api/state'))['queue']['id'],self.store.snapshot()['id'])
+        html=self.get('/ns/').decode()
+        self.assertIn('<base href="/ns/">',html)
+        self.assertIn('href="api/report.json"',html)
+        self.assertNotIn('href="/api/',html)
+        self.assertIn('EventSource',self.get('/ns/assets/app.js').decode())
+        self.assertIn('ns-',self.get('/ns/api/report.json').decode())
+        self.store.log('scheduler','namespace')
+        self.assertIn('scheduler',self.get('/ns/api/logs/export').decode())
+
     def test_all_mutations_are_rejected_without_changing_state(self):
         before=self.store.snapshot()
         for method in ['POST','PUT','PATCH','DELETE']:

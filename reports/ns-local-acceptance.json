@@ -1,67 +1,18 @@
 {
   "schemaVersion": 1,
-  "createdAt": "2026-11-21T18:17:18.650153+00:00",
-  "sourceSha256": "d00d344a227a79dad178207e3fc7b2a4e0b8dadae70289d50879c5910dca3e05",
-  "scope": "Local platform tests only; no real NS build or proof execution; no remote connection",
-  "budgetCapUsd": 0,
+  "createdAt": "2026-11-21T18:51:02.332Z",
+  "sourceSha256": "a03d49ba3ca34cf826f177d12f6aca04ddbdfb17420100a84a6315149ce10301",
+  "scope": "Local platform tests only; no real proof execution; same command groups as deploy/ns/local_acceptance.py",
+  "executionMode": "parallel independent groups",
   "checks": {
-    "unit": {
+    "compile": {
       "command": [
-        "/opt/homebrew/opt/python@3.15/bin/python3.15",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "tests",
-        "-q"
+        "/opt/homebrew/bin/python3",
+        "-c",
+        "import py_compile;from pathlib import Path;[py_compile.compile(str(p),doraise=True) for d in ['ns_queue','deploy/ns'] for p in Path(d).rglob('*.py')];print('all Python sources compiled')"
       ],
       "exitCode": 0,
-      "log": "reports/ns-local/unit.log"
-    },
-    "resources": {
-      "command": [
-        "node",
-        "--test",
-        "tests/resource-profile.test.mjs"
-      ],
-      "exitCode": 0,
-      "log": "reports/ns-local/resources.log"
-    },
-    "charts": {
-      "command": [
-        "node",
-        "--test",
-        "tests/chart-math.test.ts"
-      ],
-      "exitCode": 0,
-      "log": "reports/ns-local/charts.log"
-    },
-    "browser": {
-      "command": [
-        "node",
-        "--test",
-        "tests/ns-addon-browser.test.mjs"
-      ],
-      "exitCode": 0,
-      "log": "reports/ns-local/browser.log"
-    },
-    "rhBrowser": {
-      "command": [
-        "node",
-        "node_modules/@playwright/test/cli.js",
-        "test"
-      ],
-      "exitCode": 0,
-      "log": "reports/ns-local/rhBrowser.log"
-    },
-    "uiBuild": {
-      "command": [
-        "npm",
-        "run",
-        "build"
-      ],
-      "exitCode": 0,
-      "log": "reports/ns-local/uiBuild.log"
+      "log": "reports/ns-local/compile.log"
     },
     "compose": {
       "command": [
@@ -77,17 +28,84 @@
       "exitCode": 0,
       "log": "reports/ns-local/compose.log"
     },
-    "compile": {
+    "charts": {
       "command": [
-        "py_compile",
-        "ns_queue/**/*.py",
-        "deploy/ns/**/*.py"
+        "node",
+        "--test",
+        "tests/chart-math.test.ts"
       ],
       "exitCode": 0,
-      "log": "reports/ns-local/compile.log"
+      "log": "reports/ns-local/charts.log"
+    },
+    "resources": {
+      "command": [
+        "node",
+        "--test",
+        "tests/resource-profile.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/resources.log"
+    },
+    "uiBuild": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/uiBuild.log"
+    },
+    "browser": {
+      "command": [
+        "node",
+        "--test",
+        "tests/ns-addon-browser.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/browser.log"
+    },
+    "sharedHTTPS": {
+      "command": [
+        "node",
+        "--test",
+        "tests/shared-https-browser.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/sharedHTTPS.log"
+    },
+    "entryBrowser": {
+      "command": [
+        "node",
+        "--test",
+        "tests/entry-browser.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/entryBrowser.log"
+    },
+    "unit": {
+      "command": [
+        "/opt/homebrew/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-q"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/unit.log"
+    },
+    "rhBrowser": {
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/rhBrowser.log"
     }
   },
   "execution": "NOT_RUN",
   "proofAccepted": false,
-  "browserNote": "Browser plugin unavailable; Playwright used; NS viewports 1440/390/320"
+  "browserNote": "Browser plugin unavailable; Playwright plus actual local Nginx fixture"
 }

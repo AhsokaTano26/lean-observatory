@@ -1,5 +1,5 @@
 [Unit]
-Description=Independent read-only NS queue HTTPS page
+Description=Read-only NS project backend behind shared HTTPS
 After=docker.service network-online.target
 Requires=docker.service
 Wants=network-online.target

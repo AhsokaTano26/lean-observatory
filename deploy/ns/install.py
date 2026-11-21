@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """First-install plan for the independent NS add-on. Dry-run is the default.
 
-This never configures certificates, the original RH stack, or the heavy worker.
+Reuses existing certificates and gracefully extends the RH router; never restarts RH proof work.
 An exact local acceptance receipt is required even to produce a reviewed plan.
 """
 import argparse
@@ -76,6 +76,7 @@ def installation_plan(source_sha, execute=False):
                 ['apparmor_parser', '-r', '/etc/apparmor.d/' + PROFILE],
                 ['python3', '-m', 'ns_queue.control', '--root', str(DATA), 'init', '--hours', '0', '--rh-run', '20565ace60c2'],
                 [*compose, 'up', '-d', '--build', '--wait', 'api', 'nginx'],
+                ['python3', 'deploy/ns/activate_proxy.py', '--execute'],
                 ['systemctl', 'daemon-reload'],
                 ['systemctl', 'enable', '--now', 'lean-observatory-ns-web.service',
                  'lean-observatory-ns-controller.service', 'lean-observatory-ns-cert-reload.path']]}
@@ -114,8 +115,8 @@ def preflight(root):
                               check=True, capture_output=True, text=True, timeout=15)
     if existing.stdout.strip():
         raise RuntimeError('Existing add-on project containers; refusing first install')
-    with socket.socket() as probe:
-        probe.bind(('0.0.0.0', 9443))
+    router=json.loads(subprocess.check_output(['docker','inspect','lean-observatory-nginx-1'],text=True))[0]
+    if not router.get('State',{}).get('Running'):raise RuntimeError('Existing RH HTTPS router required')
 
 
 def install(root, execute=False):
@@ -125,8 +126,8 @@ def install(root, execute=False):
     if not execute:
         return plan
     preflight(root)
-    # Every write below has a fresh, add-on-specific destination. Parent RH
-    # configuration, volumes, containers, certificates and DNS are untouched.
+    # Add-on state uses dedicated destinations. The explicit router step is
+    # syntax-checked and gracefully reloaded; RH proof processes stay untouched.
     DATA.mkdir(mode=0o750)
     os.chown(DATA, 0, 10001)
     os.chmod(DATA, 0o2750)
