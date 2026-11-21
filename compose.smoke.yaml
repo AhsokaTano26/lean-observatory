@@ -1,0 +1,7 @@
+# Local-only resource overrides; never use these for the full reproduction.
+services:
+  worker:
+    cpus: 2
+    cpuset: "0-1"
+    mem_limit: 2g
+    memswap_limit: 2g

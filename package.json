@@ -7,20 +7,25 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "python3 -m unittest discover -s tests -v",
+    "test": "npm run test:unit && npm run test:charts && npm run build && playwright test",
     "test:e2e": "playwright test",
-    "check": "npm test && npm run build && npm run test:e2e"
+    "check": "npm test",
+    "test:unit": "python3 -m unittest discover -s tests -v",
+    "test:charts": "node --test tests/chart-math.test.ts"
   },
   "dependencies": {
+    "d3-shape": "3.2.1",
+    "lucide-react": "1.73.0",
     "react": "19.3.1",
-    "react-dom": "19.3.1",
-    "lucide-react": "1.73.0"
+    "react-dom": "19.3.1"
   },
   "devDependencies": {
-    "typescript": "6.0.3",
-    "vite": "8.3.8",
+    "@playwright/test": "1.65.1",
+    "@types/d3-shape": "3.2.0",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "@playwright/test": "1.65.1"
+    "prettier": "^3.10.1",
+    "typescript": "6.0.3",
+    "vite": "8.3.8"
   }
 }

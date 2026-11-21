@@ -1,0 +1,75 @@
+name: lean-observatory
+x-logging: &logging
+  driver: json-file
+  options: {max-size: "10m", max-file: "3"}
+services:
+  api:
+    build: {context: ., target: api}
+    environment:
+      ADMIN_TOKEN: ${ADMIN_TOKEN:?set ADMIN_TOKEN in .env}
+      ENABLE_REAL: ${ENABLE_REAL:-0}
+      HOST_METRICS: /metrics/host.json
+    volumes: ["verification-data:/data", "${METRICS_DIR:-./.data/metrics}:/metrics:ro"]
+    expose: ["8787"]
+    cpus: 2
+    mem_limit: 2g
+    pids_limit: 128
+    read_only: true
+    tmpfs: ["/tmp:size=128m"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+    logging: *logging
+    healthcheck:
+      test: [CMD, python3, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8787/healthz',timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  worker:
+    profiles: [verification]
+    user: "0:10001"
+    build: {context: ., target: worker}
+    environment:
+      ENABLE_REAL: ${ENABLE_REAL:-0}
+      HOST_METRICS: /metrics/host.json
+      SANDBOX_ROOT: /sandbox
+    volumes: ["verification-data:/data", "build-data:/sandbox/work", "${METRICS_DIR:-./.data/metrics}:/metrics:ro", "/dev/null:/sandbox/dev/null", "/dev/urandom:/sandbox/dev/urandom:ro"]
+    depends_on: {api: {condition: service_healthy}}
+    cpus: ${WORKER_CPUS:-48}
+    cpuset: ${WORKER_CPUSET:-8-55}
+    mem_limit: ${WORKER_MEMORY:-208g}
+    memswap_limit: ${WORKER_MEMORY:-208g}
+    pids_limit: 1024
+    ulimits: {nofile: {soft: 65536, hard: 65536}, stack: {soft: 67108864, hard: 67108864}}
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+    cap_add: [SYS_CHROOT, SETUID, SETGID, CHOWN, DAC_OVERRIDE, KILL, SYS_ADMIN]
+    stop_grace_period: 30s
+    logging: *logging
+  mock-worker:
+    profiles: [mock]
+    build: {context: ., target: api}
+    command: [python3, -m, backend.worker, --data, /data]
+    environment: {ENABLE_REAL: "0", HOST_METRICS: /metrics/host.json}
+    volumes: ["verification-data:/data", "${METRICS_DIR:-./.data/metrics}:/metrics:ro"]
+    cpus: 1
+    mem_limit: 512m
+    pids_limit: 32
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+    logging: *logging
+  nginx:
+    image: nginx:1.28-alpine
+    ports: ["127.0.0.1:${HTTP_PORT:-8789}:8080"]
+    volumes: ["./deploy/nginx.conf:/etc/nginx/nginx.conf:ro"]
+    depends_on: {api: {condition: service_healthy}}
+    cpus: 1
+    mem_limit: 256m
+    pids_limit: 64
+    restart: unless-stopped
+    logging: *logging
+volumes:
+  build-data:
+  verification-data:

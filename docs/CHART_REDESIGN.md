@@ -1,0 +1,9 @@
+# Chart refinement
+
+Purpose: operational time-series monitoring. Use framework-owned SVG with D3 shape geometry. Keep at most six SVG plots on the monitoring page; <=360 samples/series, no per-sample DOM nodes except selected/end markers. Use measured container width, fixed readable 11px axes, time-based X geometry, clean 1/2/5 Y ticks, restrained fills and endpoint markers. Percent scales remain 0–100; rates/loads start at zero and use readable bounds. Missing values and long gaps split the line instead of fabricating continuity.
+
+Interaction: current/average/peak always visible for full charts; pointer/touch or left/right keyboard inspect a single timestamp with a common multi-series tooltip. Escape returns to live latest value. URL hash owns page navigation; ephemeral point inspection stays local. Chart does not capture scrolling. ResizeObserver recalculates geometry, no stretching or chart path animations that can flicker during SSE updates.
+
+Server view: coherent CPU/memory/disk/load small multiples plus a dual-series network chart (Rx solid, Tx dashed). Overview: clear throughput chart and compact CPU chart. D3 generates monotone paths through samples; source points and peaks remain authoritative. Last sample time/source remain visible; stale/offline data stays visible and labeled.
+
+Mock: synthetic host telemetry derives from an explicit timestamp, independent of verification progression so completed/paused tasks do not freeze the host monitor. History stays run-scoped and backend-generated. Do not seed real task history or hide missing real measurements. Tests cover honest coordinates/domains/gaps, hover/keyboard/mobile, dark/light rendering, and real endpoint integration. Browser host is unavailable in this environment, so use existing Playwright workflow for QA.

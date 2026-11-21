@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": 1795250720.992928,
+  "passed": true,
+  "sourceSha256": "be56c7c7145f11cd4d987a2edee15fe82cd899d5254d4bca780759c94f520d04",
+  "checks": {
+    "backend": {
+      "exitCode": 0,
+      "count": 36,
+      "command": [
+        "npm",
+        "test"
+      ],
+      "log": "native-tests.log"
+    },
+    "charts": {
+      "exitCode": 0,
+      "count": 10,
+      "command": [
+        "npm",
+        "test"
+      ],
+      "log": "native-tests.log"
+    },
+    "build": {
+      "exitCode": 0,
+      "command": [
+        "npm",
+        "test"
+      ],
+      "log": "native-tests.log"
+    },
+    "browser": {
+      "exitCode": 0,
+      "count": 13,
+      "command": [
+        "npm",
+        "test"
+      ],
+      "log": "native-tests.log"
+    },
+    "compose": {
+      "exitCode": 0,
+      "command": "docker compose --env-file /tmp/lean-observatory-local.env --profile mock up -d --build --wait"
+    },
+    "http": {
+      "exitCode": 0,
+      "command": "docker compose run api python3 http_smoke.py",
+      "scope": "Actual Nginx health, auth, Mock controls, SSE, report and logs"
+    },
+    "worker_image": {
+      "exitCode": 0,
+      "command": "docker compose --profile verification build worker"
+    },
+    "worker_smoke": {
+      "exitCode": 0,
+      "command": "docker compose -f compose.yaml -f compose.smoke.yaml run worker python3 container_smoke.py",
+      "log": "worker-fixture.log",
+      "scope": "Tiny Main only; no original proof executed"
+    },
+    "live_preview": {
+      "exitCode": 0,
+      "command": "node --test /tmp/lean-observatory-live.test.mjs",
+      "scope": "Read-only live Docker Chromium: matching built assets, Mock state, SSE, overview and 5 server charts"
+    }
+  },
+  "remoteConnected": false,
+  "serverPurchased": false,
+  "publicDomain": "lean.tano.asia (planned, not deployed)",
+  "localPreview": "http://127.0.0.1:8789",
+  "realProofVerification": "NOT_RUN",
+  "mathematicalProofAccepted": false,
+  "platform": "Local ARM64; target AMD64 must be retested after deployment"
+}

@@ -18,6 +18,7 @@ def validate_project(root, expected_count=175187):
     if (root/'lean-toolchain').read_text().strip() != 'leanprover/lean4:v4.33.1':
         raise ValueError('Lean 工具链与指定 v4.33.1 不匹配')
     cfg=tomllib.loads((root/'lakefile.toml').read_text())
+    if (root/'lakefile.lean').exists(): raise ValueError('拒绝未审计的替代 lakefile.lean')
     dep=next((x for x in cfg.get('require',[]) if x.get('name')=='mathlib'),None)
     if not dep or dep.get('rev')!=MATHLIB or dep.get('git','').rstrip('/').removesuffix('.git')!='https://github.com/leanprover-community/mathlib4':
         raise ValueError('原始 Mathlib 依赖配置不匹配')
@@ -35,7 +36,7 @@ def validate_project(root, expected_count=175187):
 
 
 def audit_source(src):
-    pattern=re.compile(r'\b(sorry|admit|axiom|native_decide|unsafe|implemented_by|extern|run_elab|elab|initialize|set_option\s+debug\.skipKernelTC)\b')
+    pattern=re.compile(r'(?<![\w])(sorry|sorryAx|#eval|#reduce|macro|syntax|run_tac|eval_tactic|admit|axiom|axioms|native_decide|unsafe|implemented_by|extern|run_elab|elab|initialize|ofReduceBool|set_option\s+debug\.skipKernelTC)\b')
     findings=[]
     for p in sorted(Path(src).rglob('*.lean')):
         for number,line in enumerate(p.read_text().splitlines(),1):
@@ -46,6 +47,12 @@ def audit_source(src):
 
 def parse_build_module(line, modules):
     match=re.search(r'\bBuilt\s+([A-Za-z_][A-Za-z0-9_.\u0080-\uffff]*)\s*(?:\(|$)',line)
+    return match[1] if match and match[1] in modules else None
+
+
+def parse_failed_module(line, modules):
+    if not line.lstrip().startswith('✖'): return None
+    match=re.search(r'\bBuilding\s+([A-Za-z_][A-Za-z0-9_.\u0080-\uffff]*)\s*(?:\(|$)',line)
     return match[1] if match and match[1] in modules else None
 
 
@@ -62,8 +69,19 @@ class Pipeline:
     def __init__(self, store, run):
         self.store=store; self.id=run; self.root=store.root/'runs'/run
         self.runner=CommandRunner(store,run)
-        self.project=self.root/'source'/'lean'
+        self.original=self.root/'source'/'lean'
+        self.project=self.original
         self.config_hashes={}
+
+    def execute(self, argv, stage, callback=None):
+        if not os.environ.get('SANDBOX_ROOT'): raise RuntimeError('真实 Lean 执行必须启用隔离文件系统')
+        return self.runner.run(argv,self.project,stage,callback,sandbox=True)
+
+    def verify_sources(self):
+        for line in (self.root/'source-files.sha256').read_text().splitlines():
+            digest,name=line.split('  ',1)
+            for base in {self.original,self.project}:
+                if sha256(base/name)!=digest: raise ValueError('源码内容发生变化: '+name)
 
     def evidence(self, name, value, text=False):
         path=self.root/name
@@ -119,15 +137,23 @@ class Pipeline:
         archive=self.root/'lean.tar.gz'; digest=verify_archive(archive,EXPECTED_HASH,EXPECTED_BYTES)
         self.store.mutate(self.id,lambda s:s['provenance'].update(sha256=digest,bytes=archive.stat().st_size,integrity='passed'))
         self.register(archive)
-        destination=self.root/'source'
-        if not self.project.exists(): safe_extract(archive,destination)
-        info=validate_project(self.project)
-        self.config_hashes={n:sha256(self.project/n) for n in ['lean-toolchain','lakefile.toml','lake-manifest.json']}
+        destination=self.root/'source'; staging=self.root/'source.partial'
+        # A directory's existence is never a completion marker. Publish extraction atomically.
+        if staging.exists(): shutil.rmtree(staging)
+        safe_extract(archive,staging)
+        validate_project(staging/'lean')
+        if destination.exists(): shutil.rmtree(destination)
+        staging.rename(destination)
+        info=validate_project(self.original)
+        if (self.original/'.lake').exists(): raise ValueError('原始归档包含构建缓存，拒绝复现')
+        findings=audit_source(info['src']); self.evidence('pre-execution-source-scan.json',findings)
+        if findings: raise ValueError(f'执行前扫描发现 {len(findings)} 个潜在绕过点，停止执行')
+        self.config_hashes={n:sha256(self.original/n) for n in ['lean-toolchain','lakefile.toml','lake-manifest.json']}
         inventory=self.root/'source-files.sha256'
         with inventory.open('w') as out:
             for i,p in enumerate(info['files']):
                 if i%1000==0: self.checkpoint()
-                out.write(f'{sha256(p)}  {p.relative_to(self.project)}\n')
+                out.write(f'{sha256(p)}  {p.relative_to(self.original)}\n')
         self.register(inventory)
         self.evidence('original-config.json',self.config_hashes)
         self.store.mutate(self.id,lambda s:(s['compile'].update(total=len(info['files'])),s['provenance'].update(inventorySha256=sha256(inventory))))
@@ -139,17 +165,26 @@ class Pipeline:
 
     def dependencies(self):
         self.unchanged()
-        output=self.runner.run(['lake','env','lean','--version'],self.project,'dependencies')
+        output=self.execute(['lake','-f','lakefile.toml','env','lean','--version'],'dependencies')
         if not re.search(r'\bversion 4\.33\.1\b',output): raise ValueError('实际 Lean 二进制版本不匹配')
         # Qualified Mathlib executable cannot accidentally fetch root project artifacts.
-        self.runner.run(['lake','exe','mathlib/cache','get'],self.project,'dependencies')
-        actual=self.runner.run(['git','-C',str(self.project/'.lake/packages/mathlib'),'rev-parse','HEAD'],self.project,'dependencies').strip()
+        self.execute(['lake','-f','lakefile.toml','exe','mathlib/cache','get'],'dependencies')
+        actual=self.execute(['git','-C','.lake/packages/mathlib','rev-parse','HEAD'],'dependencies').strip()
         if actual!=MATHLIB: raise ValueError('实际 Mathlib checkout 版本不匹配')
         self.unchanged()
-        self.store.mutate(self.id,lambda s:s['environment'].update(actualLean=output,actualMathlib=actual,platform=platform.platform(),python=platform.python_version()))
+        environment=json.loads(self.execute(['python3','-c',"import json,platform;from pathlib import Path;print(json.dumps(dict(platform=platform.platform(),python=platform.python_version(),osRelease=Path('/etc/os-release').read_text())))"],'dependencies'))
+        toolchain=Path(os.environ['SANDBOX_ROOT'])/'home/lean/.elan/toolchains/leanprover--lean4---v4.33.1'
+        environment['toolchainBinarySha256']={n:sha256(toolchain/'bin'/n) for n in ['lean','lake','leanchecker']}
+        environment.update(actualLean=output,actualMathlib=actual)
+        self.evidence('environment.json',environment)
+        self.store.mutate(self.id,lambda s:s['environment'].update(environment))
 
     def compile(self):
         self.unchanged(); info=validate_project(self.project); jobs=self.store.raw(self.id)['compile']['jobs']
+        if not self.store.raw(self.id)['compile'].get('startedFresh'):
+            if any((self.project/'.lake/build').rglob('*.olean')):
+                raise ValueError('首次编译发现已有项目 .olean，拒绝将外部产物计为本次编译')
+            self.store.mutate(self.id,lambda s:s['compile'].update(startedFresh=True))
         # Preserve original configuration bytes and record the sole runtime-only override.
         original=(self.project/'lakefile.toml').read_text()
         pattern=re.compile(r'(?m)^moreLeanArgs\s*=\s*\[([^\]]*)\]')
@@ -163,32 +198,47 @@ class Pipeline:
             for path in (self.project/'.lake/build/lib/lean').rglob('*.olean'):
                 name='.'.join(path.relative_to(self.project/'.lake/build/lib/lean').with_suffix('').parts)
                 if name in info['modules']: self.store.module_done(self.id,name)
-        refresh_artifacts(); times=[]; last_flush=[0.]
+        refresh_artifacts(); times=[]; last_flush=[0.]; failed_modules=set()
+        self.store.mutate(self.id,lambda s:s['compile'].update(failed=0,recent=[]))
         def line(text):
+            failed=parse_failed_module(text,info['modules'])
+            if failed:
+                failed_modules.add(failed)
+                self.store.mutate(self.id,lambda s:s['compile'].update(failed=len(failed_modules)))
             name=parse_build_module(text,info['modules']); now=time.time()
             if name and self.store.module_done(self.id,name): times.append(now)
             times[:]=[t for t in times if now-t<60]
             if name and now-last_flush[0]>=.8:
                 count=self.store.module_count(self.id)
-                self.store.mutate(self.id,lambda s:s['compile'].update(succeeded=count,rate=round(len(times)/min(60,max(1,now-start)),2),currentModule=name))
+                self.store.mutate(self.id,lambda s:s['compile'].update(succeeded=count,rate=round(len(times)/min(60,max(1,now-start)),2),recent=list(times),currentModule=name))
                 last_flush[0]=now
         start=time.time()
-        self.runner.run(['lake','--no-ansi','--no-cache','-f',effective_file.name,'build'],self.project,'compile',line)
+        self.execute(['lake','--no-ansi','--no-cache','-f',effective_file.name,'build'],'compile',line)
         refresh_artifacts(); count=self.store.module_count(self.id)
         self.store.mutate(self.id,lambda s:s['compile'].update(succeeded=count,failed=0,rate=0))
         if count!=len(info['modules']): raise ValueError(f'编译产物覆盖不足: {count}/{len(info["modules"])}')
         self.unchanged()
+        self.verify_sources()
 
     def audit(self):
         info=validate_project(self.project); findings=audit_source(info['src'])
         self.evidence('source-scan.json',findings)
         if findings: raise ValueError(f'静态扫描发现 {len(findings)} 个潜在绕过点，需人工复核；不自动判定通过')
         file=self.root/'Audit.lean'; file.write_text(audit_program()); self.register(file)
-        output=self.runner.run(['lake','env','lean','-j1',str(file)],self.project,'audit')
+        audit_dir=self.project.parent/'audit';audit_dir.mkdir(exist_ok=True)
+        (audit_dir/'Audit.lean').write_text(file.read_text())
+        audit_path='/'+str(audit_dir.relative_to(Path(os.environ['SANDBOX_ROOT'])))
+        output=self.execute(['lake','-f','lakefile.toml','env','lean','-j1',audit_path+'/Audit.lean'],'audit')
         self.evidence('audit-output.txt',output,text=True)
+        axioms_file=self.root/'Axioms.lean'
+        axioms_file.write_text('import Main\n'+'\n'.join(f'#print axioms {n}' for n,_ in THEOREMS)+'\n')
+        self.register(axioms_file)
+        (audit_dir/'Axioms.lean').write_text(axioms_file.read_text())
+        axioms_output=self.execute(['lake','-f','lakefile.toml','env','lean','-j1',audit_path+'/Axioms.lean'],'audit')
+        self.evidence('axioms-output.txt',axioms_output,text=True)
         passed=True
         for name,_ in THEOREMS:
-            result=audit_axioms(output,name); passed=passed and result['passed']
+            result=audit_axioms(axioms_output,name); passed=passed and result['passed']
             def update(s):
                 a=next(a for a in s['audits'] if a['name']==name)
                 a.update(type='passed',axioms='passed' if result['passed'] else 'failed',dependencies=result['dependencies'],output=result['error'])
@@ -197,7 +247,8 @@ class Pipeline:
 
     def replay(self):
         self.unchanged()
-        self.runner.run(['lake','env','leanchecker','--fresh','Main'],self.project,'replay')
+        self.execute(['lake','-f','lakefile.toml','env','leanchecker','--fresh','Main'],'replay')
+        self.verify_sources()
         self.store.mutate(self.id,lambda s:[a.update(replay='passed') for a in s['audits']])
 
     def run(self):
@@ -206,11 +257,13 @@ class Pipeline:
             state=self.store.raw(self.id)
             if state['stages'][1]['status']=='passed':
                 verify_archive(self.root/'lean.tar.gz',EXPECTED_HASH,EXPECTED_BYTES)
-                validate_project(self.project); self.unchanged()
-                for line in (self.root/'source-files.sha256').read_text().splitlines():
-                    digest,name=line.split('  ',1)
-                    if sha256(self.project/name)!=digest: raise ValueError('恢复时发现源码发生变化: '+name)
+                validate_project(self.original); self.unchanged(); self.verify_sources()
             for name in ['download','integrity','dependencies','compile','audit','replay']:
+                if name=='dependencies':
+                    if not os.environ.get('SANDBOX_ROOT'): raise RuntimeError('未配置 Lean 子进程文件系统隔离')
+                    from .sandbox import prepare
+                    self.project=prepare(os.environ['SANDBOX_ROOT'],self.id,self.original)
+                    self.unchanged(); self.verify_sources()
                 self.stage(name,getattr(self,name))
             self.store.mutate(self.id,lambda s:s.update(status='checks_completed',finishedAt=time.time(),error=None),'finished')
         except Exception as e:

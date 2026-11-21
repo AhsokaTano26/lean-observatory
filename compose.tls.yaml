@@ -1,0 +1,9 @@
+services:
+  nginx:
+    ports: !override
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/nginx-tls.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ${ACME_WEBROOT:-/opt/lean-observatory/acme}:/var/www/acme:ro

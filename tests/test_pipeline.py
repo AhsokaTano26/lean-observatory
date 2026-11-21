@@ -41,3 +41,9 @@ class PipelineTests(unittest.TestCase):
             self.assertIn(f'example : {typ} := {name}',code)
             self.assertIn(f'#print axioms {name}',code)
         self.assertIn('import Main',code)
+
+    def test_failed_file_accounting_ignores_non_source_jobs(self):
+        from backend.pipeline import parse_failed_module
+        self.assertEqual(parse_failed_module('✖ [9/20] Building Foo.Bar (1s)',{'Foo.Bar'}),'Foo.Bar')
+        self.assertIsNone(parse_failed_module('✖ [9/20] Building Foo.Bar:c.o (1s)',{'Foo.Bar'}))
+        self.assertIsNone(parse_failed_module('✖ [9/20] Building Mathlib.Foo (1s)',{'Foo.Bar'}))

@@ -1,0 +1,127 @@
+> lean-observatory@0.1.0 test
+> npm run test:unit && npm run test:charts && npm run build && playwright test
+
+
+> lean-observatory@0.1.0 test:unit
+> python3 -m unittest discover -s tests -v
+
+test_conflicting_task_rejected (test_api.ApiTests.test_conflicting_task_rejected) ... ok
+test_full_log_download_contains_untruncated_command_output (test_api.ApiTests.test_full_log_download_contains_untruncated_command_output) ... ok
+test_health_and_waiting_state (test_api.ApiTests.test_health_and_waiting_state) ... ok
+test_mock_report_and_sse_have_provenance (test_api.ApiTests.test_mock_report_and_sse_have_provenance) ... ok
+test_mutation_auth_and_invalid_scenario (test_api.ApiTests.test_mutation_auth_and_invalid_scenario) ... ok
+test_real_is_disabled_until_deployment_gate (test_api.ApiTests.test_real_is_disabled_until_deployment_gate) ... ok
+test_body_text_cannot_mask_real_sorry_axiom (test_core.AuditParserRegressionTests.test_body_text_cannot_mask_real_sorry_axiom) ... ok
+test_duplicate_axiom_records_fail_closed (test_core.AuditParserRegressionTests.test_duplicate_axiom_records_fail_closed) ... ok
+test_history_does_not_mix_different_runs (test_core.HistoryTests.test_history_does_not_mix_different_runs) ... ok
+test_history_supports_full_thirty_minutes_of_one_second_samples (test_core.HistoryTests.test_history_supports_full_thirty_minutes_of_one_second_samples) ... ok
+test_html_200_and_wrong_hash_rejected (test_core.IntegrityTests.test_html_200_and_wrong_hash_rejected) ... ok
+test_traversal_and_symlink_rejected (test_core.IntegrityTests.test_traversal_and_symlink_rejected) ... ok
+test_explicit_zero_cursor_reads_oldest_instead_of_tail (test_core.LogExportTests.test_explicit_zero_cursor_reads_oldest_instead_of_tail) ... ok
+test_old_resumed_run_remains_visible_to_scheduler (test_core.SchedulingTests.test_old_resumed_run_remains_visible_to_scheduler) ... ok
+test_accounting_is_bounded_and_eta_not_fabricated (test_core.StateTests.test_accounting_is_bounded_and_eta_not_fabricated) ... ok
+test_axioms_fail_closed (test_core.StateTests.test_axioms_fail_closed) ... ok
+test_mock_all_scenarios_and_resume (test_core.StateTests.test_mock_all_scenarios_and_resume) ... ok
+test_pending_never_claims_success (test_core.StateTests.test_pending_never_claims_success) ... ok
+test_sqlite_survives_restart_and_logs_are_ordered (test_core.StateTests.test_sqlite_survives_restart_and_logs_are_ordered) ... ok
+test_missing_or_stale_receipt_blocks_remote (test_gates.GateTests.test_missing_or_stale_receipt_blocks_remote) ... ok
+test_nonzero_check_blocks_even_matching_source (test_gates.GateTests.test_nonzero_check_blocks_even_matching_source) ... ok
+test_host_history_uses_sample_time_after_task_completion (test_mock_metrics.MockMetricsTests.test_host_history_uses_sample_time_after_task_completion) ... ok
+test_slow_demo_progress_keeps_throughput_consistent (test_mock_metrics.MockMetricsTests.test_slow_demo_progress_keeps_throughput_consistent) ... ok
+test_audit_program_checks_exact_expected_types (test_pipeline.PipelineTests.test_audit_program_checks_exact_expected_types) ... ok
+test_failed_file_accounting_ignores_non_source_jobs (test_pipeline.PipelineTests.test_failed_file_accounting_ignores_non_source_jobs) ... ok
+test_pin_and_inventory (test_pipeline.PipelineTests.test_pin_and_inventory) ... ok
+test_progress_only_matches_source_modules (test_pipeline.PipelineTests.test_progress_only_matches_source_modules) ... ok
+test_scan_catches_escapes_and_preserves_config (test_pipeline.PipelineTests.test_scan_catches_escapes_and_preserves_config) ... ok
+test_cancel_between_scheduler_read_and_tick_cannot_resurrect_mock (test_recovery.RecoveryTests.test_cancel_between_scheduler_read_and_tick_cannot_resurrect_mock) ... ok
+test_cancel_kills_command_and_records_actual_exit (test_recovery.RecoveryTests.test_cancel_kills_command_and_records_actual_exit) ... ok
+test_resource_resume_lowers_concurrency_without_losing_progress (test_recovery.RecoveryTests.test_resource_resume_lowers_concurrency_without_losing_progress) ... ok
+test_worker_restart_requires_explicit_resume (test_recovery.RecoveryTests.test_worker_restart_requires_explicit_resume) ... ok
+test_command_capture_and_no_shell_interpolation (test_runtime.RuntimeTests.test_command_capture_and_no_shell_interpolation) ... ok
+test_metrics_explicit_source_and_non_negative (test_runtime.RuntimeTests.test_metrics_explicit_source_and_non_negative) ... ok
+test_nonzero_exit_is_persisted_and_raised (test_runtime.RuntimeTests.test_nonzero_exit_is_persisted_and_raised) ... ok
+test_paused_eta_unknown (test_runtime.RuntimeTests.test_paused_eta_unknown) ... ok
+
+----------------------------------------------------------------------
+Ran 36 tests in 5.181s
+
+OK
+
+> lean-observatory@0.1.0 test:charts
+> node --test tests/chart-math.test.ts
+
+✔ normalize preserves missing measurements, sorts times and deduplicates snapshots (1.014625ms)
+✔ time spacing reflects elapsed time rather than sample order (0.084125ms)
+✔ domains use calm readable bounds and preserve percent scale (0.556ms)
+✔ axis labels are compact, no fractional large-rate noise (32.762125ms)
+✔ missing data and outages break paths instead of spanning the gap (0.191459ms)
+✔ pointer inspection picks nearest timestamp including null (0.086166ms)
+✔ a sparse outage cannot become the inferred sampling cadence (0.099917ms)
+✔ one-second history retains the full thirty-minute selectable window (0.986291ms)
+✔ live and polled history merge without duplicate points or losing newer samples (0.16825ms)
+✔ stale history breaks every resource trace without discarding real compile progress (0.141625ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 195.213083
+
+> lean-observatory@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 2100 modules transformed.
+rendering chunks...
+computing gzip size...
+frontend/dist/index.html                   0.79 kB │ gzip:  0.54 kB
+frontend/dist/assets/index-CrwsKo82.css   42.08 kB │ gzip:  9.08 kB
+frontend/dist/assets/index-Dlv_mFOO.js   290.63 kB │ gzip: 90.06 kB
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "node_modules/lucide-react/dist/esm/context.mjs" may not be preserved when bundling.
+   ╭─[ node_modules/lucide-react/dist/esm/context.mjs:2:1 ]
+   │
+ 2 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "node_modules/lucide-react/dist/esm/Icon.mjs" may not be preserved when bundling.
+   ╭─[ node_modules/lucide-react/dist/esm/Icon.mjs:2:1 ]
+   │
+ 2 │ "use client";
+   │ ──────┬──────
+   │       ╰──────── module level directive may not be preserved
+   │
+   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+───╯
+
+✓ built in 179ms
+
+Running 13 tests using 1 worker
+
+(node:64953) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ✓   1 tests/browser/charts.spec.ts:23:1 › all chart geometry is undistorted and supports pointer and keyboard inspection (1.4s)
+
+  ✓   2 tests/browser/charts.spec.ts:108:3 › touch charts › mobile charts stay legible, scroll freely and expose values on tap (619ms)
+  ✓   3 tests/browser/dashboard.spec.ts:33:1 › desktop full dashboard, navigation, theme, logs and downloads (9.8s)
+  ✓   4 tests/browser/dashboard.spec.ts:116:3 › failure failure states persist and resume (9.4s)
+  ✓   5 tests/browser/dashboard.spec.ts:116:3 › interruption failure states persist and resume (8.4s)
+  ✓   6 tests/browser/dashboard.spec.ts:116:3 › resource failure states persist and resume (9.6s)
+  ✓   7 tests/browser/dashboard.spec.ts:153:3 › responsive 320px and mobile navigation (474ms)
+  ✓   8 tests/browser/dashboard.spec.ts:153:3 › responsive 390px and mobile navigation (429ms)
+  ✓   9 tests/browser/dashboard.spec.ts:153:3 › responsive 768px and mobile navigation (413ms)
+  ✓  10 tests/browser/dashboard.spec.ts:153:3 › responsive 1280px and mobile navigation (364ms)
+  ✓  11 tests/browser/dashboard.spec.ts:188:1 › SSE disconnect reconnect and live data recovery (314ms)
+  ✓  12 tests/browser/dashboard.spec.ts:202:1 › new task dialog and real gate (453ms)
+
+  ✓  13 tests/browser/theme.spec.ts:5:1 › editorial theme defaults to paper and adapts from phone to desktop (1.7s)
+
+  13 passed (45.0s)

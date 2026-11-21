@@ -1,0 +1,18 @@
+[Unit]
+Description=Lean Observatory host metrics (read-only)
+After=network.target
+[Service]
+Type=simple
+User=lean-metrics
+Group=lean-metrics
+WorkingDirectory=/opt/lean-observatory
+ExecStart=/usr/bin/python3 -m backend.metrics --output /var/lib/lean-observatory-metrics/host.json --disk /var/lib
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/lean-observatory-metrics
+[Install]
+WantedBy=multi-user.target

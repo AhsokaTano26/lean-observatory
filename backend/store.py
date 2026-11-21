@@ -2,6 +2,7 @@
 import contextlib
 import json
 import sqlite3
+import os
 import time
 from pathlib import Path
 from .model import initial_state, derived
@@ -20,8 +21,11 @@ class Store:
               CREATE INDEX IF NOT EXISTS logs_run ON logs(run,id);
               CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY AUTOINCREMENT, run TEXT, ts REAL, kind TEXT, payload TEXT);
               CREATE TABLE IF NOT EXISTS samples(id INTEGER PRIMARY KEY AUTOINCREMENT, ts REAL, payload TEXT);
+              CREATE INDEX IF NOT EXISTS samples_ts ON samples(ts);
               CREATE TABLE IF NOT EXISTS modules(run TEXT, module TEXT, PRIMARY KEY(run,module));
             ''')
+        if self.path.stat().st_mode & 0o777 != 0o660:
+            os.chmod(self.path,0o660)
 
     @contextlib.contextmanager
     def db(self):
@@ -37,7 +41,7 @@ class Store:
     def create(self, mode='mock', scenario='success', jobs=48):
         if mode not in ('mock', 'real') or scenario not in ('success', 'failure', 'interruption', 'resource'):
             raise ValueError('无效的模式或场景')
-        if not isinstance(jobs, int) or not 1 <= jobs <= 52:
+        if type(jobs) is not int or not 1 <= jobs <= 52:
             raise ValueError('并发必须在 1 到 52 之间')
         s = initial_state(mode)
         s.update(scenario=scenario, status='queued')
@@ -83,6 +87,10 @@ class Store:
         with self.db() as db:
             return [json.loads(r[0]) for r in db.execute('SELECT state FROM runs ORDER BY created DESC LIMIT 30')]
 
+    def active_runs(self):
+        with self.db() as db:
+            return [json.loads(r[0]) for r in db.execute("SELECT state FROM runs WHERE json_extract(state,'$.status') IN ('queued','running','paused') ORDER BY created")]
+
     def control(self, run, action):
         allowed = {'pause': ('running', 'queued'), 'resume': ('paused', 'interrupted', 'resource_exhausted', 'failed'), 'cancel': ('queued', 'running', 'paused', 'interrupted', 'resource_exhausted', 'failed')}
         def change(s):
@@ -90,8 +98,10 @@ class Store:
                 raise ValueError('当前状态不支持该操作')
             s['desired'] = {'pause': 'paused', 'resume': 'running', 'cancel': 'cancelled'}[action]
             if action == 'resume' and s['status'] not in ('paused',):
-                if any(x['status'] in ('queued', 'running', 'paused') and x['id'] != run for x in self.runs()):
+                if any(x['id'] != run for x in self.active_runs()):
                     raise ValueError('另一个任务正在运行')
+                if s['status']=='resource_exhausted':
+                    s['compile']['jobs']=max(1,s['compile']['jobs']//2)
                 s.update(status='queued', error=None, finishedAt=None)
                 if s['mode'] == 'mock':
                     s['scenario'] = 'success'
@@ -105,10 +115,10 @@ class Store:
         with self.db() as db:
             db.execute('INSERT INTO logs(run,ts,level,stage,message) VALUES(?,?,?,?,?)', (run, time.time(), level, stage, message[:16000]))
 
-    def logs(self, run, after=0, limit=300, query=''):
+    def logs(self, run, after=None, limit=300, query=''):
         limit = max(1, min(1000, limit))
         with self.db() as db:
-            if after:
+            if after is not None:
                 rows = db.execute('SELECT * FROM logs WHERE run=? AND id>? AND message LIKE ? ORDER BY id LIMIT ?', (run, after, '%'+query+'%', limit))
                 return [dict(r) for r in rows]
             rows = db.execute('SELECT * FROM logs WHERE run=? AND message LIKE ? ORDER BY id DESC LIMIT ?', (run, '%'+query+'%', limit))
@@ -119,9 +129,11 @@ class Store:
             db.execute('INSERT INTO samples(ts,payload) VALUES(?,?)', (time.time(), json.dumps(payload)))
             db.execute('DELETE FROM samples WHERE ts < ?', (time.time()-86400*7,))
 
-    def history(self, limit=360):
+    def history(self, limit=1801, run=None):
         with self.db() as db:
-            return list(reversed([json.loads(x[0]) for x in db.execute('SELECT payload FROM samples ORDER BY id DESC LIMIT ?', (min(limit, 720),))]))
+            if run:
+                return list(reversed([json.loads(x[0]) for x in db.execute("SELECT payload FROM samples WHERE json_extract(payload,'$.runId')=? ORDER BY id DESC LIMIT ?",(run,min(limit,1801)))]))
+            return list(reversed([json.loads(x[0]) for x in db.execute('SELECT payload FROM samples ORDER BY id DESC LIMIT ?', (min(limit, 1801),))]))
 
     def module_done(self, run, module):
         with self.db() as db:

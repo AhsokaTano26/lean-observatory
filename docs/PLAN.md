@@ -20,4 +20,4 @@ Alternatives considered: full Node backend (adds dependencies for OS/process mon
 Wrong HTML HTTP-200 download, traversal/symlink archive, unexpected axioms or missing output, build progress incorrectly counting C facets/dependencies, process restart/resume, stale metrics, SSE replay gaps, unauthorized mutations, interrupted command exit codes, never converting mock success to real success.
 
 ## Current blockers
-Remote machine not purchased. Docker socket access currently denied in this session, so Compose runtime acceptance cannot yet be claimed. We can still build/test native local services and validate Compose structurally.
+Remote machine not purchased. Initial restricted command paths could not access Docker; supported Docker Compose commands resolved this. Native services, browser scenarios, Compose runtime, TLS configuration fixtures and a pinned Lean kernel fixture have now been exercised; see the final acceptance receipt.

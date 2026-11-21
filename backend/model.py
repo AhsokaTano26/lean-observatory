@@ -44,6 +44,10 @@ def derived(state, now=None):
     s = copy.deepcopy(state)
     now = time.time() if now is None else now
     c = s['compile']
+    if s['status']!='running': c['rate']=0
+    if s['status']=='paused':
+        for stage in s['stages']:
+            if stage['status']=='running': stage['status']='paused'
     total = c['total']
     c['remaining'] = max(0, total - c['succeeded'] - c['failed']) if total is not None else None
     c['percent'] = round(min(100, 100 * c['succeeded'] / total), 2) if total else 0
@@ -57,11 +61,11 @@ def derived(state, now=None):
 
 
 def audit_axioms(output, name):
-    match = re.search(r"['`]?" + re.escape(name) + r"['`]? depends on axioms:\s*\[([^\]]*)\]", output)
-    empty = re.search(r"['`]?" + re.escape(name) + r"['`]? does not depend on any axioms", output)
-    if not match and not empty:
+    matches = re.findall(r"^'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]\s*$", output, re.MULTILINE)
+    empty = re.findall(r"^'" + re.escape(name) + r"' does not depend on any axioms\s*$", output, re.MULTILINE)
+    if len(matches)+len(empty)!=1:
         return dict(passed=False, dependencies=[], error='缺少可解析的公理输出')
-    deps = [x.strip() for x in match[1].split(',') if x.strip()] if match else []
+    deps = [x.strip() for x in matches[0].split(',') if x.strip()] if matches else []
     forbidden = set(deps) - {'propext', 'Classical.choice', 'Quot.sound'}
     return dict(passed=not forbidden, dependencies=deps,
                 error=('非允许公理: ' + ', '.join(sorted(forbidden))) if forbidden else None)

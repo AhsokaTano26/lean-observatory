@@ -1,12 +1,15 @@
 """Small read-oriented HTTP/SSE API. Heavy work only happens in worker.py."""
 import argparse
 import hashlib
+import io
 import hmac
 import json
 import mimetypes
 import os
 import threading
 import time
+import tarfile
+import tempfile
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
@@ -24,10 +27,13 @@ def make_server(store, address, token='', frontend=None, allow_real=False, host_
             stopping.set()
             super().shutdown()
 
-    def metrics():
+    def metrics(state):
+        if state['id'] and state['mode']=='mock':
+            from .mock import metrics as mock_metrics
+            return mock_metrics(store.raw(state['id']))
         if host_metrics: return read_host_file(host_metrics)
         history=store.history(1)
-        if history and time.time()-history[-1]['sampledAt'] < 20:
+        if history and history[-1].get('mode')!='mock' and time.time()-history[-1]['sampledAt'] < 20:
             return history[-1]
         m=collect(store.root); m['stale']=False
         return m
@@ -35,12 +41,16 @@ def make_server(store, address, token='', frontend=None, allow_real=False, host_
     def payload(run=None):
         s=store.snapshot(run)
         heartbeat=s['workerHeartbeat']
-        return dict(run=s, metrics=metrics(), serverTime=time.time(),
+        return dict(run=s, metrics=metrics(s), serverTime=time.time(),
                     workerOnline=bool(heartbeat and time.time()-heartbeat < 15),
                     capabilities=dict(realEnabled=allow_real, authRequired=bool(token)))
 
     class Handler(BaseHTTPRequestHandler):
         protocol_version='HTTP/1.1'
+
+        def handle(self):
+            try: super().handle()
+            except (ConnectionResetError, BrokenPipeError): pass
 
         def log_message(self, fmt, *args):
             pass
@@ -63,9 +73,9 @@ def make_server(store, address, token='', frontend=None, allow_real=False, host_
                 if path=='/healthz': return self.respond(200,{'ok':True,'service':'lean-observatory'})
                 if path=='/api/state': return self.respond(200,payload(run))
                 if path=='/api/runs': return self.respond(200,[dict(id=s['id'],mode=s['mode'],status=s['status'],startedAt=s['startedAt']) for s in store.runs()])
-                if path=='/api/history': return self.respond(200,store.history())
-                if path=='/api/logs': return self.respond(200,store.logs(run or store.snapshot()['id'],int(q.get('after',[0])[0]),int(q.get('limit',[300])[0]),q.get('q',[''])[0]))
-                if path=='/api/events': return self.events(run)
+                if path=='/api/history': return self.respond(200,store.history(run=run))
+                if path=='/api/logs': return self.respond(200,store.logs(run or store.snapshot()['id'],int(q['after'][0]) if 'after' in q else None,int(q.get('limit',[300])[0]),q.get('q',[''])[0]))
+                if path=='/api/events': return self.events(run,q.get('after',[None])[0])
                 if path in ('/api/report.json','/api/report.md'):
                     report=dict(schemaVersion=1,generatedAt=time.time(),disclaimer='Mock 为合成数据；检查完成不等于数学陈述已人工复核。',**payload(run))
                     report['logs']=store.logs(report['run']['id'],limit=1000)
@@ -78,14 +88,25 @@ def make_server(store, address, token='', frontend=None, allow_real=False, host_
                 if path=='/api/logs/download':
                     s=store.raw(run)
                     if not s: return self.respond(404,{'error':'任务不存在'})
-                    # Chunked iteration through SQLite, not a bounded UI log window.
-                    self.send_response(200); self.send_header('Content-Type','application/x-ndjson'); self.send_header('Content-Disposition','attachment; filename="full-logs.ndjson"'); self.send_header('Connection','close'); self.end_headers()
-                    after=0
-                    while True:
-                        rows=store.logs(s['id'],after=after,limit=1000)
-                        if not rows: break
-                        for row in rows: self.wfile.write((json.dumps(row,ensure_ascii=False)+'\n').encode())
-                        after=rows[-1]['id']
+                    # Raw command bytes are preserved separately from bounded UI messages.
+                    # Build a finite ledger snapshot on the data disk, never in API RAM/tmpfs.
+                    last=store.logs(s['id'],limit=1);end_id=last[0]['id'] if last else 0
+                    with tempfile.TemporaryFile(dir=store.root) as ledger:
+                        after=0
+                        while after<end_id:
+                            rows=store.logs(s['id'],after=after,limit=1000)
+                            if not rows: break
+                            for row in rows:
+                                if row['id']<=end_id: ledger.write((json.dumps(row,ensure_ascii=False)+'\n').encode())
+                            after=rows[-1]['id']
+                        length=ledger.tell();ledger.seek(0)
+                        self.send_response(200);self.send_header('Content-Type','application/gzip');self.send_header('Content-Disposition','attachment; filename="verification-logs.tar.gz"');self.send_header('Connection','close');self.end_headers()
+                        with tarfile.open(fileobj=self.wfile,mode='w|gz') as archive:
+                            info=tarfile.TarInfo('events.ndjson');info.size=length;archive.addfile(info,ledger)
+                            snapshot=json.dumps(dict(run=store.snapshot(s['id']),capturedAt=time.time(),note='下载时刻的日志快照；原始命令输出与事件记录均包含。'),ensure_ascii=False).encode()
+                            info=tarfile.TarInfo('snapshot.json');info.size=len(snapshot);archive.addfile(info,io.BytesIO(snapshot))
+                            for file in sorted((store.root/'runs'/s['id']).glob('command-*.log')):
+                                archive.add(file,arcname=file.name,recursive=False)
                     self.close_connection=True; return
                 if path.startswith('/api/artifacts/'):
                     s=store.raw(run)
@@ -108,13 +129,13 @@ def make_server(store, address, token='', frontend=None, allow_real=False, host_
             except (BrokenPipeError,ConnectionResetError): pass
             except (ValueError,TypeError) as e: self.respond(400,{'error':str(e)})
 
-        def events(self, run):
+        def events(self, run, cursor=None):
             if not stream_slots.acquire(False): return self.respond(503,{'error':'实时连接已达上限，请重试'})
             try:
                 self.send_response(200); self.send_header('Content-Type','text/event-stream'); self.send_header('Cache-Control','no-cache'); self.send_header('X-Accel-Buffering','no'); self.end_headers()
                 # Every reconnect receives an authoritative snapshot. Logs replay from durable IDs.
-                try: after=max(0,int(self.headers.get('Last-Event-ID','0')))
-                except ValueError: after=0
+                try: after=max(0,int(self.headers.get('Last-Event-ID',cursor))) if self.headers.get('Last-Event-ID',cursor) is not None else None
+                except ValueError: after=None
                 last_run=None; last_stamp=None
                 while not stopping.is_set():
                     p=payload(run); rid=p['run']['id']
@@ -141,6 +162,7 @@ def make_server(store, address, token='', frontend=None, allow_real=False, host_
                 if not self.headers.get('Content-Type','').startswith('application/json'):
                     return self.respond(415,{'error':'仅支持 JSON'})
                 data=json.loads(self.rfile.read(size))
+                if not isinstance(data,dict): raise ValueError('JSON 请求体必须是对象')
                 if self.path=='/api/runs':
                     mode=data.get('mode','mock')
                     if mode=='real' and not allow_real:

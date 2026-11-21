@@ -31,15 +31,15 @@ class ApiTests(unittest.TestCase):
     def test_mutation_auth_and_invalid_scenario(self):
         with self.assertRaises(urllib.error.HTTPError) as e:
             self.req('/api/runs', {'mode':'mock'})
-        self.assertEqual(e.exception.code,401)
+        self.assertEqual(e.exception.code,401); e.exception.close()
         with self.assertRaises(urllib.error.HTTPError) as e:
             self.req('/api/runs', {'mode':'mock','scenario':'oops'},'test-secret')
-        self.assertEqual(e.exception.code,400)
+        self.assertEqual(e.exception.code,400); e.exception.close()
 
     def test_real_is_disabled_until_deployment_gate(self):
         with self.assertRaises(urllib.error.HTTPError) as e:
             self.req('/api/runs', {'mode':'real'},'test-secret')
-        self.assertEqual(e.exception.code,403)
+        self.assertEqual(e.exception.code,403); e.exception.close()
 
     def test_mock_report_and_sse_have_provenance(self):
         s=json.load(self.req('/api/runs',{'mode':'mock','scenario':'success'},'test-secret'))
@@ -55,4 +55,13 @@ class ApiTests(unittest.TestCase):
         self.req('/api/runs',{'mode':'mock'},'test-secret').close()
         with self.assertRaises(urllib.error.HTTPError) as e:
             self.req('/api/runs',{'mode':'mock'},'test-secret')
-        self.assertEqual(e.exception.code,409)
+        self.assertEqual(e.exception.code,409); e.exception.close()
+
+    def test_full_log_download_contains_untruncated_command_output(self):
+        import io,tarfile
+        s=self.store.create('mock');raw=b'x'*24000+b'\n'
+        (self.store.root/'runs'/s['id']/'command-000-compile.log').write_bytes(raw)
+        with self.req('/api/logs/download?run='+s['id']) as response: blob=response.read()
+        with tarfile.open(fileobj=io.BytesIO(blob),mode='r:gz') as archive:
+            self.assertEqual(archive.extractfile('command-000-compile.log').read(),raw)
+            self.assertIn('snapshot.json',archive.getnames())

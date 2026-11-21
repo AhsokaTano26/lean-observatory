@@ -3,6 +3,7 @@ import os
 import selectors
 import signal
 import subprocess
+import sys
 import time
 from pathlib import Path
 
@@ -18,10 +19,11 @@ class CommandRunner:
         self.root=store.root/'runs'/run
         self.root.mkdir(parents=True, exist_ok=True)
 
-    def run(self, argv, cwd, stage, callback=None, timeout=86400*3):
+    def run(self, argv, cwd, stage, callback=None, timeout=86400*3, sandbox=False):
         start=time.time(); index=len(self.store.raw(self.run_id)['commands'])
         filename=f'command-{index:03d}-{stage}.log'
-        record=dict(argv=argv, cwd=str(cwd), stage=stage, startedAt=start,
+        record=dict(argv=argv, cwd=str(cwd), stage=stage, startedAt=start, sandbox=sandbox,
+                    leanThreads=self.store.raw(self.run_id)['compile']['jobs'],
                     finishedAt=None, exitCode=None, logFile=filename)
         self.store.mutate(self.run_id, lambda s: s['commands'].append(record), 'command_started')
         self.store.log(self.run_id, 'info', '$ ' + ' '.join(argv), stage)
@@ -30,8 +32,14 @@ class CommandRunner:
         process=None; code=127; reason=None
         with (self.root/filename).open('wb') as full:
             try:
-                process=subprocess.Popen(argv, cwd=cwd, env=env, stdout=subprocess.PIPE,
+                actual=argv
+                if sandbox:
+                    from .sandbox import command
+                    actual=command(os.environ['SANDBOX_ROOT'],cwd,argv,self.store.raw(self.run_id)['compile']['jobs'],network=stage=='dependencies')
+                guarded=[sys.executable,str(Path(__file__).with_name('child.py')),str(os.getpid()),*actual]
+                process=subprocess.Popen(guarded, cwd=cwd, env=env, stdout=subprocess.PIPE,
                                          stderr=subprocess.STDOUT, start_new_session=True)
+                self.store.mutate(self.run_id, lambda s:s['commands'][index].update(pid=process.pid,pgid=process.pid,supervised=True))
                 os.set_blocking(process.stdout.fileno(), False)
                 selector=selectors.DefaultSelector(); selector.register(process.stdout, selectors.EVENT_READ)
                 buffer=b''
@@ -52,6 +60,11 @@ class CommandRunner:
                             s['status']='paused' if paused else 'running'
                             s['elapsedSeconds']=round(time.time()-(s['startedAt'] or start), 1)
                             if not paused: s['activeSeconds']+=now-heartbeat if heartbeat else 0
+                            if stage=='compile':
+                                wall=time.time();c=s['compile']
+                                c['recent']=[t for t in c['recent'] if wall-t<60]
+                                began=next(x['startedAt'] for x in s['stages'] if x['id']=='compile') or wall
+                                c['rate']=round(len(c['recent'])/max(1,min(60,wall-began)),2) if not paused else 0
                         self.store.mutate(self.run_id, beat)
                         heartbeat=now
                     if time.time()-start > timeout:
@@ -79,7 +92,7 @@ class CommandRunner:
                 code=process.wait(); selector.close(); process.stdout.close()
             except BaseException as exc:
                 if process and process.poll() is None:
-                    os.killpg(process.pid, signal.SIGKILL); process.wait()
+                    os.killpg(process.pid, signal.SIGKILL); code=process.wait()
                 reason=str(exc); full.write((reason+'\n').encode())
                 if isinstance(exc, (KeyboardInterrupt, SystemExit)):
                     code=-signal.SIGTERM

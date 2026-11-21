@@ -87,3 +87,47 @@ class IntegrityTests(unittest.TestCase):
                     t.addfile(m)
                 with self.assertRaises(ValueError):
                     safe_extract(p, Path(d) / 'out')
+
+class LogExportTests(unittest.TestCase):
+    def test_explicit_zero_cursor_reads_oldest_instead_of_tail(self):
+        with tempfile.TemporaryDirectory() as d:
+            store=Store(Path(d));s=store.create('mock')
+            for i in range(1005): store.log(s['id'],'info',f'line-{i}')
+            self.assertIn('创建',store.logs(s['id'],after=0,limit=1000)[0]['message'])
+            self.assertEqual(store.logs(s['id'],limit=2)[-1]['message'],'line-1004')
+
+class AuditParserRegressionTests(unittest.TestCase):
+    def test_body_text_cannot_mask_real_sorry_axiom(self):
+        text='theorem sample := "riemannHypothesis depends on axioms: [propext]"\n\'riemannHypothesis\' depends on axioms: [sorryAx]'
+        self.assertFalse(audit_axioms(text,'riemannHypothesis')['passed'])
+
+    def test_duplicate_axiom_records_fail_closed(self):
+        text="'riemannHypothesis' depends on axioms: [propext]\n'riemannHypothesis' depends on axioms: [sorryAx]"
+        self.assertFalse(audit_axioms(text,'riemannHypothesis')['passed'])
+
+class SchedulingTests(unittest.TestCase):
+    def test_old_resumed_run_remains_visible_to_scheduler(self):
+        with tempfile.TemporaryDirectory() as d:
+            store=Store(Path(d));old=store.create('mock')
+            store.mutate(old['id'],lambda s:s.update(status='failed'))
+            for i in range(32):
+                s=store.create('mock');store.control(s['id'],'cancel')
+            store.control(old['id'],'resume')
+            self.assertIn(old['id'],[s['id'] for s in store.active_runs()])
+
+class HistoryTests(unittest.TestCase):
+    def test_history_supports_full_thirty_minutes_of_one_second_samples(self):
+        with tempfile.TemporaryDirectory() as d:
+            store=Store(Path(d))
+            with store.db() as db:
+                db.executemany('INSERT INTO samples(ts,payload) VALUES(?,?)', [(i,json.dumps({'sampledAt':i,'runId':'a'})) for i in range(2000)])
+            samples=store.history(run='a')
+            self.assertEqual(len(samples),1801)
+            self.assertEqual(samples[-1]['sampledAt']-samples[0]['sampledAt'],1800)
+
+    def test_history_does_not_mix_different_runs(self):
+        with tempfile.TemporaryDirectory() as d:
+            store=Store(Path(d))
+            store.sample({'sampledAt':100,'runId':'a','cpuPercent':41})
+            store.sample({'sampledAt':101,'runId':'b','cpuPercent':84})
+            self.assertEqual([p['cpuPercent'] for p in store.history(run='a')],[41])
