@@ -1,0 +1,8 @@
+# Built locally before purchase; resource overrides only for tiny local fixtures.
+services:
+  api:
+    platform: linux/amd64
+    image: lean-observatory-api-amd64:prepared
+  worker:
+    platform: linux/amd64
+    image: lean-observatory-worker-amd64:prepared

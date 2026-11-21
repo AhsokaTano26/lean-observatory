@@ -4,9 +4,10 @@ x-logging: &logging
   options: {max-size: "10m", max-file: "3"}
 services:
   api:
-    build: {context: ., target: api}
+    build: {context: ., target: api, args: {SOURCE_SHA256: "${SOURCE_SHA256:-unbound}"}}
     environment:
       HOST_METRICS: /metrics/host.json
+      SOURCE_SHA256: ${SOURCE_SHA256:-}
     volumes: ["verification-data:/data", "${METRICS_DIR:-./.data/metrics}:/metrics:ro"]
     expose: ["8787"]
     cpus: 2
@@ -26,12 +27,14 @@ services:
   worker:
     profiles: [verification]
     user: "0:10001"
-    build: {context: ., target: worker}
+    build: {context: ., target: worker, args: {SOURCE_SHA256: "${SOURCE_SHA256:-unbound}"}}
     environment:
       ENABLE_REAL: ${ENABLE_REAL:-0}
       HOST_METRICS: /metrics/host.json
       SANDBOX_ROOT: /sandbox
-    volumes: ["verification-data:/data", "build-data:/sandbox/work", "${METRICS_DIR:-./.data/metrics}:/metrics:ro", "/dev/null:/sandbox/dev/null", "/dev/urandom:/sandbox/dev/urandom:ro"]
+      SOURCE_SHA256: ${SOURCE_SHA256:-}
+      ONLINE_RECEIPT: /approval/online.json
+    volumes: ["verification-data:/data", "build-data:/sandbox/work", "${METRICS_DIR:-./.data/metrics}:/metrics:ro", "./.data/approval:/approval:ro", "/dev/null:/sandbox/dev/null", "/dev/urandom:/sandbox/dev/urandom:ro"]
     depends_on: {api: {condition: service_healthy}}
     cpus: ${WORKER_CPUS:-48}
     cpuset: ${WORKER_CPUSET:-8-55}
@@ -40,9 +43,9 @@ services:
     pids_limit: 1024
     ulimits: {nofile: {soft: 65536, hard: 65536}, stack: {soft: 67108864, hard: 67108864}}
     cap_drop: [ALL]
-    security_opt: ["no-new-privileges:true"]
     restart: unless-stopped
     cap_add: [SYS_CHROOT, SETUID, SETGID, CHOWN, DAC_OVERRIDE, KILL, SYS_ADMIN]
+    security_opt: ["no-new-privileges:true", "apparmor=${APPARMOR_PROFILE:-unconfined}"]
     stop_grace_period: 30s
     logging: *logging
   mock-worker:

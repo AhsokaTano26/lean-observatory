@@ -1,0 +1,448 @@
+ Image lean-observatory-worker Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.24kB done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.22kB done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/ubuntu:24.04
+#3 ...
+
+#4 [internal] load metadata for docker.io/library/python:3.13-slim-bookworm
+#4 DONE 1.0s
+
+#3 [internal] load metadata for docker.io/library/ubuntu:24.04
+#3 DONE 1.0s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 133B done
+#5 DONE 0.1s
+
+#6 [api 1/5] FROM docker.io/library/python:3.13-slim-bookworm@sha256:a5a7017efc5969e00ae2b91c8eb0631049a569652aa4ffc4501769049ae45c72
+#6 resolve docker.io/library/python:3.13-slim-bookworm@sha256:a5a7017efc5969e00ae2b91c8eb0631049a569652aa4ffc4501769049ae45c72 0.0s done
+#6 CACHED
+
+#7 [1/2] FROM docker.io/library/ubuntu:24.04@sha256:9c7f200c07e3d4a03e7249d2c16bf66a51120fb876aa2242cf31451412543289
+#7 resolve docker.io/library/ubuntu:24.04@sha256:9c7f200c07e3d4a03e7249d2c16bf66a51120fb876aa2242cf31451412543289 0.0s done
+#7 CACHED
+
+#8 [internal] load build context
+#8 transferring context: 603B done
+#8 DONE 0.0s
+
+#9 [lean-tools 2/3] RUN apt-get update && apt-get install -y --no-install-recommends python3 curl git ca-certificates xz-utils zstd elan build-essential && rm -rf /var/lib/apt/lists/*  && groupadd -g 10001 lean && useradd -m -u 10001 -g 10001 lean && mkdir /data && chown lean:lean /data
+#9 2.193 Get:1 http://ports.ubuntu.com/ubuntu-ports noble InRelease [256 kB]
+#9 4.289 Get:2 http://ports.ubuntu.com/ubuntu-ports noble-updates InRelease [126 kB]
+#9 ...
+
+#10 [worker 2/8] RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates && rm -rf /var/lib/apt/lists/*
+#10 0.798 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#10 1.086 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#10 1.379 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+#10 2.245 Get:4 http://deb.debian.org/debian bookworm/main arm64 Packages [8689 kB]
+#10 2.514 Get:5 http://deb.debian.org/debian bookworm-updates/main arm64 Packages [6936 B]
+#10 2.958 Get:6 http://deb.debian.org/debian-security bookworm-security/main arm64 Packages [377 kB]
+#10 2.988 Fetched 9314 kB in 3s (3612 kB/s)
+#10 2.988 Reading package lists...
+#10 3.288 Reading package lists...
+#10 3.583 Building dependency tree...
+#10 3.667 Reading state information...
+#10 3.746 ca-certificates is already the newest version (20250419~deb12u2).
+#10 3.746 The following additional packages will be installed:
+#10 3.746   libbrotli1 libcurl4 libgssapi-krb5-2 libk5crypto3 libkeyutils1 libkrb5-3
+#10 3.746   libkrb5support0 libldap-2.5-0 libnghttp2-14 libpsl5 librtmp1 libsasl2-2
+#10 3.746   libsasl2-modules-db libssh2-1
+#10 3.747 Suggested packages:
+#10 3.747   krb5-doc krb5-user
+#10 3.747 Recommended packages:
+#10 3.747   krb5-locales libldap-common publicsuffix libsasl2-modules
+#10 3.808 The following NEW packages will be installed:
+#10 3.808   curl libbrotli1 libcurl4 libgssapi-krb5-2 libk5crypto3 libkeyutils1
+#10 3.808   libkrb5-3 libkrb5support0 libldap-2.5-0 libnghttp2-14 libpsl5 librtmp1
+#10 3.808   libsasl2-2 libsasl2-modules-db libssh2-1
+#10 4.231 0 upgraded, 15 newly installed, 0 to remove and 0 not upgraded.
+#10 4.231 Need to get 2111 kB of archives.
+#10 4.231 After this operation, 6189 kB of additional disk space will be used.
+#10 4.231 Get:1 http://deb.debian.org/debian-security bookworm-security/main arm64 libbrotli1 arm64 1.0.9-2+deb12u1 [267 kB]
+#10 4.498 Get:2 http://deb.debian.org/debian bookworm/main arm64 libkrb5support0 arm64 1.20.1-2+deb12u5 [32.6 kB]
+#10 4.805 Get:3 http://deb.debian.org/debian bookworm/main arm64 libk5crypto3 arm64 1.20.1-2+deb12u5 [79.9 kB]
+#10 4.959 Get:4 http://deb.debian.org/debian bookworm/main arm64 libkeyutils1 arm64 1.6.3-2 [8844 B]
+#10 5.435 Get:5 http://deb.debian.org/debian bookworm/main arm64 libkrb5-3 arm64 1.20.1-2+deb12u5 [316 kB]
+#10 5.783 Get:6 http://deb.debian.org/debian bookworm/main arm64 libgssapi-krb5-2 arm64 1.20.1-2+deb12u5 [124 kB]
+#10 6.008 Get:7 http://deb.debian.org/debian-security bookworm-security/main arm64 libsasl2-modules-db arm64 2.1.28+dfsg-10+deb12u1 [21.0 kB]
+#10 6.319 Get:8 http://deb.debian.org/debian-security bookworm-security/main arm64 libsasl2-2 arm64 2.1.28+dfsg-10+deb12u1 [58.3 kB]
+#10 6.702 Get:9 http://deb.debian.org/debian bookworm/main arm64 libldap-2.5-0 arm64 2.5.13+dfsg-5 [171 kB]
+#10 7.012 Get:10 http://deb.debian.org/debian bookworm/main arm64 libnghttp2-14 arm64 1.52.0-1+deb12u3 [69.0 kB]
+#10 7.291 Get:11 http://deb.debian.org/debian bookworm/main arm64 libpsl5 arm64 0.21.2-1 [58.6 kB]
+#10 7.568 Get:12 http://deb.debian.org/debian bookworm/main arm64 librtmp1 arm64 2.4+20151223.gitfa8646d.1-2+b2 [59.4 kB]
+#10 7.942 Get:13 http://deb.debian.org/debian-security bookworm-security/main arm64 libssh2-1 arm64 1.10.0-3+deb12u1 [169 kB]
+#10 8.386 Get:14 http://deb.debian.org/debian bookworm/main arm64 libcurl4 arm64 7.88.1-10+deb12u15 [367 kB]
+#10 8.879 Get:15 http://deb.debian.org/debian bookworm/main arm64 curl arm64 7.88.1-10+deb12u15 [310 kB]
+#10 8.985 debconf: delaying package configuration, since apt-utils is not installed
+#10 9.000 Fetched 2111 kB in 5s (416 kB/s)
+#10 9.017 Selecting previously unselected package libbrotli1:arm64.
+#10 9.017 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6639 files and directories currently installed.)
+#10 9.034 Preparing to unpack .../00-libbrotli1_1.0.9-2+deb12u1_arm64.deb ...
+#10 9.036 Unpacking libbrotli1:arm64 (1.0.9-2+deb12u1) ...
+#10 9.063 Selecting previously unselected package libkrb5support0:arm64.
+#10 9.063 Preparing to unpack .../01-libkrb5support0_1.20.1-2+deb12u5_arm64.deb ...
+#10 9.064 Unpacking libkrb5support0:arm64 (1.20.1-2+deb12u5) ...
+#10 9.078 Selecting previously unselected package libk5crypto3:arm64.
+#10 9.079 Preparing to unpack .../02-libk5crypto3_1.20.1-2+deb12u5_arm64.deb ...
+#10 9.081 Unpacking libk5crypto3:arm64 (1.20.1-2+deb12u5) ...
+#10 9.096 Selecting previously unselected package libkeyutils1:arm64.
+#10 9.096 Preparing to unpack .../03-libkeyutils1_1.6.3-2_arm64.deb ...
+#10 9.097 Unpacking libkeyutils1:arm64 (1.6.3-2) ...
+#10 9.111 Selecting previously unselected package libkrb5-3:arm64.
+#10 9.112 Preparing to unpack .../04-libkrb5-3_1.20.1-2+deb12u5_arm64.deb ...
+#10 9.114 Unpacking libkrb5-3:arm64 (1.20.1-2+deb12u5) ...
+#10 9.144 Selecting previously unselected package libgssapi-krb5-2:arm64.
+#10 9.144 Preparing to unpack .../05-libgssapi-krb5-2_1.20.1-2+deb12u5_arm64.deb ...
+#10 9.145 Unpacking libgssapi-krb5-2:arm64 (1.20.1-2+deb12u5) ...
+#10 9.160 Selecting previously unselected package libsasl2-modules-db:arm64.
+#10 9.161 Preparing to unpack .../06-libsasl2-modules-db_2.1.28+dfsg-10+deb12u1_arm64.deb ...
+#10 9.162 Unpacking libsasl2-modules-db:arm64 (2.1.28+dfsg-10+deb12u1) ...
+#10 9.176 Selecting previously unselected package libsasl2-2:arm64.
+#10 9.176 Preparing to unpack .../07-libsasl2-2_2.1.28+dfsg-10+deb12u1_arm64.deb ...
+#10 9.177 Unpacking libsasl2-2:arm64 (2.1.28+dfsg-10+deb12u1) ...
+#10 9.191 Selecting previously unselected package libldap-2.5-0:arm64.
+#10 9.191 Preparing to unpack .../08-libldap-2.5-0_2.5.13+dfsg-5_arm64.deb ...
+#10 9.193 Unpacking libldap-2.5-0:arm64 (2.5.13+dfsg-5) ...
+#10 9.213 Selecting previously unselected package libnghttp2-14:arm64.
+#10 9.213 Preparing to unpack .../09-libnghttp2-14_1.52.0-1+deb12u3_arm64.deb ...
+#10 9.214 Unpacking libnghttp2-14:arm64 (1.52.0-1+deb12u3) ...
+#10 9.228 Selecting previously unselected package libpsl5:arm64.
+#10 9.228 Preparing to unpack .../10-libpsl5_0.21.2-1_arm64.deb ...
+#10 9.230 Unpacking libpsl5:arm64 (0.21.2-1) ...
+#10 9.244 Selecting previously unselected package librtmp1:arm64.
+#10 9.244 Preparing to unpack .../11-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_arm64.deb ...
+#10 9.248 Unpacking librtmp1:arm64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#10 9.263 Selecting previously unselected package libssh2-1:arm64.
+#10 9.264 Preparing to unpack .../12-libssh2-1_1.10.0-3+deb12u1_arm64.deb ...
+#10 9.265 Unpacking libssh2-1:arm64 (1.10.0-3+deb12u1) ...
+#10 9.284 Selecting previously unselected package libcurl4:arm64.
+#10 9.285 Preparing to unpack .../13-libcurl4_7.88.1-10+deb12u15_arm64.deb ...
+#10 9.286 Unpacking libcurl4:arm64 (7.88.1-10+deb12u15) ...
+#10 9.310 Selecting previously unselected package curl.
+#10 9.311 Preparing to unpack .../14-curl_7.88.1-10+deb12u15_arm64.deb ...
+#10 9.312 Unpacking curl (7.88.1-10+deb12u15) ...
+#10 9.338 Setting up libkeyutils1:arm64 (1.6.3-2) ...
+#10 9.343 Setting up libpsl5:arm64 (0.21.2-1) ...
+#10 9.346 Setting up libbrotli1:arm64 (1.0.9-2+deb12u1) ...
+#10 9.348 Setting up libnghttp2-14:arm64 (1.52.0-1+deb12u3) ...
+#10 9.352 Setting up libkrb5support0:arm64 (1.20.1-2+deb12u5) ...
+#10 9.354 Setting up libsasl2-modules-db:arm64 (2.1.28+dfsg-10+deb12u1) ...
+#10 9.357 Setting up librtmp1:arm64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#10 9.362 Setting up libk5crypto3:arm64 (1.20.1-2+deb12u5) ...
+#10 9.364 Setting up libsasl2-2:arm64 (2.1.28+dfsg-10+deb12u1) ...
+#10 9.368 Setting up libssh2-1:arm64 (1.10.0-3+deb12u1) ...
+#10 9.370 Setting up libkrb5-3:arm64 (1.20.1-2+deb12u5) ...
+#10 9.374 Setting up libldap-2.5-0:arm64 (2.5.13+dfsg-5) ...
+#10 9.377 Setting up libgssapi-krb5-2:arm64 (1.20.1-2+deb12u5) ...
+#10 9.381 Setting up libcurl4:arm64 (7.88.1-10+deb12u15) ...
+#10 9.385 Setting up curl (7.88.1-10+deb12u15) ...
+#10 9.388 Processing triggers for libc-bin (2.36-9+deb12u14) ...
+#10 DONE 9.5s
+
+#9 [lean-tools 2/3] RUN apt-get update && apt-get install -y --no-install-recommends python3 curl git ca-certificates xz-utils zstd elan build-essential && rm -rf /var/lib/apt/lists/*  && groupadd -g 10001 lean && useradd -m -u 10001 -g 10001 lean && mkdir /data && chown lean:lean /data
+#9 5.788 Get:3 http://ports.ubuntu.com/ubuntu-ports noble-backports InRelease [126 kB]
+#9 7.272 Get:4 http://ports.ubuntu.com/ubuntu-ports noble-security InRelease [126 kB]
+#9 9.696 Get:5 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 Packages [1776 kB]
+#9 11.25 Get:6 http://ports.ubuntu.com/ubuntu-ports noble/restricted arm64 Packages [113 kB]
+#9 14.91 Get:7 http://ports.ubuntu.com/ubuntu-ports noble/universe arm64 Packages [19.0 MB]
+#9 16.90 Get:8 http://ports.ubuntu.com/ubuntu-ports noble/multiverse arm64 Packages [274 kB]
+#9 19.66 Get:9 http://ports.ubuntu.com/ubuntu-ports noble-updates/restricted arm64 Packages [3485 kB]
+#9 22.21 Get:10 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 Packages [1891 kB]
+#9 24.81 Get:11 http://ports.ubuntu.com/ubuntu-ports noble-updates/universe arm64 Packages [2247 kB]
+#9 26.33 Get:12 http://ports.ubuntu.com/ubuntu-ports noble-updates/multiverse arm64 Packages [110 kB]
+#9 27.02 Get:13 http://ports.ubuntu.com/ubuntu-ports noble-backports/multiverse arm64 Packages [669 B]
+#9 28.22 Get:14 http://ports.ubuntu.com/ubuntu-ports noble-backports/main arm64 Packages [49.0 kB]
+#9 29.31 Get:15 http://ports.ubuntu.com/ubuntu-ports noble-backports/universe arm64 Packages [36.3 kB]
+#9 35.40 Get:16 http://ports.ubuntu.com/ubuntu-ports noble-security/restricted arm64 Packages [3298 kB]
+#9 38.30 Get:17 http://ports.ubuntu.com/ubuntu-ports noble-security/main arm64 Packages [1549 kB]
+#9 39.94 Get:18 http://ports.ubuntu.com/ubuntu-ports noble-security/multiverse arm64 Packages [105 kB]
+#9 42.62 Get:19 http://ports.ubuntu.com/ubuntu-ports noble-security/universe arm64 Packages [1666 kB]
+#9 42.71 Fetched 36.3 MB in 42s (854 kB/s)
+#9 42.71 Reading package lists...
+#9 43.64 Reading package lists...
+#9 44.56 Building dependency tree...
+#9 44.79 Reading state information...
+#9 45.05 The following additional packages will be installed:
+#9 45.05   binutils binutils-aarch64-linux-gnu binutils-common bzip2 cpp cpp-13
+#9 45.05   cpp-13-aarch64-linux-gnu cpp-aarch64-linux-gnu dpkg-dev g++ g++-13
+#9 45.05   g++-13-aarch64-linux-gnu g++-aarch64-linux-gnu gcc gcc-13
+#9 45.05   gcc-13-aarch64-linux-gnu gcc-13-base gcc-aarch64-linux-gnu git-man libasan8
+#9 45.05   libatomic1 libbinutils libbrotli1 libc-bin libc-dev-bin libc6 libc6-dev
+#9 45.05   libcc1-0 libcrypt-dev libctf-nobfd0 libctf0 libcurl3t64-gnutls libcurl4t64
+#9 45.05   libdpkg-perl liberror-perl libexpat1 libgcc-13-dev libgdbm-compat4t64
+#9 45.05   libgdbm6t64 libgomp1 libgprofng0 libgssapi-krb5-2 libhwasan0 libisl23
+#9 45.05   libitm1 libjansson4 libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0
+#9 45.05   libldap2 liblsan0 libmpc3 libmpfr6 libnghttp2-14 libperl5.38t64 libpsl5t64
+#9 45.05   libpython3-stdlib libpython3.12-minimal libpython3.12-stdlib libreadline8t64
+#9 45.05   librtmp1 libsasl2-2 libsasl2-modules-db libsframe1 libsqlite3-0 libssh-4
+#9 45.05   libstdc++-13-dev libtsan2 libubsan1 linux-libc-dev lto-disabled-list make
+#9 45.05   media-types netbase openssl patch perl perl-modules-5.38 python3-minimal
+#9 45.05   python3.12 python3.12-minimal readline-common rpcsvc-proto tzdata
+#9 45.05 Suggested packages:
+#9 45.05   binutils-doc gprofng-gui bzip2-doc cpp-doc gcc-13-locales cpp-13-doc
+#9 45.05   debian-keyring gcc-13-doc gcc-multilib manpages-dev autoconf automake
+#9 45.05   libtool flex bison gdb gcc-doc gdb-aarch64-linux-gnu gettext-base
+#9 45.05   git-daemon-run | git-daemon-sysvinit git-doc git-email git-gui gitk gitweb
+#9 45.05   git-cvs git-mediawiki git-svn manpages glibc-doc locales libnss-nis
+#9 45.05   libnss-nisplus gnupg | sq | sqop | pgpainless-cli | sequoia-chameleon-gnupg
+#9 45.05   bzr gdbm-l10n krb5-doc krb5-user libstdc++-13-doc make-doc ed diffutils-doc
+#9 45.05   perl-doc libterm-readline-gnu-perl | libterm-readline-perl-perl
+#9 45.05   libtap-harness-archive-perl python3-doc python3-tk python3-venv
+#9 45.05   python3.12-venv python3.12-doc binfmt-support readline-doc
+#9 45.05 Recommended packages:
+#9 45.05   fakeroot gnupg | sq | sqop | pgpainless-cli | sequoia-chameleon-gnupg
+#9 45.05   libalgorithm-merge-perl less ssh-client manpages manpages-dev libc-devtools
+#9 45.05   libfile-fcntllock-perl liblocale-gettext-perl krb5-locales libldap-common
+#9 45.05   publicsuffix libsasl2-modules
+#9 45.16 The following NEW packages will be installed:
+#9 45.16   binutils binutils-aarch64-linux-gnu binutils-common build-essential bzip2
+#9 45.16   ca-certificates cpp cpp-13 cpp-13-aarch64-linux-gnu cpp-aarch64-linux-gnu
+#9 45.16   curl dpkg-dev elan g++ g++-13 g++-13-aarch64-linux-gnu g++-aarch64-linux-gnu
+#9 45.16   gcc gcc-13 gcc-13-aarch64-linux-gnu gcc-13-base gcc-aarch64-linux-gnu git
+#9 45.16   git-man libasan8 libatomic1 libbinutils libbrotli1 libc-dev-bin libc6-dev
+#9 45.16   libcc1-0 libcrypt-dev libctf-nobfd0 libctf0 libcurl3t64-gnutls libcurl4t64
+#9 45.16   libdpkg-perl liberror-perl libexpat1 libgcc-13-dev libgdbm-compat4t64
+#9 45.16   libgdbm6t64 libgomp1 libgprofng0 libgssapi-krb5-2 libhwasan0 libisl23
+#9 45.16   libitm1 libjansson4 libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0
+#9 45.16   libldap2 liblsan0 libmpc3 libmpfr6 libnghttp2-14 libperl5.38t64 libpsl5t64
+#9 45.16   libpython3-stdlib libpython3.12-minimal libpython3.12-stdlib libreadline8t64
+#9 45.16   librtmp1 libsasl2-2 libsasl2-modules-db libsframe1 libsqlite3-0 libssh-4
+#9 45.16   libstdc++-13-dev libtsan2 libubsan1 linux-libc-dev lto-disabled-list make
+#9 45.16   media-types netbase openssl patch perl perl-modules-5.38 python3
+#9 45.16   python3-minimal python3.12 python3.12-minimal readline-common rpcsvc-proto
+#9 45.16   tzdata xz-utils zstd
+#9 45.16 The following packages will be upgraded:
+#9 45.17   libc-bin libc6
+#9 48.23 2 upgraded, 91 newly installed, 0 to remove and 2 not upgraded.
+#9 48.23 Need to get 95.5 MB of archives.
+#9 48.23 After this operation, 360 MB of additional disk space will be used.
+#9 48.23 Get:1 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libc6 arm64 2.39-0ubuntu8.12 [2774 kB]
+#9 50.36 Get:2 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libc-bin arm64 2.39-0ubuntu8.12 [591 kB]
+#9 52.83 Get:3 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libpython3.12-minimal arm64 3.12.3-1ubuntu0.17 [835 kB]
+#9 54.19 Get:4 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libexpat1 arm64 2.6.1-2ubuntu0.6 [89.8 kB]
+#9 56.72 Get:5 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 python3.12-minimal arm64 3.12.3-1ubuntu0.17 [2253 kB]
+#9 57.68 Get:6 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 python3-minimal arm64 3.12.3-0ubuntu2.1 [27.4 kB]
+#9 58.61 Get:7 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 media-types all 10.1.0 [27.5 kB]
+#9 59.35 Get:8 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 netbase all 6.4 [13.1 kB]
+#9 61.13 Get:9 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 tzdata all 2026e-0ubuntu0.24.04.1 [282 kB]
+#9 62.30 Get:10 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 readline-common all 8.2-4build1 [56.5 kB]
+#9 63.89 Get:11 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 libreadline8t64 arm64 8.2-4build1 [153 kB]
+#9 66.01 Get:12 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libsqlite3-0 arm64 3.45.1-1ubuntu2.9 [705 kB]
+#9 68.52 Get:13 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libpython3.12-stdlib arm64 3.12.3-1ubuntu0.17 [2039 kB]
+#9 70.62 Get:14 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 python3.12 arm64 3.12.3-1ubuntu0.17 [651 kB]
+#9 71.28 Get:15 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libpython3-stdlib arm64 3.12.3-0ubuntu2.1 [10.1 kB]
+#9 72.24 Get:16 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 python3 arm64 3.12.3-0ubuntu2.1 [23.0 kB]
+#9 74.93 Get:17 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 perl-modules-5.38 all 5.38.2-3.2ubuntu0.7 [3110 kB]
+#9 75.97 Get:18 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 libgdbm6t64 arm64 1.23-5.1build1 [34.4 kB]
+#9 76.64 Get:19 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 libgdbm-compat4t64 arm64 1.23-5.1build1 [6578 B]
+#9 79.59 Get:20 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libperl5.38t64 arm64 5.38.2-3.2ubuntu0.7 [4777 kB]
+#9 81.39 Get:21 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 perl arm64 5.38.2-3.2ubuntu0.7 [231 kB]
+#9 83.65 Get:22 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 openssl arm64 3.0.13-0ubuntu3.16 [985 kB]
+#9 85.18 Get:23 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 ca-certificates all 20260816ubuntu0.24.04.2 [140 kB]
+#9 86.19 Get:24 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libkrb5support0 arm64 1.20.1-6ubuntu2.10 [35.4 kB]
+#9 87.56 Get:25 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libk5crypto3 arm64 1.20.1-6ubuntu2.10 [85.8 kB]
+#9 88.26 Get:26 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 libkeyutils1 arm64 1.6.3-3build1 [9654 B]
+#9 90.15 Get:27 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libkrb5-3 arm64 1.20.1-6ubuntu2.10 [350 kB]
+#9 91.65 Get:28 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libgssapi-krb5-2 arm64 1.20.1-6ubuntu2.10 [142 kB]
+#9 92.74 Get:29 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 libjansson4 arm64 2.14-2build2 [34.4 kB]
+#9 93.99 Get:30 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libnghttp2-14 arm64 1.59.0-1ubuntu0.4 [74.8 kB]
+#9 95.22 Get:31 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 libpsl5t64 arm64 0.21.2-1.1build1 [57.4 kB]
+#9 97.00 Get:32 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 xz-utils arm64 5.6.1+really5.4.5-1ubuntu0.4 [268 kB]
+#9 98.78 Get:33 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 binutils-common arm64 2.42-4ubuntu2.10 [240 kB]
+#9 99.51 Get:34 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libsframe1 arm64 2.42-4ubuntu2.10 [15.4 kB]
+#9 101.6 Get:35 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libbinutils arm64 2.42-4ubuntu2.10 [766 kB]
+#9 103.0 Get:36 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libctf-nobfd0 arm64 2.42-4ubuntu2.10 [101 kB]
+#9 104.5 Get:37 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libctf0 arm64 2.42-4ubuntu2.10 [95.7 kB]
+#9 106.7 Get:38 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libgprofng0 arm64 2.42-4ubuntu2.10 [776 kB]
+#9 109.5 Get:39 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 binutils-aarch64-linux-gnu arm64 2.42-4ubuntu2.10 [3304 kB]
+#9 110.5 Get:40 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 binutils arm64 2.42-4ubuntu2.10 [18.1 kB]
+#9 111.5 Get:41 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libc-dev-bin arm64 2.39-0ubuntu8.12 [19.7 kB]
+#9 114.0 Get:42 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 linux-libc-dev arm64 6.8.0-151.151 [1686 kB]
+#9 115.5 Get:43 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 libcrypt-dev arm64 1:4.4.36-4build1 [118 kB]
+#9 116.8 Get:44 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 rpcsvc-proto arm64 1.4.2-0ubuntu7 [64.8 kB]
+#9 120.4 Get:45 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libc6-dev arm64 2.39-0ubuntu8.12 [1596 kB]
+#9 121.7 Get:46 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 gcc-13-base arm64 13.3.0-6ubuntu2~24.04.1 [51.6 kB]
+#9 123.8 Get:47 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libisl23 arm64 0.26-3build1.1 [669 kB]
+#9 125.8 Get:48 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libmpfr6 arm64 4.2.1-1build1.1 [329 kB]
+#9 127.1 Get:49 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libmpc3 arm64 1.3.1-1build1.1 [56.4 kB]
+#9 130.4 Get:50 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 cpp-13-aarch64-linux-gnu arm64 13.3.0-6ubuntu2~24.04.1 [9560 kB]
+#9 131.2 Get:51 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 cpp-13 arm64 13.3.0-6ubuntu2~24.04.1 [1038 B]
+#9 131.8 Get:52 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 cpp-aarch64-linux-gnu arm64 4:13.2.0-7ubuntu1 [5316 B]
+#9 132.8 Get:53 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 cpp arm64 4:13.2.0-7ubuntu1 [22.4 kB]
+#9 134.0 Get:54 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libcc1-0 arm64 14.2.0-4ubuntu2~24.04.1 [49.7 kB]
+#9 135.7 Get:55 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libgomp1 arm64 14.2.0-4ubuntu2~24.04.1 [145 kB]
+#9 136.7 Get:56 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libitm1 arm64 14.2.0-4ubuntu2~24.04.1 [28.2 kB]
+#9 137.4 Get:57 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libatomic1 arm64 14.2.0-4ubuntu2~24.04.1 [11.6 kB]
+#9 140.1 Get:58 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libasan8 arm64 14.2.0-4ubuntu2~24.04.1 [2928 kB]
+#9 142.7 Get:59 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 liblsan0 arm64 14.2.0-4ubuntu2~24.04.1 [1289 kB]
+#9 145.3 Get:60 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libtsan2 arm64 14.2.0-4ubuntu2~24.04.1 [2697 kB]
+Warning: truncated output (original token count: 8939)
+Total output lines: 443
+
+#9 147.8 Get:61 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libubsan1 arm64 14.2.0-4ubuntu2~24.04.1 [1157 kB]
+#9 150.2 Get:62 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libhwasan0 arm64 14.2.0-4ubuntu2~24.04.1 [1605 kB]
+#9 153.0 Get:63 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libgcc-13-dev arm64 13.3.0-6ubuntu2~24.04.1 [2473 kB]
+#9 156.7 Get:64 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 gcc-13-aarch64-linux-gnu arm64 13.3.0-6ubuntu2~24.04.1 [18.7 MB]
+#9 158.8 Get:65 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 gcc-13 arm64 13.3.0-6ubuntu2~24.04.1 [484 kB]
+#9 159.5 Get:66 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 gcc-aarch64-linux-gnu arm64 4:13.2.0-7ubuntu1 [1198 B]
+#9 160.2 Get:67 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 gcc arm64 4:13.2.0-7ubuntu1 [5018 B]
+#9 162.8 Get:68 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libstdc++-13-dev arm64 13.3.0-6ubuntu2~24.04.1 [2397 kB]
+#9 166.0 Get:69 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 g++-13-aarch64-linux-gnu arm64 13.3.0-6ubuntu2~24.04.1 [10.9 MB]
+#9 166.9 Get:70 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 g++-13 arm64 13.3.0-6ubuntu2~24.04.1 [16.0 kB]
+#9 167.6 Get:71 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 g++-aarch64-linux-gnu arm64 4:13.2.0-7ubuntu1 [962 B]
+#9 168.3 Get:72 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 g++ arm64 4:13.2.0-7ubuntu1 [1082 B]
+#9 169.8 Get:73 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 make arm64 4.3-4.1build2 [178 kB]
+#9 171.7 Get:74 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libdpkg-perl all 1.22.6ubuntu6.6 [268 kB]
+#9 172.7 Get:75 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 bzip2 arm64 1.0.8-5.1ubuntu0.1 [34.0 kB]
+#9 174.2 Get:76 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 patch arm64 2.7.6-7build3 [101 kB]
+#9 175.0 Get:77 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 lto-disabled-list all 47 [12.4 kB]
+#9 177.2 Get:78 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 dpkg-dev all 1.22.6ubuntu6.6 [1074 kB]
+#9 177.9 Get:79 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 build-essential arm64 12.10ubuntu1 [4932 B]
+#9 180.1 Get:80 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libbrotli1 arm64 1.1.0-2ubuntu0.1 [340 kB]
+#9 181.0 Get:81 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libsasl2-modules-db arm64 2.1.28+dfsg1-5ubuntu3.1 [21.6 kB]
+#9 182.2 Get:82 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libsasl2-2 arm64 2.1.28+dfsg1-5ubuntu3.1 [54.7 kB]
+#9 183.8 Get:83 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libldap2 arm64 2.6.10+dfsg-0ubuntu0.24.04.1 [196 kB]
+#9 185.0 Get:84 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 librtmp1 arm64 2.4+20151223.gitfa8646d.1-2build7 [57.8 kB]
+#9 186.7 Get:85 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libssh-4 arm64 0.10.6-2ubuntu0.5 [192 kB]
+#9 188.5 Get:86 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libcurl4t64 arm64 8.5.0-2ubuntu10.16 [337 kB]
+#9 190.4 Get:87 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 curl arm64 8.5.0-2ubuntu10.16 [222 kB]
+#9 192.3 Get:88 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 libcurl3t64-gnutls arm64 8.5.0-2ubuntu10.16 [331 kB]
+#9 194.8 Get:89 http://ports.ubuntu.com/ubuntu-ports noble-updates/universe arm64 elan arm64 3.1.0-1ubuntu0.1 [1388 kB]
+#9 195.8 Get:90 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 liberror-perl all 0.17029-2 [25.6 kB]
+#9 198.1 Get:91 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 git-man all 1:2.43.0-1ubuntu7.4 [1101 kB]
+#9 200.9 Get:92 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 git arm64 1:2.43.0-1ubuntu7.4 [3774 kB]
+#9 203.1 Get:93 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 zstd arm64 1.5.5+dfsg2-2build1.1 [575 kB]
+#9 203.3 debconf: delaying package configuration, since apt-utils is not installed
+#9 203.3 Fetched 95.5 MB in 2min 38s (605 kB/s)
+#9 203.3 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4376 files and directories currently installed.)
+#9 203.3 Preparing to unpack .../libc6_2.39-0ubuntu8.12_arm64.deb ...
+#9 203.4 Unpacking libc6:arm64 (2.39-0ubuntu8.12) over (2.39-0ubuntu8.9) ...
+#9 204.2 Setting up libc6:arm64 (2.39-0ubuntu8.12) ...
+#9 205.2…6439 tokens truncated…n1/lzgrep.1.gz because associated file /usr/share/man/man1/xzgrep.1.gz (of link group lzma) doesn't exist
+#9 209.0 update-alternatives: warning: skip creation of /usr/share/man/man1/lzegrep.1.gz because associated file /usr/share/man/man1/xzegrep.1.gz (of link group lzma) doesn't exist
+#9 209.0 update-alternatives: warning: skip creation of /usr/share/man/man1/lzfgrep.1.gz because associated file /usr/share/man/man1/xzfgrep.1.gz (of link group lzma) doesn't exist
+#9 209.0 Setting up perl-modules-5.38 (5.38.2-3.2ubuntu0.7) ...
+#9 209.0 Setting up libmpc3:arm64 (1.3.1-1build1.1) ...
+#9 209.0 Setting up libatomic1:arm64 (14.2.0-4ubuntu2~24.04.1) ...
+#9 209.0 Setting up patch (2.7.6-7build3) ...
+#9 209.0 Setting up libk5crypto3:arm64 (1.20.1-6ubuntu2.10) ...
+#9 209.1 Setting up libsasl2-2:arm64 (2.1.28+dfsg1-5ubuntu3.1) ...
+#9 209.1 Setting up libubsan1:arm64 (14.2.0-4ubuntu2~24.04.1) ...
+#9 209.1 Setting up libhwasan0:arm64 (14.2.0-4ubuntu2~24.04.1) ...
+#9 209.1 Setting up libcrypt-dev:arm64 (1:4.4.36-4build1) ...
+#9 209.1 Setting up libasan8:arm64 (14.2.0-4ubuntu2~24.04.1) ...
+#9 209.1 Setting up git-man (1:2.43.0-1ubuntu7.4) ...
+#9 209.1 Setting up netbase (6.4) ...
+#9 209.1 Setting up libkrb5-3:arm64 (1.20.1-6ubuntu2.10) ...
+#9 209.1 Setting up libperl5.38t64:arm64 (5.38.2-3.2ubuntu0.7) ...
+#9 209.1 Setting up libtsan2:arm64 (14.2.0-4ubuntu2~24.04.1) ...
+#9 209.1 Setting up libbinutils:arm64 (2.42-4ubuntu2.10) ...
+#9 209.1 Setting up libisl23:arm64 (0.26-3build1.1) ...
+#9 209.1 Setting up libc-dev-bin (2.39-0ubuntu8.12) ...
+#9 209.1 Setting up openssl (3.0.13-0ubuntu3.16) ...
+#9 209.1 Setting up readline-common (8.2-4build1) ...
+#9 209.1 Setting up zstd (1.5.5+dfsg2-2build1.1) ...
+#9 209.1 Setting up libcc1-0:arm64 (14.2.0-4ubuntu2~24.04.1) ...
+#9 209.1 Setting up libldap2:arm64 (2.6.10+dfsg-0ubuntu0.24.04.1) ...
+#9 209.1 Setting up liblsan0:arm64 (14.2.0-4ubuntu2~24.04.1) ...
+#9 209.1 Setting up libitm1:arm64 (14.2.0-4ubuntu2~24.04.1) ...
+#9 209.1 Setting up libctf0:arm64 (2.42-4ubuntu2.10) ...
+#9 209.2 Setting up cpp-13-aarch64-linux-gnu (13.3.0-6ubuntu2~24.04.1) ...
+#9 209.2 Setting up ca-certificates (20260816ubuntu0.24.04.2) ...
+#9 209.3 Updating certificates in /etc/ssl/certs...
+#9 209.6 120 added, 0 removed; done.
+#9 209.6 Running hooks in /etc/ca-certificates/update.d...
+#9 209.6 done.
+#9 209.6 Setting up perl (5.38.2-3.2ubuntu0.7) ...
+#9 209.6 Setting up cpp-aarch64-linux-gnu (4:13.2.0-7ubuntu1) ...
+#9 209.6 Setting up libgprofng0:arm64 (2.42-4ubuntu2.10) ...
+#9 209.6 Setting up libgssapi-krb5-2:arm64 (1.20.1-6ubuntu2.10) ...
+#9 209.6 Setting up libdpkg-perl (1.22.6ubuntu6.6) ...
+#9 209.6 Setting up libssh-4:arm64 (0.10.6-2ubuntu0.5) ...
+#9 209.6 Setting up libreadline8t64:arm64 (8.2-4build1) ...
+#9 209.6 Setting up libgcc-13-dev:arm64 (13.3.0-6ubuntu2~24.04.1) ...
+#9 209.6 Setting up libc6-dev:arm64 (2.39-0ubuntu8.12) ...
+#9 209.6 Setting up libstdc++-13-dev:arm64 (13.3.0-6ubuntu2~24.04.1) ...
+#9 209.6 Setting up libpython3.12-stdlib:arm64 (3.12.3-1ubuntu0.17) ...
+#9 209.6 Setting up cpp-13 (13.3.0-6ubuntu2~24.04.1) ...
+#9 209.6 Setting up libcurl4t64:arm64 (8.5.0-2ubuntu10.16) ...
+#9 209.7 Setting up python3.12 (3.12.3-1ubuntu0.17) ...
+#9 210.1 Setting up libcurl3t64-gnutls:arm64 (8.5.0-2ubuntu10.16) ...
+#9 210.1 Setting up binutils-aarch64-linux-gnu (2.42-4ubuntu2.10) ...
+#9 210.1 Setting up binutils (2.42-4ubuntu2.10) ...
+#9 210.1 Setting up gcc-13-aarch64-linux-gnu (13.3.0-6ubuntu2~24.04.1) ...
+#9 210.1 Setting up dpkg-dev (1.22.6ubuntu6.6) ...
+#9 210.1 Setting up liberror-perl (0.17029-2) ...
+#9 210.1 Setting up gcc-13 (13.3.0-6ubuntu2~24.04.1) ...
+#9 210.1 Setting up git (1:2.43.0-1ubuntu7.4) ...
+#9 210.2 Setting up cpp (4:13.2.0-7ubuntu1) ...
+#9 210.2 Setting up curl (8.5.0-2ubuntu10.16) ...
+#9 210.2 Setting up libpython3-stdlib:arm64 (3.12.3-0ubuntu2.1) ...
+#9 210.2 Setting up g++-13-aarch64-linux-gnu (13.3.0-6ubuntu2~24.04.1) ...
+#9 210.2 Setting up gcc-aarch64-linux-gnu (4:13.2.0-7ubuntu1) ...
+#9 210.2 Setting up g++-13 (13.3.0-6ubuntu2~24.04.1) ...
+#9 210.2 Setting up elan (3.1.0-1ubuntu0.1) ...
+#9 210.2 Setting up python3 (3.12.3-0ubuntu2.1) ...
+#9 210.2 Setting up gcc (4:13.2.0-7ubuntu1) ...
+#9 210.2 Setting up g++-aarch64-linux-gnu (4:13.2.0-7ubuntu1) ...
+#9 210.2 Setting up g++ (4:13.2.0-7ubuntu1) ...
+#9 210.2 update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+#9 210.2 update-alternatives: warning: skip creation of /usr/share/man/man1/c++.1.gz because associated file /usr/share/man/man1/g++.1.gz (of link group c++) doesn't exist
+#9 210.2 Setting up build-essential (12.10ubuntu1) ...
+#9 210.3 Processing triggers for libc-bin (2.39-0ubuntu8.12) ...
+#9 DONE 211.0s
+
+#11 [lean-tools 3/3] RUN elan toolchain install leanprover/lean4:v4.33.1 && elan default leanprover/lean4:v4.33.1  && lean --version
+#11 0.196 info: downloading component 'lean'
+#11 20.97 info: installing component 'lean'
+#11 30.41 
+#11 30.60   leanprover/lean4:v4.33.1 installed - Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+#11 30.60 
+#11 30.64 info: using existing install for 'leanprover/lean4:v4.33.1'
+#11 30.64 
+#11 30.64 info: default toolchain set to 'leanprover/lean4:v4.33.1'
+#11 30.67   leanprover/lean4:v4.33.1 unchanged - Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+#11 30.67 
+#11 30.70 Lean (version 4.33.1, aarch64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+#11 DONE 31.1s
+
+#12 [worker 3/8] COPY --from=lean-tools /usr /sandbox/usr
+#12 DONE 2.2s
+
+#13 [worker 4/8] COPY --from=lean-tools /etc /sandbox/etc
+#13 DONE 0.5s
+
+#14 [worker 5/8] COPY --from=lean-tools /home/lean/.elan /sandbox/home/lean/.elan
+#14 DONE 16.6s
+
+#15 [worker 6/8] RUN mkdir -p /data /sandbox/work /sandbox/tmp /sandbox/dev  && chown 10001:10001 /data  && ln -s usr/bin /sandbox/bin && ln -s usr/sbin /sandbox/sbin && ln -s usr/lib /sandbox/lib  && if [ -d /sandbox/usr/lib64 ]; then ln -s usr/lib64 /sandbox/lib64; fi  && mkdir -p /sandbox/proc && chmod 1777 /sandbox/tmp  && touch /sandbox/dev/null /sandbox/dev/urandom
+#15 DONE 0.4s
+
+#16 [worker 7/8] WORKDIR /app
+#16 DONE 0.1s
+
+#17 [worker 8/8] COPY backend ./backend
+#17 DONE 0.1s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 90.7s done
+#18 exporting manifest sha256:9fbbc0c5b10a918e7511cf68df6c28d22f1df051f91cc687bd1826d2b04427d8 done
+#18 exporting config sha256:656664463452be5b600778ac32b4e8b0cf04e20bce12b445cdb23c0708c792bc done
+#18 exporting attestation manifest sha256:489a69fea3f806cd6c2d3cde41e19906452f296efbaea829535366f80774b39c done
+#18 exporting manifest list sha256:ef8f4046006afe146b7db4eab5caea6b6bd101cfc2ceb5835a38ae6690a03db8 done
+#18 naming to docker.io/library/lean-observatory-worker:latest done
+#18 unpacking to docker.io/library/lean-observatory-worker:latest
+#18 unpacking to docker.io/library/lean-observatory-worker:latest 11.4s done
+#18 DONE 102.2s
+
+#19 resolving provenance for metadata file
+#19 DONE 0.0s
+ Image lean-observatory-worker Built 

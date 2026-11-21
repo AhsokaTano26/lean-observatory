@@ -1,0 +1,95 @@
+ Image lean-observatory-mock-worker Building 
+ Image lean-observatory-api Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.16kB done
+#1 DONE 0.0s
+
+#2 [mock-worker internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.22kB done
+#2 DONE 0.0s
+
+#3 [mock-worker internal] load metadata for docker.io/library/node:24-bookworm-slim
+#3 DONE 0.9s
+
+#4 [api internal] load metadata for docker.io/library/python:3.13-slim-bookworm
+#4 DONE 0.9s
+
+#5 [mock-worker internal] load .dockerignore
+#5 transferring context: 133B done
+#5 DONE 0.0s
+
+#6 [mock-worker frontend 1/5] FROM docker.io/library/node:24-bookworm-slim@sha256:dc26ae92c9fb15cf6b1d63e20f0944b2efe0f115b20e00be48fb23fceb061c54
+#6 resolve docker.io/library/node:24-bookworm-slim@sha256:dc26ae92c9fb15cf6b1d63e20f0944b2efe0f115b20e00be48fb23fceb061c54 0.0s done
+#6 DONE 0.0s
+
+#7 [api api 1/5] FROM docker.io/library/python:3.13-slim-bookworm@sha256:a5a7017efc5969e00ae2b91c8eb0631049a569652aa4ffc4501769049ae45c72
+#7 resolve docker.io/library/python:3.13-slim-bookworm@sha256:a5a7017efc5969e00ae2b91c8eb0631049a569652aa4ffc4501769049ae45c72 0.0s done
+#7 CACHED
+
+#8 [mock-worker internal] load build context
+#8 transferring context: 1.76kB 0.0s done
+#8 DONE 0.0s
+
+#9 [mock-worker frontend 3/5] COPY package.json package-lock.json tsconfig.json vite.config.ts ./
+#9 CACHED
+
+#10 [mock-worker frontend 5/5] RUN npm ci --ignore-scripts --no-audit --no-fund && npm run build
+#10 CACHED
+
+#11 [mock-worker api 2/5] RUN groupadd -g 10001 lean && useradd -m -u 10001 -g 10001 lean && mkdir /data && chown lean:lean /data
+#11 CACHED
+
+#12 [mock-worker api 3/5] WORKDIR /app
+#12 CACHED
+
+#13 [mock-worker api 4/5] COPY backend ./backend
+#13 CACHED
+
+#14 [mock-worker frontend 2/5] WORKDIR /app
+#14 CACHED
+
+#15 [mock-worker frontend 4/5] COPY frontend ./frontend
+#15 CACHED
+
+#16 [mock-worker api 5/5] COPY --from=frontend /app/frontend/dist ./frontend/dist
+#16 CACHED
+
+#17 [api] exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:466e5bf37f7abdeb9f3c5f0eba13fdd3ac9c393d6cdbdd45cdc3f143221a5aa6 done
+#17 exporting config sha256:0f9c9e703956cf04ed7fc54c8ff84a6628ef67c31c311cd8e2754fdca34c61cd done
+#17 exporting attestation manifest sha256:0ad57aa0cb1ddee53bc0a3368e73e1f611cd106225365dd2e40c17152b407b4c 0.0s done
+#17 exporting manifest list sha256:454942eb20fef5740626745f90205a77783350bfc6b2cdb79c3d7c9f0543a6bb
+#17 exporting manifest list sha256:454942eb20fef5740626745f90205a77783350bfc6b2cdb79c3d7c9f0543a6bb 0.0s done
+#17 naming to docker.io/library/lean-observatory-api:latest 0.0s done
+#17 unpacking to docker.io/library/lean-observatory-api:latest 0.0s done
+#17 DONE 0.3s
+
+#18 [mock-worker] exporting to image
+#18 exporting layers done
+#18 exporting manifest sha256:f614bf360561554f4fb788be64efe4ca356b7851ed1aeaa5f6feae2ba1e244ab done
+#18 exporting config sha256:14128b89840f43a106f626e92f9b2a747797374d6a6002ca3a28ca036168bf10 done
+#18 exporting attestation manifest sha256:beffdb8e1a77dbd4597b5fa5c6cd9b04cc3009720f9955125bacfab12b0cfef7 0.0s done
+#18 exporting manifest list sha256:0c0b81719fb35a2136ff573287e9921b08d7566a6a4d8e6022b910a3151e5424 0.1s done
+#18 naming to docker.io/library/lean-observatory-mock-worker:latest 0.0s done
+#18 unpacking to docker.io/library/lean-observatory-mock-worker:latest 0.1s done
+#18 DONE 0.3s
+
+#19 [mock-worker] resolving provenance for metadata file
+#19 DONE 0.0s
+
+#20 [api] resolving provenance for metadata file
+#20 DONE 0.0s
+ Image lean-observatory-api Built 
+ Image lean-observatory-mock-worker Built 
+ Container lean-observatory-nginx-1 Running 
+ Container lean-observatory-api-1 Running 
+ Container lean-observatory-mock-worker-1 Running 
+ Container lean-observatory-api-1 Waiting 
+ Container lean-observatory-api-1 Healthy 
+ Container lean-observatory-nginx-1 Waiting 
+ Container lean-observatory-api-1 Waiting 
+ Container lean-observatory-mock-worker-1 Waiting 
+ Container lean-observatory-mock-worker-1 Healthy 
+ Container lean-observatory-api-1 Healthy 
+ Container lean-observatory-nginx-1 Healthy 

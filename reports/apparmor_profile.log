@@ -1,0 +1,40 @@
+ Image lean-observatory-tools-apparmor-check Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 602B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from apparmor-check.Dockerfile
+#2 transferring dockerfile: 258B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/ubuntu:24.04
+#3 DONE 1.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 133B done
+#4 DONE 0.0s
+
+#5 [2/2] RUN apt-get update && apt-get install -y --no-install-recommends apparmor && rm -rf /var/lib/apt/lists/*
+#5 CACHED
+
+#6 [1/2] FROM docker.io/library/ubuntu:24.04@sha256:9c7f200c07e3d4a03e7249d2c16bf66a51120fb876aa2242cf31451412543289
+#6 resolve docker.io/library/ubuntu:24.04@sha256:9c7f200c07e3d4a03e7249d2c16bf66a51120fb876aa2242cf31451412543289 0.0s done
+#6 CACHED
+
+#7 exporting to image
+#7 exporting layers done
+#7 exporting manifest sha256:ad1bc4892868f83fb02e39fa37345d754734e53173608c85c317fab17fa6f61b done
+#7 exporting config sha256:ba575c1b3d6e0a2ed7ec36a1cc138f62c1209139f743fbe3f6146808dc673ae8 done
+#7 exporting attestation manifest sha256:6be3f9ed9bbbd18dfdab23391abb7bf7e3b3aedc9418f7e3c9e4dcc9aeea9abe 0.0s done
+#7 exporting manifest list sha256:36f7e62ffd1faf0fda2be94466f5f167bbb2e00a39e70f24637fc719b87fde8d
+#7 exporting manifest list sha256:36f7e62ffd1faf0fda2be94466f5f167bbb2e00a39e70f24637fc719b87fde8d 0.0s done
+#7 naming to docker.io/library/lean-observatory-tools-apparmor-check:latest done
+#7 unpacking to docker.io/library/lean-observatory-tools-apparmor-check:latest 0.0s done
+#7 DONE 0.1s
+
+#8 resolving provenance for metadata file
+#8 DONE 0.0s
+ Image lean-observatory-tools-apparmor-check Built 
+ Container lean-observatory-tools-apparmor-check-run-880b53675f52 Creating 
+ Container lean-observatory-tools-apparmor-check-run-880b53675f52 Created 
+Cache read/write disabled: interface file missing. (Kernel needs AppArmor 2.4 compatibility patch.)

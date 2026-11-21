@@ -1,5 +1,6 @@
 import json
 import os
+import signal
 import subprocess
 import sys
 import tempfile
@@ -12,6 +13,26 @@ from backend.metrics import collect
 
 
 class RuntimeTests(unittest.TestCase):
+    def test_operator_interruption_preserves_wait_status_and_separate_cause(self):
+        for interruption in (KeyboardInterrupt, SystemExit):
+            with self.subTest(interruption=interruption.__name__), tempfile.TemporaryDirectory() as d:
+                store = Store(Path(d)); run = store.create('real')
+                def interrupt(line):
+                    if line == 'ready':
+                        raise interruption('operator stopped the worker')
+                with self.assertRaises(CommandError) as error:
+                    CommandRunner(store, run['id']).run(
+                        [sys.executable, '-c', 'import time;print("ready",flush=True);time.sleep(60)'],
+                        Path(d), 'compile', callback=interrupt)
+                command = store.raw(run['id'])['commands'][0]
+                self.assertEqual(command['exitCode'], -signal.SIGKILL)
+                self.assertEqual(error.exception.code, -signal.SIGKILL)
+                self.assertEqual(command.get('terminationCause'), 'operator_interruption')
+                self.assertEqual(error.exception.terminationCause, 'operator_interruption')
+                self.assertEqual(error.exception.reason, 'operator stopped the worker')
+                self.assertEqual(command.get('status'), 'interrupted')
+                self.assertIsNotNone(command['finishedAt'])
+
     def test_nonzero_exit_is_persisted_and_raised(self):
         with tempfile.TemporaryDirectory() as d:
             store = Store(Path(d))

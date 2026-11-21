@@ -1,7 +1,13 @@
 {
-  "archive": "/Users/tano/Documents/GitHub/Lean/artifacts/lean-observatory-e15068631090.tar.gz",
-  "sha256": "9c09f732362eb72017cc33fe0724096fe829984c19e11fde932b59afca5b7188",
-  "bytes": 3585467,
-  "sourceSha256": "e15068631090285789b0739ce37a9e094257f840e2a5d341a6fc8ef4d565bb02",
-  "scope": "Read-only Web platform + local Mock/tiny-fixture evidence; original proof NOT_RUN"
+  "archive": "artifacts/lean-observatory-07b2cd8f2c01.tar.gz",
+  "sha256": "f1a5259fddf26ff0faa53f26e5f50254c3994110b4561c54f25dad4de1ea1b65",
+  "bytes": 3643962,
+  "sourceSha256": "07b2cd8f2c01a6c87406dc2b03667d3ee5de415e3a9682e35ddcb9dbe184d85a",
+  "archiveFileCount": 126,
+  "rootOwnershipAndSafeModes": "passed",
+  "unpackedSourceGate": "passed",
+  "unpackedBootstrapDryRun": "passed",
+  "proofReproduction": "NOT_RUN",
+  "remoteConnected": false,
+  "note": "This external metadata is generated after packaging and is not included inside its own archive."
 }

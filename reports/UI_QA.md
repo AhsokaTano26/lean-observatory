@@ -10,7 +10,7 @@
 - Surface inspected: 实际 Playwright Chromium 页面与截图。Browser 插件不可用，因此使用本机 Playwright。
 - Viewports checked: 320、360、390、768、1024、1280、1440、1600px；深色和浅色。手机图表另使用真实触控上下文。
 - Interaction path tested: 六页导航、移动菜单、主题切换/刷新持久化、独立 CLI 驱动的 Mock 暂停恢复、失败/中断/资源不足、审计展开、日志筛选/下载、指针/触摸/方向键读数、时间范围、断网及恢复。
-- Commands run: `npm test` → 37 个后端 + 10 个图表计算 + 构建 + 13 个浏览器测试通过。跳转链接样式调整另用 `npm test -- --grep 'editorial|geometry|touch|responsive'` 复查相关页面；原始输出保存在 native-tests.log 与 ui-revision.log。
+- Commands run: `npm test` → 72 个后端 + 10 个图表计算 + 构建 + 13 个浏览器测试通过。跳转链接样式调整另用 `npm test -- --grep 'editorial|geometry|touch|responsive'` 复查相关页面；原始输出保存在 native-tests.log 与 ui-revision.log。
 - Audit scripts: 未运行启发式样式扫描器；使用实际 DOM 几何、溢出、SVG 变换比例和交互断言，并逐张检查关键截图。
 - Visual revision loop: 修正 SVG 字体/曲线拉伸与时间比例；手机审计状态改为名称下方显示；修正离屏跳转链接在全页截图中的绘制及点击误触路由；证明审计的移动布局规则限定到自身，结果中心保留命令与退出码。同步修正资源过期值、断线“实时”标记、30 分钟历史长度和稀疏长中断连线问题。取消 Mock 任务与 Worker 调度交错可能复活任务的问题，也已确定性复现并修复。
 - Remaining gaps: 正式服务器及可信 HTTPS 尚未部署；完整原始证明仍未运行。相关本地容器测试只涉及平台及 tiny Lean fixture。

@@ -1,0 +1,131 @@
+ Image lean-observatory-worker-amd64:prepared Building 
+ Image lean-observatory-api-amd64:prepared Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.39kB done
+#1 DONE 0.0s
+
+#2 [api internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.22kB done
+#2 DONE 0.0s
+
+#3 [api internal] load metadata for docker.io/library/python:3.13-slim-bookworm
+#3 ...
+
+#4 [api internal] load metadata for docker.io/library/node:24-bookworm-slim
+#4 DONE 0.9s
+
+#5 [worker internal] load metadata for docker.io/library/ubuntu:24.04
+#5 DONE 0.9s
+
+#3 [worker internal] load metadata for docker.io/library/python:3.13-slim-bookworm
+#3 DONE 1.0s
+
+#6 [worker internal] load .dockerignore
+#6 transferring context: 133B done
+#6 DONE 0.1s
+
+#7 [api internal] load build context
+#7 DONE 0.0s
+
+#8 [worker internal] load build context
+#8 transferring context: 232.98kB 0.0s done
+#8 DONE 0.1s
+
+#9 [worker lean-tools 1/3] FROM docker.io/library/ubuntu:24.04@sha256:9c7f200c07e3d4a03e7249d2c16bf66a51120fb876aa2242cf31451412543289
+#9 resolve docker.io/library/ubuntu:24.04@sha256:9c7f200c07e3d4a03e7249d2c16bf66a51120fb876aa2242cf31451412543289 0.1s done
+#9 DONE 0.1s
+
+#10 [worker worker 1/8] FROM docker.io/library/python:3.13-slim-bookworm@sha256:a5a7017efc5969e00ae2b91c8eb0631049a569652aa4ffc4501769049ae45c72
+#10 resolve docker.io/library/python:3.13-slim-bookworm@sha256:a5a7017efc5969e00ae2b91c8eb0631049a569652aa4ffc4501769049ae45c72
+#10 resolve docker.io/library/python:3.13-slim-bookworm@sha256:a5a7017efc5969e00ae2b91c8eb0631049a569652aa4ffc4501769049ae45c72 0.1s done
+#10 DONE 0.1s
+
+#11 [api frontend 1/5] FROM docker.io/library/node:24-bookworm-slim@sha256:dc26ae92c9fb15cf6b1d63e20f0944b2efe0f115b20e00be48fb23fceb061c54
+#11 resolve docker.io/library/node:24-bookworm-slim@sha256:dc26ae92c9fb15cf6b1d63e20f0944b2efe0f115b20e00be48fb23fceb061c54 0.1s done
+#11 DONE 0.1s
+
+#12 [worker worker 6/8] RUN mkdir -p /data /sandbox/work /sandbox/tmp /sandbox/dev  && chown 10001:10001 /data  && ln -s usr/bin /sandbox/bin && ln -s usr/sbin /sandbox/sbin && ln -s usr/lib /sandbox/lib  && if [ -d /sandbox/usr/lib64 ]; then ln -s usr/lib64 /sandbox/lib64; fi  && mkdir -p /sandbox/proc && chmod 1777 /sandbox/tmp  && touch /sandbox/dev/null /sandbox/dev/urandom
+#12 CACHED
+
+#13 [worker worker 7/8] WORKDIR /app
+#13 CACHED
+
+#14 [worker worker 2/8] RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates && rm -rf /var/lib/apt/lists/*
+#14 CACHED
+
+#15 [worker lean-tools 2/3] RUN apt-get update && apt-get install -y --no-install-recommends python3 curl git ca-certificates xz-utils zstd elan build-essential && rm -rf /var/lib/apt/lists/*  && groupadd -g 10001 lean && useradd -m -u 10001 -g 10001 lean && mkdir /data && chown lean:lean /data
+#15 CACHED
+
+#16 [worker lean-tools 3/3] RUN elan toolchain install leanprover/lean4:v4.33.1 && elan default leanprover/lean4:v4.33.1  && lean --version
+#16 CACHED
+
+#17 [worker worker 5/8] COPY --from=lean-tools /home/lean/.elan /sandbox/home/lean/.elan
+#17 CACHED
+
+#18 [worker worker 3/8] COPY --from=lean-tools /usr /sandbox/usr
+#18 CACHED
+
+#19 [worker worker 4/8] COPY --from=lean-tools /etc /sandbox/etc
+#19 CACHED
+
+#20 [worker worker 8/8] COPY backend ./backend
+#20 CACHED
+
+#21 [worker] exporting to image
+#21 exporting layers done
+#21 exporting manifest sha256:e1f93bc0707716bea204ed62c7edc37589f7cec9fc6328aee33457bdc17added 0.0s done
+#21 exporting config sha256:5ceff8469aaa581aa7ce6b1e86d239f705defa31849057fe54c58f67b6b5a6cb 0.0s done
+#21 ...
+
+#7 [api internal] load build context
+#7 transferring context: 396.42kB 0.0s done
+#7 DONE 0.2s
+
+#22 [api frontend 3/5] COPY package.json package-lock.json tsconfig.json vite.config.ts ./
+#22 CACHED
+
+#23 [api frontend 5/5] RUN npm ci --ignore-scripts --no-audit --no-fund && npm run build
+#23 CACHED
+
+#24 [api api 4/5] COPY backend ./backend
+#24 CACHED
+
+#25 [api frontend 4/5] COPY frontend ./frontend
+#25 CACHED
+
+#26 [api api 2/5] RUN groupadd -g 10001 lean && useradd -m -u 10001 -g 10001 lean && mkdir /data && chown lean:lean /data
+#26 CACHED
+
+#27 [api api 3/5] WORKDIR /app
+#27 CACHED
+
+#28 [api frontend 2/5] WORKDIR /app
+#28 CACHED
+
+#29 [api api 5/5] COPY --from=frontend /app/frontend/dist ./frontend/dist
+#29 CACHED
+
+#21 [worker] exporting to image
+#21 exporting attestation manifest sha256:d67c5a815d6638b1bf4cb82209e1d7b4324db4f08d82f838f0751ec624f10429
+#21 exporting attestation manifest sha256:d67c5a815d6638b1bf4cb82209e1d7b4324db4f08d82f838f0751ec624f10429 0.0s done
+#21 exporting manifest list sha256:b12c16e780aa5494313e17eb6987dcdfa23377fdcef4f3e39312c9d362cf0226 0.0s done
+#21 naming to docker.io/library/lean-observatory-worker-amd64:prepared done
+#21 DONE 0.3s
+
+#30 [api] exporting to image
+#30 exporting layers done
+#30 exporting manifest sha256:b03bad362c2d0ebc2e4f7f425bc76f9ab07ba09df51fc312f6f7b11d1acdc9ec 0.0s done
+#30 exporting config sha256:18779b20b45d00067b6b67b11e1cb713d4bd16efb084f52bec15584301179f61 0.0s done
+#30 exporting attestation manifest sha256:37cf43d6f3f6477a45304cf4684e8b15f409e5e55d47db60749f5e82d296cabf 0.0s done
+#30 exporting manifest list sha256:2e1f9876cb06422607808be3c30023e046988bc28eeed2543ef5d431724ba78b
+#30 exporting manifest list sha256:2e1f9876cb06422607808be3c30023e046988bc28eeed2543ef5d431724ba78b done
+#30 naming to docker.io/library/lean-observatory-api-amd64:prepared done
+#30 DONE 0.1s
+
+#31 [api] resolving provenance for metadata file
+#31 DONE 0.0s
+
+#32 [worker] resolving provenance for metadata file
+#32 DONE 0.0s
+ Image lean-observatory-worker-amd64:prepared Built 
+ Image lean-observatory-api-amd64:prepared Built 

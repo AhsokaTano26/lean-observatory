@@ -4,6 +4,7 @@ import hashlib
 import io
 import json
 import mimetypes
+import os
 import threading
 import time
 import tarfile
@@ -41,7 +42,7 @@ def make_server(store, address, frontend=None, host_metrics=None):
         heartbeat=s['workerHeartbeat']
         return dict(run=s, metrics=metrics(s), serverTime=time.time(),
                     workerOnline=bool(heartbeat and time.time()-heartbeat < 15),
-                    capabilities=dict(readOnly=True))
+                    capabilities=dict(readOnly=True),deployment=dict(sourceSha256=os.environ.get('SOURCE_SHA256')))
 
     class Handler(BaseHTTPRequestHandler):
         protocol_version='HTTP/1.1'
@@ -71,7 +72,7 @@ def make_server(store, address, frontend=None, host_metrics=None):
             try:
                 if path=='/healthz': return self.respond(200,{'ok':True,'service':'lean-observatory'})
                 if path=='/api/state': return self.respond(200,payload(run))
-                if path=='/api/runs': return self.respond(200,[dict(id=s['id'],mode=s['mode'],status=s['status'],startedAt=s['startedAt']) for s in store.runs()])
+                if path=='/api/runs': return self.respond(200,store.run_summaries())
                 if path=='/api/history': return self.respond(200,store.history(run=run))
                 if path=='/api/logs': return self.respond(200,store.logs(run or store.snapshot()['id'],int(q['after'][0]) if 'after' in q else None,int(q.get('limit',[300])[0]),q.get('q',[''])[0]))
                 if path=='/api/events': return self.events(run,q.get('after',[None])[0])
@@ -163,7 +164,6 @@ def make_server(store, address, frontend=None, host_metrics=None):
 
 
 def main():
-    import os
     parser=argparse.ArgumentParser(); parser.add_argument('--host',default='127.0.0.1'); parser.add_argument('--port',type=int,default=8787); parser.add_argument('--data',default='.data')
     a=parser.parse_args()
     make_server(Store(Path(a.data)),(a.host,a.port),host_metrics=os.environ.get('HOST_METRICS')).serve_forever()

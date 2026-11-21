@@ -92,6 +92,10 @@ export interface Run {
     finishedAt: number | null;
     exitCode: number | null;
     logFile: string;
+    status?: Status;
+    terminationCause?: string | null;
+    observedStoppedAt?: number;
+    reason?: string | null;
   }[];
 }
 export interface Metrics {

@@ -1,0 +1,2719 @@
+{
+  "schemaVersion": 1,
+  "repository": "tamnd/riemann-lean",
+  "revision": "af705e0d9a5904326eb0693310e36d9484df7f8f",
+  "expectedOriginalArchiveSha256": "9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc",
+  "originalArchiveDownloaded": false,
+  "fullProofCompiled": false,
+  "limitations": [
+    "这是上游小文件的逐段审查；原始归档中每个文件仍必须逐字节匹配。",
+    "不是175187文件完整扫描结果；未来全量扫描发现的新命中一律未批准。",
+    "批准仅解除已审查元编程/文本误报的执行前阻断，不能代替五定理公理审计或 fresh kernel replay。",
+    "任何额外 axiom / sorryAx / 跳过内核的能力均不在批准范围。"
+  ],
+  "kernelReferences": [
+    "https://github.com/leanprover/lean4/blob/v4.33.1/src/Lean/AddDecl.lean",
+    "https://github.com/leanprover/lean4/blob/v4.33.1/src/Lean/LibrarySuggestions/Basic.lean"
+  ],
+  "files": [
+    {
+      "path": "src/BuildAid/D1.lean",
+      "bytes": 168,
+      "sha256": "31929a2acb212f4ff081fcbcf3be3450265e616d41567868214ed6a4d4e36208",
+      "lineCount": 4,
+      "hits": [
+        {
+          "line": 4,
+          "token": "run_cmd",
+          "text": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"CompanionTheory\""
+        }
+      ],
+      "sourceRelativePath": "BuildAid/D1.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/BuildAid/D1.lean",
+      "category": "library_suggestion_filter",
+      "purpose": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"CompanionTheory\"",
+      "rationale": "只向 Lean.LibrarySuggestions.nameDenyListExt 添加命名空间字符串；已核对 Lean4.33.1 Basic.lean 的 String/List 扩展实现，仅影响库建议过滤，不修改声明、证明或内核。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/BuildAid/D2.lean",
+      "bytes": 184,
+      "sha256": "26425f890b105125a44aa60967fe39b3f961841c0d720f0f14986b8052c237e0",
+      "lineCount": 4,
+      "hits": [
+        {
+          "line": 4,
+          "token": "run_cmd",
+          "text": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"CrystallineSemistableComparison\""
+        }
+      ],
+      "sourceRelativePath": "BuildAid/D2.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/BuildAid/D2.lean",
+      "category": "library_suggestion_filter",
+      "purpose": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"CrystallineSemistableComparison\"",
+      "rationale": "只向 Lean.LibrarySuggestions.nameDenyListExt 添加命名空间字符串；已核对 Lean4.33.1 Basic.lean 的 String/List 扩展实现，仅影响库建议过滤，不修改声明、证明或内核。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/BuildAid/D3.lean",
+      "bytes": 165,
+      "sha256": "de55aa305addb1a552941059ea5cca8a48142412652980b79acf28566576654e",
+      "lineCount": 4,
+      "hits": [
+        {
+          "line": 4,
+          "token": "run_cmd",
+          "text": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"GlobalTheory\""
+        }
+      ],
+      "sourceRelativePath": "BuildAid/D3.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/BuildAid/D3.lean",
+      "category": "library_suggestion_filter",
+      "purpose": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"GlobalTheory\"",
+      "rationale": "只向 Lean.LibrarySuggestions.nameDenyListExt 添加命名空间字符串；已核对 Lean4.33.1 Basic.lean 的 String/List 扩展实现，仅影响库建议过滤，不修改声明、证明或内核。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/BuildAid/D4.lean",
+      "bytes": 169,
+      "sha256": "4ba5bd9edc7f1a9e4fa769dd8ae34fdb30d0481468325ad5cc85449c873be2ff",
+      "lineCount": 4,
+      "hits": [
+        {
+          "line": 4,
+          "token": "run_cmd",
+          "text": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"PositivityTheory\""
+        }
+      ],
+      "sourceRelativePath": "BuildAid/D4.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/BuildAid/D4.lean",
+      "category": "library_suggestion_filter",
+      "purpose": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"PositivityTheory\"",
+      "rationale": "只向 Lean.LibrarySuggestions.nameDenyListExt 添加命名空间字符串；已核对 Lean4.33.1 Basic.lean 的 String/List 扩展实现，仅影响库建议过滤，不修改声明、证明或内核。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/BuildAid/D5.lean",
+      "bytes": 164,
+      "sha256": "b4766a7b0b3187f772e027b76e540bc36689705b7133cfa6db11555ce0cd01f7",
+      "lineCount": 4,
+      "hits": [
+        {
+          "line": 4,
+          "token": "run_cmd",
+          "text": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"UpperTheory\""
+        }
+      ],
+      "sourceRelativePath": "BuildAid/D5.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/BuildAid/D5.lean",
+      "category": "library_suggestion_filter",
+      "purpose": "run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env \"UpperTheory\"",
+      "rationale": "只向 Lean.LibrarySuggestions.nameDenyListExt 添加命名空间字符串；已核对 Lean4.33.1 Basic.lean 的 String/List 扩展实现，仅影响库建议过滤，不修改声明、证明或内核。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/BlockTheory/CMModuli/ThetaCosetLabels.lean",
+      "bytes": 13924,
+      "sha256": "94134487a3267b04e66e8a9309e957db890bc7a4c181e517d112480c9f9c8f30",
+      "lineCount": 254,
+      "hits": [
+        {
+          "line": 234,
+          "token": "axioms",
+          "text": "  axioms : ∀ r : EndRel g (N' ^ 2) I, (∀ Y ∈ C, Y.Sat r) → 𝒜.Sat r"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/BlockTheory/CMModuli/ThetaCosetLabels.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/BlockTheory/CMModuli/ThetaCosetLabels.lean",
+      "category": "structure_field",
+      "purpose": "IsMMFamily 的结构字段 axioms，要求调用者提供相关关系的证明。",
+      "rationale": "字段属于 structure 的假设/证明参数，未新增 axiom 声明；构造实例仍须提供字段证明。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/GoodPartEq.lean",
+      "bytes": 12691,
+      "sha256": "693785a6e1f60531b1dc1f62a9a10aef54fc59d6ab501b8df51828e579686494",
+      "lineCount": 234,
+      "hits": [
+        {
+          "line": 17,
+          "token": "macro",
+          "text": "scoped macro \"tr_via \" P:term:max e:term:max h:term:max : tactic => `(tactic| kexactB (cast (congrArg $P $e) (kc% $h)))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/GoodPartEq.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/GoodPartEq.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "scoped macro \"tr_via \" P:term:max e:term:max h:term:max : tactic => `(tactic| kexactB (cast (congrArg $P $e) (kc% $h)))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/PlaceModelImp.lean",
+      "bytes": 16339,
+      "sha256": "ae11832e67ebf87d2110128ca07d4859f2dd8c9ab23c9718222513ef929ffe91",
+      "lineCount": 431,
+      "hits": [
+        {
+          "line": 27,
+          "token": "macro",
+          "text": "scoped macro:max \"kc% \" e:term:max : term => `((by kexactB $e))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/PlaceModelImp.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/PlaceModelImp.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "scoped macro:max \"kc% \" e:term:max : term => `((by kexactB $e))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/RealIoX.lean",
+      "bytes": 6523,
+      "sha256": "29b499b0efa4e8bc72fdac1fba7a17bba4fd4aad0c83a3dc83541407473141ac",
+      "lineCount": 115,
+      "hits": [
+        {
+          "line": 90,
+          "token": "macro",
+          "text": "scoped macro \"tr_delta\" : tactic => `(tactic|"
+        },
+        {
+          "line": 99,
+          "token": "macro",
+          "text": "scoped macro \"tr_leaves \" a:term:max b:term:max : tactic => `(tactic| ("
+        },
+        {
+          "line": 111,
+          "token": "macro",
+          "text": "scoped macro \"tr_clause \" a:term:max b:term:max h:term:max : tactic => `(tactic| (tr_delta; tr_leaves $a $b; kexactB $h))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/RealIoX.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/RealIoX.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "scoped macro \"tr_delta\" : tactic => `(tactic|；scoped macro \"tr_leaves \" a:term:max b:term:max : tactic => `(tactic| (；scoped macro \"tr_clause \" a:term:max b:term:max h:term:max : tactic => `(tactic| (tr_delta; tr_leaves $a $b; kexactB $h))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Definitions/GaloisGeometry/NegOnePowBoundaryTermsCancel.lean",
+      "bytes": 21749,
+      "sha256": "1f515b833ef2a8c92fa25213054888f5ad7eddae2d33a5cf6d95029a1395eccd",
+      "lineCount": 426,
+      "hits": [
+        {
+          "line": 114,
+          "token": "macro",
+          "text": "macro \"fin_index_simp\" : tactic => `(tactic| ("
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Definitions/GaloisGeometry/NegOnePowBoundaryTermsCancel.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Definitions/GaloisGeometry/NegOnePowBoundaryTermsCancel.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"fin_index_simp\" : tactic => `(tactic| (",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/ExistsBoundAbsLocalLatticeCompletionEntries.lean",
+      "bytes": 1784,
+      "sha256": "207d52cbf7d2c7fb5cc29c525977bd62cb86d97f60e8c1bef6fa48d48d0e4429",
+      "lineCount": 23,
+      "hits": [
+        {
+          "line": 12,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.LocalLatticeBound.exists_bound_latLoc"
+        },
+        {
+          "line": 13,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.LocalLatticeBound.exists_bound_latLoc"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/ExistsBoundAbsLocalLatticeCompletionEntries.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/ExistsBoundAbsLocalLatticeCompletionEntries.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/BoundedPowerSeriesEvaluationDivisibility.lean",
+      "bytes": 2636,
+      "sha256": "21afee859a9a448e5015885591246abe378ab49e80a3e126461e1f7e8c3857cd",
+      "lineCount": 33,
+      "hits": [
+        {
+          "line": 24,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.SummableSeriesBounds.main"
+        },
+        {
+          "line": 25,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.SummableSeriesBounds.main"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/BoundedPowerSeriesEvaluationDivisibility.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/BoundedPowerSeriesEvaluationDivisibility.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsDlogAddCoboundaryAbLocus.lean",
+      "bytes": 12232,
+      "sha256": "ecd4795a23609f1b580560a0edc8dc18508fbb1a986d2d05c681b36c7f19e128",
+      "lineCount": 180,
+      "hits": [
+        {
+          "line": 20,
+          "token": "macro",
+          "text": "local macro \"opens_le\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsDlogAddCoboundaryAbLocus.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsDlogAddCoboundaryAbLocus.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"opens_le\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsJetExtensionSquareZero.lean",
+      "bytes": 1890,
+      "sha256": "f16e4d34a5569ae070e4c994a7e653228875e3889e29bd1beb64f993f12b6b36",
+      "lineCount": 31,
+      "hits": [
+        {
+          "line": 22,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.SquareLiftLemmas.exists_hom_jet"
+        },
+        {
+          "line": 23,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.SquareLiftLemmas.exists_hom_jet"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsJetExtensionSquareZero.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsJetExtensionSquareZero.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsMeasY.lean",
+      "bytes": 10350,
+      "sha256": "129d70e907e358e4d683623e95ae4f24dd211ec1ec7e87f36f78f6117a2c9f19",
+      "lineCount": 143,
+      "hits": [
+        {
+          "line": 20,
+          "token": "macro",
+          "text": "scoped macro \"obt \" p:Lean.Parser.Tactic.rcasesPatMed \" := \" e:term : tactic => `(tactic| (have x := $e; obtain $p := x))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsMeasY.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsMeasY.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "scoped macro \"obt \" p:Lean.Parser.Tactic.rcasesPatMed \" := \" e:term : tactic => `(tactic| (have x := $e; obtain $p := x))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/FramesTildeGammaValues.lean",
+      "bytes": 7723,
+      "sha256": "99a63d7c360a02b38886390ad2920722147844a5d0784d7e2eb6b89d68802ae2",
+      "lineCount": 126,
+      "hits": [
+        {
+          "line": 70,
+          "token": "run_tac",
+          "text": "  run_tac do"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/FramesTildeGammaValues.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/FramesTildeGammaValues.lean",
+      "category": "goal_context_lemma",
+      "purpose": "从局部上下文读取 famEq/fin，构造 Subsingleton.elim 的应用并用 g.note 加入已证明等式。",
+      "rationale": "仅用已有 Subsingleton.elim 构造证明项；不写 Environment、不创建声明/公理，不关闭 kernel。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsCechOneCoboundaryOfRefinement.lean",
+      "bytes": 2358,
+      "sha256": "bbb3e7fd56039366282618e081a13d43ab16fce91049b52cb07376aa1ea7aaaa",
+      "lineCount": 41,
+      "hits": [
+        {
+          "line": 8,
+          "token": "macro",
+          "text": "local macro \"opens_le\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsCechOneCoboundaryOfRefinement.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsCechOneCoboundaryOfRefinement.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"opens_le\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsProperOfFiniteType.lean",
+      "bytes": 9540,
+      "sha256": "46b2d819955a02c1180b9d9996f7e31b5b837f35876365cb06b3aa6f2437e520",
+      "lineCount": 132,
+      "hits": [
+        {
+          "line": 30,
+          "token": "macro",
+          "text": "macro \"lbt\" : tactic => `(tactic| (repeat (first | assumption | apply pull_isLB)))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsProperOfFiniteType.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsProperOfFiniteType.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"lbt\" : tactic => `(tactic| (repeat (first | assumption | apply pull_isLB)))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsRootMapMinpolyIffExistsRingHomExtension.lean",
+      "bytes": 3295,
+      "sha256": "d014ad8c343003d93ae8294e32164bac7c64cfd6d0ceda5ed00c7a5999e60d49",
+      "lineCount": 45,
+      "hits": [
+        {
+          "line": 10,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.InjectiveAlgebraHomExistence.exists_ringHom_comp_algebraMap_eq"
+        },
+        {
+          "line": 11,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.InjectiveAlgebraHomExistence.exists_ringHom_comp_algebraMap_eq"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsRootMapMinpolyIffExistsRingHomExtension.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsRootMapMinpolyIffExistsRingHomExtension.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/LocalizationPreservesRingPullbackSquare.lean",
+      "bytes": 4953,
+      "sha256": "63d6d73c6c6124fe59f8d9d39011ae89ced99136e6171f5eece05c7d36fa6303",
+      "lineCount": 70,
+      "hits": [
+        {
+          "line": 38,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.QuotientMapComposition.main"
+        },
+        {
+          "line": 39,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.QuotientMapComposition.main"
+        },
+        {
+          "line": 61,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.QuotientMapComposition.main"
+        },
+        {
+          "line": 62,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.QuotientMapComposition.main"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/LocalizationPreservesRingPullbackSquare.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/LocalizationPreservesRingPullbackSquare.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MatchedDiffsInvariantSubspace.lean",
+      "bytes": 11767,
+      "sha256": "1ffd0d0463f1c181190decf35c7f9d8b118a3d8179b99d0458f8ff40ec44e03f",
+      "lineCount": 198,
+      "hits": [
+        {
+          "line": 31,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.SpectralLemmaFirst.main"
+        },
+        {
+          "line": 32,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.SpectralLemmaFirst.main"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/MatchedDiffsInvariantSubspace.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MatchedDiffsInvariantSubspace.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/BasedFlagPairLatticeContainment.lean",
+      "bytes": 27077,
+      "sha256": "08dd140404e9f1dc19f5f92e0bee1b8de77c3ea048750c4b3cc81f1ed733088e",
+      "lineCount": 423,
+      "hits": [
+        {
+          "line": 131,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem"
+        },
+        {
+          "line": 132,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/FlagMeasures/BasedFlagPairLatticeContainment.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/BasedFlagPairLatticeContainment.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/DetMatrixSandwichLinearMap.lean",
+      "bytes": 1660,
+      "sha256": "d49d70682b8bd9734f01ce398539a1b04affa57d5dbca5448e392c848be49389",
+      "lineCount": 23,
+      "hits": [
+        {
+          "line": 14,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.DeterminantRealSandwich.det_real_family"
+        },
+        {
+          "line": 15,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.DeterminantRealSandwich.det_real_family"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/FlagMeasures/DetMatrixSandwichLinearMap.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/DetMatrixSandwichLinearMap.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/PowLePowRatio.lean",
+      "bytes": 33182,
+      "sha256": "1c1344fc4694c67b921373cd194c2c0cee2f6128ed1924596968ae5410c26b1d",
+      "lineCount": 584,
+      "hits": [
+        {
+          "line": 153,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.InnerSumZeroSpan.main"
+        },
+        {
+          "line": 154,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.InnerSumZeroSpan.main"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/FlagMeasures/PowLePowRatio.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/PowLePowRatio.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/FormalGroupCharts/ExistsFormalBiextMap.lean",
+      "bytes": 8780,
+      "sha256": "bcfbd604673d770c9f819503e3d5723c093ca2483cf76813533bfde723234de5",
+      "lineCount": 253,
+      "hits": [
+        {
+          "line": 87,
+          "token": "macro",
+          "text": "local macro \"no_const\" : tactic =>"
+        },
+        {
+          "line": 96,
+          "token": "macro",
+          "text": "local macro \"push_map\" h:ident : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/FormalGroupCharts/ExistsFormalBiextMap.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/FormalGroupCharts/ExistsFormalBiextMap.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"no_const\" : tactic =>；local macro \"push_map\" h:ident : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/FormalGroupCharts/GermEvGermEvThreePoints.lean",
+      "bytes": 11991,
+      "sha256": "3cd0dca7402a5914edee4d25386627ebee82594b507f5162e6e0891e9c2ae372",
+      "lineCount": 198,
+      "hits": [
+        {
+          "line": 87,
+          "token": "macro",
+          "text": "local macro \"gp\" : tactic =>"
+        },
+        {
+          "line": 92,
+          "token": "macro",
+          "text": "local macro \"push_ev\" loc:(Lean.Parser.Tactic.location)? : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/FormalGroupCharts/GermEvGermEvThreePoints.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/FormalGroupCharts/GermEvGermEvThreePoints.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"gp\" : tactic =>；local macro \"push_ev\" loc:(Lean.Parser.Tactic.location)? : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/IsClassSystem.lean",
+      "bytes": 12220,
+      "sha256": "ff6a2ff76ae10c79983f52c17be97819210cef1c2ee210280290d62e0fc4ace1",
+      "lineCount": 258,
+      "hits": [
+        {
+          "line": 29,
+          "token": "macro",
+          "text": "scoped macro \"geo_cases \" h:ident D:ident D':ident : tactic =>"
+        },
+        {
+          "line": 94,
+          "token": "macro",
+          "text": "scoped macro \"base_cases \" r:ident B:ident B':ident : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/IsClassSystem.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/IsClassSystem.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "scoped macro \"geo_cases \" h:ident D:ident D':ident : tactic =>；scoped macro \"base_cases \" r:ident B:ident B':ident : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/LiftSetupOverExtendedDataIntegralFormsEq.lean",
+      "bytes": 13784,
+      "sha256": "c93ba9fdb2f8f719dab32d7a6bf1f88f18938ca4886ae2d80a3c972d6ca1ce8d",
+      "lineCount": 206,
+      "hits": [
+        {
+          "line": 15,
+          "token": "macro",
+          "text": "local macro:max \"kc% \" e:term:max : term => `((by kexactB $e))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/LiftSetupOverExtendedDataIntegralFormsEq.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/LiftSetupOverExtendedDataIntegralFormsEq.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro:max \"kc% \" e:term:max : term => `((by kexactB $e))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/RatCopyIff.lean",
+      "bytes": 12531,
+      "sha256": "92f2393e4cc983c3944a6bc601f5cf022bdf92165a19bd60ccc87bce7d586ac1",
+      "lineCount": 169,
+      "hits": [
+        {
+          "line": 16,
+          "token": "macro",
+          "text": "local macro:max \"kc% \" e:term:max : term => `((by kexactB $e))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/RatCopyIff.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/RatCopyIff.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro:max \"kc% \" e:term:max : term => `((by kexactB $e))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/SetupRelIffSameData.lean",
+      "bytes": 13422,
+      "sha256": "568628f8e3d4e7b99bed73014556225005875e1315b0da8dd35d96f95d7f94d0",
+      "lineCount": 203,
+      "hits": [
+        {
+          "line": 21,
+          "token": "macro",
+          "text": "scoped macro \"set_cases \" h1:ident h2:ident N:ident N':ident X:ident X':ident : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/SetupRelIffSameData.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/SetupRelIffSameData.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "scoped macro \"set_cases \" h1:ident h2:ident N:ident N':ident X:ident X':ident : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/TieMove.lean",
+      "bytes": 2411,
+      "sha256": "edb6d42513b62bef85e298330cff5a4422bb27855397a7e280f8ab26ba4c191f",
+      "lineCount": 43,
+      "hits": [
+        {
+          "line": 15,
+          "token": "macro",
+          "text": "local macro:max \"kc% \" e:term:max : term => `((by kexactB $e))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/TieMove.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/TieMove.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro:max \"kc% \" e:term:max : term => `((by kexactB $e))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/CharWSeedStd.lean",
+      "bytes": 9292,
+      "sha256": "c4d38323952e32ef49e72ac2a202cbaeb5ee7a847c25a03185e87acbdbf30175",
+      "lineCount": 92,
+      "hits": [
+        {
+          "line": 16,
+          "token": "macro",
+          "text": "local macro \"qmove \" h:term : tactic => `(tactic| ("
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/CharWSeedStd.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/CharWSeedStd.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"qmove \" h:term : tactic => `(tactic| (",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EqCjOneSmul.lean",
+      "bytes": 11315,
+      "sha256": "0286e8427bbc35fe46d95263739d7ffc46586ee93abacdd839b8fb925feb0042",
+      "lineCount": 143,
+      "hits": [
+        {
+          "line": 69,
+          "token": "macro",
+          "text": "local macro \"qmove \" h:term : tactic => `(tactic| ("
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EqCjOneSmul.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EqCjOneSmul.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"qmove \" h:term : tactic => `(tactic| (",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsExtTwistedPlaces.lean",
+      "bytes": 8889,
+      "sha256": "9fdeae7598305e1240ab6c0a10010864df931bd238f87d4feb5ea987da95bd4b",
+      "lineCount": 114,
+      "hits": [
+        {
+          "line": 60,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.PrimeBelow.exists_below"
+        },
+        {
+          "line": 61,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.PrimeBelow.exists_below"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsExtTwistedPlaces.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsExtTwistedPlaces.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsGIs.lean",
+      "bytes": 10633,
+      "sha256": "506dc53de6619cc15a9efd9b5bcb4d01b7a934e2a723fa41df8a045cf31080d8",
+      "lineCount": 168,
+      "hits": [
+        {
+          "line": 81,
+          "token": "run_tac",
+          "text": "  run_tac do"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsGIs.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsGIs.lean",
+      "category": "direct_goal_assignment",
+      "purpose": "将当前目标赋为上下文已有假设 h。",
+      "rationale": "MVarId.assign 本身不应被当作类型正确证据；最终声明必须通过正常内核类型检查及 fresh replay；代码不更改环境或选项。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsNormalisedReadingTransportedNewTwist.lean",
+      "bytes": 5241,
+      "sha256": "f576b78897baa6fdb1c0508cf45d8f5ec58f45ca83b05308995bc2efbb5da859",
+      "lineCount": 54,
+      "hits": [
+        {
+          "line": 13,
+          "token": "macro",
+          "text": "local macro:max \"kc% \" e:term:max : term => `((by kexactB $e))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsNormalisedReadingTransportedNewTwist.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsNormalisedReadingTransportedNewTwist.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro:max \"kc% \" e:term:max : term => `((by kexactB $e))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSelectedRealization.lean",
+      "bytes": 26088,
+      "sha256": "8370fc19690243cf55fb9e495b88aadedc481fe79480798d3b8883ad09aac0fc",
+      "lineCount": 292,
+      "hits": [
+        {
+          "line": 43,
+          "token": "macro",
+          "text": "local macro:max \"kq% \" e:term:max : term => `((by kexactB $e))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSelectedRealization.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSelectedRealization.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro:max \"kq% \" e:term:max : term => `((by kexactB $e))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FormGroupsModelsActionsMeasuresBasesCharacterise.lean",
+      "bytes": 14138,
+      "sha256": "0c657a8eb47ddc66036d4835fabc9bf5f5d083e2d1d4884d35c4047a3c6943a1",
+      "lineCount": 253,
+      "hits": [
+        {
+          "line": 18,
+          "token": "macro",
+          "text": "local macro \"ksub \" h:ident x:ident y:term : tactic => `(tactic| ("
+        },
+        {
+          "line": 30,
+          "token": "macro",
+          "text": "local macro \"tie_cases\" : tactic => `(tactic| ("
+        },
+        {
+          "line": 81,
+          "token": "macro",
+          "text": "local macro \"pre_cases\" : tactic => `(tactic| ("
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FormGroupsModelsActionsMeasuresBasesCharacterise.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FormGroupsModelsActionsMeasuresBasesCharacterise.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"ksub \" h:ident x:ident y:term : tactic => `(tactic| (；local macro \"tie_cases\" : tactic => `(tactic| (；local macro \"pre_cases\" : tactic => `(tactic| (",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/LineModelTrueOfFalse.lean",
+      "bytes": 16184,
+      "sha256": "a4239af55e0848076b9a4fc5decaf96b223dd1199b635101ab64d70d703c27d8",
+      "lineCount": 262,
+      "hits": [
+        {
+          "line": 9,
+          "token": "macro",
+          "text": "local macro \"opens_le_auto\" : tactic => `(tactic| (refine SetLike.le_def.2 fun z hz => ?_; simp only [TopologicalSpace.Opens.mem_inf] at hz ⊢; tauto))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/LineModelTrueOfFalse.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/LineModelTrueOfFalse.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"opens_le_auto\" : tactic => `(tactic| (refine SetLike.le_def.2 fun z hz => ?_; simp only [TopologicalSpace.Opens.mem_inf] at hz ⊢; tauto))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RealDatumPrerequisitesUpdateModels.lean",
+      "bytes": 17540,
+      "sha256": "1806305b83cbb3ba1d7a13abe0a6b980978d4500c4548f717e4ca0bf85515adb",
+      "lineCount": 244,
+      "hits": [
+        {
+          "line": 18,
+          "token": "macro",
+          "text": "scoped macro \"obt \" p:Lean.Parser.Tactic.rcasesPatMed \" := \" e:term : tactic => `(tactic| (have x := $e; obtain $p := x))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RealDatumPrerequisitesUpdateModels.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RealDatumPrerequisitesUpdateModels.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "scoped macro \"obt \" p:Lean.Parser.Tactic.rcasesPatMed \" := \" e:term : tactic => `(tactic| (have x := $e; obtain $p := x))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ReferenceTupleWeilDatumVectorPolynomialMapEnlarg.lean",
+      "bytes": 19782,
+      "sha256": "886711e2d1f4b63417047751fc1aab835d29d29a782a86c9bda9fc41db0f8707",
+      "lineCount": 298,
+      "hits": [
+        {
+          "line": 18,
+          "token": "macro",
+          "text": "local macro \"ksub \" h:ident x:ident y:term : tactic => `(tactic| ("
+        },
+        {
+          "line": 25,
+          "token": "macro",
+          "text": "local macro \"pre_sub\" : tactic => `(tactic| ("
+        },
+        {
+          "line": 30,
+          "token": "macro",
+          "text": "local macro \"keq \" n:ident x:term:max y:term:max h:term:max : tactic => `(tactic|"
+        },
+        {
+          "line": 161,
+          "token": "macro",
+          "text": "local macro \"tie_cases\" : tactic => `(tactic| ("
+        },
+        {
+          "line": 213,
+          "token": "macro",
+          "text": "local macro \"pre_cases\" : tactic => `(tactic| ("
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ReferenceTupleWeilDatumVectorPolynomialMapEnlarg.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ReferenceTupleWeilDatumVectorPolynomialMapEnlarg.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"ksub \" h:ident x:ident y:term : tactic => `(tactic| (；local macro \"pre_sub\" : tactic => `(tactic| (；local macro \"keq \" n:ident x:term:max y:term:max h:term:max : tactic => `(tactic|；local macro \"tie_cases\" : tactic => `(tactic| (；local macro \"pre_cases\" : tactic => `(tactic| (",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RigidFrameSymmetricRatioSeries.lean",
+      "bytes": 19547,
+      "sha256": "de16c25d0b0f85df8976667902985424c4e9195668d6be6418a663a8abfa2490",
+      "lineCount": 272,
+      "hits": [
+        {
+          "line": 49,
+          "token": "macro",
+          "text": "macro \"jet_tac\" : tactic => `(tactic| ("
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RigidFrameSymmetricRatioSeries.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RigidFrameSymmetricRatioSeries.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"jet_tac\" : tactic => `(tactic| (",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RingSpecNormalisedCharacterEq.lean",
+      "bytes": 7777,
+      "sha256": "29f604feb6f7e07de6e4c70fd1dbdba1a9fd2f35db1a0be2ad10d15946bc6e6b",
+      "lineCount": 104,
+      "hits": [
+        {
+          "line": 75,
+          "token": "macro",
+          "text": "scoped macro \"copy_cases \" h:ident D:ident D':ident : tactic => `(tactic| ("
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RingSpecNormalisedCharacterEq.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RingSpecNormalisedCharacterEq.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "scoped macro \"copy_cases \" h:ident D:ident D':ident : tactic => `(tactic| (",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ThetaLiftAtReferenceTupleOverEnlargedBase.lean",
+      "bytes": 16532,
+      "sha256": "10844a3c4f248fe97ae1d4b98b8e9b7ecf24200424fddd8a433564a0a01ff82f",
+      "lineCount": 298,
+      "hits": [
+        {
+          "line": 19,
+          "token": "macro",
+          "text": "local macro \"ksub \" h:ident x:ident y:term : tactic => `(tactic| ("
+        },
+        {
+          "line": 53,
+          "token": "macro",
+          "text": "local macro \"tie_cases\" : tactic => `(tactic| ("
+        },
+        {
+          "line": 72,
+          "token": "macro",
+          "text": "local macro \"coef_cases\" : tactic => `(tactic| ("
+        },
+        {
+          "line": 183,
+          "token": "macro",
+          "text": "local macro \"pre_cases\" : tactic => `(tactic| ("
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ThetaLiftAtReferenceTupleOverEnlargedBase.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ThetaLiftAtReferenceTupleOverEnlargedBase.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"ksub \" h:ident x:ident y:term : tactic => `(tactic| (；local macro \"tie_cases\" : tactic => `(tactic| (；local macro \"coef_cases\" : tactic => `(tactic| (；local macro \"pre_cases\" : tactic => `(tactic| (",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/IntegralChartFormalBiext.lean",
+      "bytes": 12909,
+      "sha256": "3785ba4d678a03a944c207bd013c4e130df18cc5f61473d5848494e97e32af21",
+      "lineCount": 349,
+      "hits": [
+        {
+          "line": 36,
+          "token": "macro",
+          "text": "local macro \"no_const\" : tactic =>"
+        },
+        {
+          "line": 46,
+          "token": "macro",
+          "text": "local macro \"push_map\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/JetHarmonics/IntegralChartFormalBiext.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/IntegralChartFormalBiext.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"no_const\" : tactic =>；local macro \"push_map\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/ModuliProofs/ExistsUniqueRigMulRight.lean",
+      "bytes": 46248,
+      "sha256": "31eafc7edc2213571e6b2dd37a4472511494d1b263e58e73c9a93b770f469bf8",
+      "lineCount": 745,
+      "hits": [
+        {
+          "line": 601,
+          "token": "macro",
+          "text": "local macro \"grp_comb \" e:term : tactic => `(tactic| ("
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/ModuliProofs/ExistsUniqueRigMulRight.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/ModuliProofs/ExistsUniqueRigMulRight.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"grp_comb \" e:term : tactic => `(tactic| (",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/AdelicLatticeSmulMemOfAgreeAwayFromPlace.lean",
+      "bytes": 17513,
+      "sha256": "e955334b8a46e2106c059bd9d5c249e24c10ac51ee9c8299d60bc72cd8447e4c",
+      "lineCount": 295,
+      "hits": [
+        {
+          "line": 70,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.NatMulIsIntegralSatakeParameters.exists_nsmul_mem"
+        },
+        {
+          "line": 71,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.NatMulIsIntegralSatakeParameters.exists_nsmul_mem"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/SatakeParameters/AdelicLatticeSmulMemOfAgreeAwayFromPlace.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/AdelicLatticeSmulMemOfAgreeAwayFromPlace.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/UnramifiedWeierstrassCurveTransformCoefficientsW.lean",
+      "bytes": 4079,
+      "sha256": "55077c284a75a14cf2f55a3cd24edd0009f2c91a71be8ce2c38abe7f47f5b5cc",
+      "lineCount": 56,
+      "hits": [
+        {
+          "line": 20,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.WittRootsOfUnity.inWf_of_mem_Kur"
+        },
+        {
+          "line": 21,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.WittRootsOfUnity.inWf_of_mem_Kur"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/SatakeParameters/UnramifiedWeierstrassCurveTransformCoefficientsW.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/UnramifiedWeierstrassCurveTransformCoefficientsW.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/ValuationRingModel.lean",
+      "bytes": 13875,
+      "sha256": "30751e257e3fc223f3a9549e28a874c3fc831e9026c4c856d781d34531a756e0",
+      "lineCount": 272,
+      "hits": [
+        {
+          "line": 206,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.AlgClosedResidueField.isAlgClosed_residueField"
+        },
+        {
+          "line": 207,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.AlgClosedResidueField.isAlgClosed_residueField"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/SatakeParameters/ValuationRingModel.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/ValuationRingModel.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/RelIndexTwoBlockParahoricConjTorusDiagElement.lean",
+      "bytes": 2510,
+      "sha256": "1f9990c66f2647e4cfad8af630be3b77cc7579299cc7fbb27409c053d646786f",
+      "lineCount": 31,
+      "hits": [
+        {
+          "line": 22,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.ParahoricConjugateOpen.relIndex_conj_parahoric"
+        },
+        {
+          "line": 23,
+          "token": "run_tac",
+          "text": "  | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.ParahoricConjugateOpen.relIndex_conj_parahoric"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/TwistedOperators/RelIndexTwoBlockParahoricConjTorusDiagElement.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/RelIndexTwoBlockParahoricConjTorusDiagElement.lean",
+      "category": "goal_reversion",
+      "purpose": "仅通过 liftMetaTactic 调用 g.revertAll，将局部假设搬回目标，再 exact/apply 原有定理。",
+      "rationale": "不丢弃待证目标、不新增公理、不改 Environment；revertAll 构造的新目标仍需证明，最终声明内核检查和 fresh replay 保留。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/TransferBottom.lean",
+      "bytes": 14374,
+      "sha256": "5a9472ea63786c435a371ecbf102908819cbab18af40228fbae469a41a47e8c0",
+      "lineCount": 160,
+      "hits": [
+        {
+          "line": 24,
+          "token": "macro",
+          "text": "local macro:max \"kc% \" e:term:max : term => `((by kexactB $e))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/TwistedOperators/TransferBottom.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/TransferBottom.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro:max \"kc% \" e:term:max : term => `((by kexactB $e))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/TransferFlip.lean",
+      "bytes": 18008,
+      "sha256": "1923ae5b42212d58dcb166cd31d9d32f8c02f7a5635e11c01a727c1d2edeea45",
+      "lineCount": 256,
+      "hits": [
+        {
+          "line": 28,
+          "token": "macro",
+          "text": "local macro:max \"kc% \" e:term:max : term => `((by kexactB $e))"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/TwistedOperators/TransferFlip.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/TransferFlip.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro:max \"kc% \" e:term:max : term => `((by kexactB $e))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/TwoLeMOf.lean",
+      "bytes": 10962,
+      "sha256": "1bb6f00a7078b70cc83e8dd797d5a7fce16c06336070422f691f92fba40e2b26",
+      "lineCount": 187,
+      "hits": [
+        {
+          "line": 72,
+          "token": "macro",
+          "text": "local macro:max \"kd% \" e:term:max : term => `((by kexactB $e))"
+        },
+        {
+          "line": 74,
+          "token": "macro",
+          "text": "local macro \"copyDec% \" d:term:max : term =>"
+        },
+        {
+          "line": 78,
+          "token": "macro",
+          "text": "local macro \"copyIsV% \" h:term:max : term =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AbelianVarietyTheory/Proofs/TwistedOperators/TwoLeMOf.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/TwoLeMOf.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro:max \"kd% \" e:term:max : term => `((by kexactB $e))；local macro \"copyDec% \" d:term:max : term =>；local macro \"copyIsV% \" h:term:max : term =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AutomorphicArithmetic/Foundations/Convolution/RealGroupAnalysis/UnitaryActions/ContinuousAdelicGL2OfContinuousEntries.lean",
+      "bytes": 16328,
+      "sha256": "c878433ece962bbb26d789d83fdb8e3bd2c8e0a9d2f11115a7ebf0ae1038d749",
+      "lineCount": 232,
+      "hits": [
+        {
+          "line": 34,
+          "token": "macro",
+          "text": "local macro \"sl2\" : tactic => `(tactic|"
+        },
+        {
+          "line": 36,
+          "token": "macro",
+          "text": "local macro \"gl2\" : tactic => `(tactic|"
+        }
+      ],
+      "sourceRelativePath": "Development/AutomorphicArithmetic/Foundations/Convolution/RealGroupAnalysis/UnitaryActions/ContinuousAdelicGL2OfContinuousEntries.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AutomorphicArithmetic/Foundations/Convolution/RealGroupAnalysis/UnitaryActions/ContinuousAdelicGL2OfContinuousEntries.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"sl2\" : tactic => `(tactic|；local macro \"gl2\" : tactic => `(tactic|",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AutomorphicArithmetic/Foundations/EtaleClopenDescent/ExistsHeckeCorrespondenceOnIntegralShimuraModel.lean",
+      "bytes": 13812,
+      "sha256": "f1b86665698294d83e5bc14077217402170b90525b60be8d0563df430be421fc",
+      "lineCount": 246,
+      "hits": [
+        {
+          "line": 103,
+          "token": "macro",
+          "text": "local macro \"cp \" m:term:max : term =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AutomorphicArithmetic/Foundations/EtaleClopenDescent/ExistsHeckeCorrespondenceOnIntegralShimuraModel.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AutomorphicArithmetic/Foundations/EtaleClopenDescent/ExistsHeckeCorrespondenceOnIntegralShimuraModel.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"cp \" m:term:max : term =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsSelectionPairLocalLanglands.lean",
+      "bytes": 13171,
+      "sha256": "9bccf10c351154503b409d5c767f30be14fdb637fb40428ac7a1a796c7135eb1",
+      "lineCount": 88,
+      "hits": [
+        {
+          "line": 29,
+          "token": "macro",
+          "text": "local macro:max \"kq% \" e:term:max : term => `((by kexactB $e))"
+        }
+      ],
+      "sourceRelativePath": "Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsSelectionPairLocalLanglands.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsSelectionPairLocalLanglands.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro:max \"kq% \" e:term:max : term => `((by kexactB $e))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/Cup1CoboundaryMemBoundaries.lean",
+      "bytes": 22558,
+      "sha256": "0cf066d390269283ffa08c36f9bbced97e7e157788b2405f3d1990e377e2db13",
+      "lineCount": 447,
+      "hits": [
+        {
+          "line": 96,
+          "token": "macro",
+          "text": "macro \"fin_order\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AutomorphicSpectrum/Proofs/BlockDecomposition/Cup1CoboundaryMemBoundaries.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/Cup1CoboundaryMemBoundaries.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"fin_order\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/DFormMem.lean",
+      "bytes": 11995,
+      "sha256": "bb935dc1ad46b52581364bd3b17a2e6d7837e0a3f13955716a15770780461f1b",
+      "lineCount": 228,
+      "hits": [
+        {
+          "line": 85,
+          "token": "macro",
+          "text": "local macro \"fa\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AutomorphicSpectrum/Proofs/BlockDecomposition/DFormMem.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/DFormMem.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"fa\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/GradedFormCocycle.lean",
+      "bytes": 10327,
+      "sha256": "f50b9e8967588dacc7efd7d89017dfbfe526d7acb09cde07483353600122b2c5",
+      "lineCount": 195,
+      "hits": [
+        {
+          "line": 15,
+          "token": "macro",
+          "text": "local macro \"fa\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AutomorphicSpectrum/Proofs/BlockDecomposition/GradedFormCocycle.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/GradedFormCocycle.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"fa\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/NewformHeckeEigenvalue.lean",
+      "bytes": 16635,
+      "sha256": "4625364af2a402520830bc9f9403eab10eadd053034ee82e2ff4527b14a6b424",
+      "lineCount": 396,
+      "hits": [
+        {
+          "line": 23,
+          "token": "macro",
+          "text": "local macro \"gl2\" : tactic => `(tactic| (apply Units.ext; ext i j; fin_cases i <;> fin_cases j <;>"
+        }
+      ],
+      "sourceRelativePath": "Development/AutomorphicSpectrum/Proofs/BlockDecomposition/NewformHeckeEigenvalue.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/NewformHeckeEigenvalue.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"gl2\" : tactic => `(tactic| (apply Units.ext; ext i j; fin_cases i <;> fin_cases j <;>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/ShuffleCup1FormulaPositiveDegree.lean",
+      "bytes": 3330,
+      "sha256": "270d10633b733d5ebb753a7815cfd8d7b2bbda417eb7be39a37bcdb26c7fc171",
+      "lineCount": 63,
+      "hits": [
+        {
+          "line": 29,
+          "token": "macro",
+          "text": "macro \"fin_order'\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AutomorphicSpectrum/Proofs/BlockDecomposition/ShuffleCup1FormulaPositiveDegree.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/ShuffleCup1FormulaPositiveDegree.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"fin_order'\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/TaylorDifferentialRepresentative.lean",
+      "bytes": 15855,
+      "sha256": "1409bcca044b469a74198b3213c3fb55acee81f221db369dc9dcaa36fe9a6053",
+      "lineCount": 274,
+      "hits": [
+        {
+          "line": 59,
+          "token": "macro",
+          "text": "local macro \"fa\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Development/AutomorphicSpectrum/Proofs/BlockDecomposition/TaylorDifferentialRepresentative.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/TaylorDifferentialRepresentative.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"fa\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/EtaleCohomology/EtaleSheaves/ChasePf.lean",
+      "bytes": 13956,
+      "sha256": "d4bc0d45dbd38c5776fe440fd2cd0d76ade37f883d2cc6caee59244ca3332fd5",
+      "lineCount": 199,
+      "hits": [
+        {
+          "line": 105,
+          "token": "macro",
+          "text": "macro \"meq\" : tactic => `(tactic| first"
+        }
+      ],
+      "sourceRelativePath": "Development/EtaleCohomology/EtaleSheaves/ChasePf.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/EtaleCohomology/EtaleSheaves/ChasePf.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"meq\" : tactic => `(tactic| first",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/EtaleCohomology/TateTwists/EtaleTensorCycleLocallyLowersTopDegreeOfRowExact.lean",
+      "bytes": 11137,
+      "sha256": "d306365f2b926515d43bdc084c629a0dca011ad39d877eefa10775d18a41dab6",
+      "lineCount": 188,
+      "hits": [
+        {
+          "line": 9,
+          "token": "macro",
+          "text": "local macro \"TI \" w:term:max : term => `({p : ℤ × ℤ // p.1 + p.2 = $w})"
+        },
+        {
+          "line": 11,
+          "token": "macro",
+          "text": "local macro \"TF \" C:term:max J:term:max U:term:max w:term:max : term =>"
+        }
+      ],
+      "sourceRelativePath": "Development/EtaleCohomology/TateTwists/EtaleTensorCycleLocallyLowersTopDegreeOfRowExact.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/EtaleCohomology/TateTwists/EtaleTensorCycleLocallyLowersTopDegreeOfRowExact.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"TI \" w:term:max : term => `({p : ℤ × ℤ // p.1 + p.2 = $w})；local macro \"TF \" C:term:max J:term:max U:term:max w:term:max : term =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/WeilBound/CoreStatements/HodgeTatePoints/CbBase.lean",
+      "bytes": 12410,
+      "sha256": "a173c165e26872a99c33bc9a83e0c734be6b3360aacc03dee151b441b101c8b2",
+      "lineCount": 256,
+      "hits": [
+        {
+          "line": 34,
+          "token": "macro",
+          "text": "macro \"zz\" : tactic => `(tactic| repeat' with_reducible first"
+        },
+        {
+          "line": 81,
+          "token": "macro",
+          "text": "macro \"evs\" loc:(Lean.Parser.Tactic.location)? : tactic => `(tactic|"
+        }
+      ],
+      "sourceRelativePath": "Development/WeilBound/CoreStatements/HodgeTatePoints/CbBase.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/WeilBound/CoreStatements/HodgeTatePoints/CbBase.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"zz\" : tactic => `(tactic| repeat' with_reducible first；macro \"evs\" loc:(Lean.Parser.Tactic.location)? : tactic => `(tactic|",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/WeilBound/CoreStatements/HodgeTatePoints/CcBase.lean",
+      "bytes": 7375,
+      "sha256": "4c6cebe8e328cc731f1cbd188c979814a7a15820d04acda2166b89976fa73cb9",
+      "lineCount": 163,
+      "hits": [
+        {
+          "line": 42,
+          "token": "macro",
+          "text": "macro \"ztac\" : tactic => `(tactic| repeat' (first"
+        },
+        {
+          "line": 81,
+          "token": "macro",
+          "text": "macro \"evs\" \" at \" h:ident : tactic => `(tactic| simp (disch := ztac) only [FGLaw.add, ev_mul', ev_one, ev_ev, evV_cons,"
+        }
+      ],
+      "sourceRelativePath": "Development/WeilBound/CoreStatements/HodgeTatePoints/CcBase.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/WeilBound/CoreStatements/HodgeTatePoints/CcBase.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"ztac\" : tactic => `(tactic| repeat' (first；macro \"evs\" \" at \" h:ident : tactic => `(tactic| simp (disch := ztac) only [FGLaw.add, ev_mul', ev_one, ev_ev, evV_cons,",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Development/WeilBound/CoreStatements/PadicHodgeComparison/EtaleCohomologyComparison/CechPairings/FaceMapCompSuccAboveCastSucc.lean",
+      "bytes": 26069,
+      "sha256": "b4bf1040a63ab247ee6f4b3c5a84c2ce5a0c4c8470b9958fdc2e326923f331cc",
+      "lineCount": 382,
+      "hits": [
+        {
+          "line": 227,
+          "token": "macro",
+          "text": "macro \"fin_tac\" : tactic => `(tactic| (funext x; first | (apply Fin.ext; simp only [Function.comp_apply, vsA, vpA, Fin.val_succ, Fin.val_castSucc, Fin.val_zero, Fin.val_last, id]; split_ifs <;> omega) | (simp only [Function.comp_apply, vbb, vsA, Fin.val_succ, Fin.val_castSucc, Fin.val_zero, Fin.val_last]; split_ifs <;> first | rfl | (exfalso; omega))))"
+        }
+      ],
+      "sourceRelativePath": "Development/WeilBound/CoreStatements/PadicHodgeComparison/EtaleCohomologyComparison/CechPairings/FaceMapCompSuccAboveCastSucc.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Development/WeilBound/CoreStatements/PadicHodgeComparison/EtaleCohomologyComparison/CechPairings/FaceMapCompSuccAboveCastSucc.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"fin_tac\" : tactic => `(tactic| (funext x; first | (apply Fin.ext; simp only [Function.comp_apply, vsA, vpA, Fin.val_succ, Fin.val_castSucc, Fin.val_zero, Fin.val_last, id]; split_ifs <;> omega) | (simp only [Function.comp_apply, vbb, vsA, Fin.val_succ, Fin.val_castSucc, Fin.val_zero, Fin.val_last]; split_ifs <;> first | rfl | (exfalso; omega))))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/DistinguishedUnitIdeals/DistinguishedOrderProofs/RhoMapFunctorial.lean",
+      "bytes": 21744,
+      "sha256": "b11b101941a1fd67d0ebdb5ef713ae77f6372bb185c7859be1b007968440f153",
+      "lineCount": 503,
+      "hits": [
+        {
+          "line": 10,
+          "token": "macro",
+          "text": "local macro \"modx\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Formalism/DistinguishedUnitIdeals/DistinguishedOrderProofs/RhoMapFunctorial.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/DistinguishedUnitIdeals/DistinguishedOrderProofs/RhoMapFunctorial.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"modx\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/EllipticTorsion/EllipticTorsionProofs/Change.lean",
+      "bytes": 7931,
+      "sha256": "21ae9b94bfe2fc26228e83015a3619bb5f25705ebdab9b11d32f02fe13b20262",
+      "lineCount": 166,
+      "hits": [
+        {
+          "line": 66,
+          "token": "macro",
+          "text": "macro \"change_aux_intm\" : tactic => `(tactic| (repeat (first"
+        }
+      ],
+      "sourceRelativePath": "Formalism/EllipticTorsion/EllipticTorsionProofs/Change.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/EllipticTorsion/EllipticTorsionProofs/Change.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"change_aux_intm\" : tactic => `(tactic| (repeat (first",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/HermitianCurvature/HermitianCurvatureProofs/CoordinateCommuteRaisingConstant.lean",
+      "bytes": 342067,
+      "sha256": "7d026652cedc95a23ee31802ba3cd7bc0b41cefd38e7f3b684fee58d5a45cf01",
+      "lineCount": 6205,
+      "hits": [
+        {
+          "line": 573,
+          "token": "macro",
+          "text": "local macro \"mx2_dg\" : tactic => `(tactic| (simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA_eq, nabsA_eq, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, ← Matrix.diagonal_one]; congr 1; funext π))"
+        }
+      ],
+      "sourceRelativePath": "Formalism/HermitianCurvature/HermitianCurvatureProofs/CoordinateCommuteRaisingConstant.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/HermitianCurvature/HermitianCurvatureProofs/CoordinateCommuteRaisingConstant.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"mx2_dg\" : tactic => `(tactic| (simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA_eq, nabsA_eq, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, ← Matrix.diagonal_one]; congr 1; funext π))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/HermitianCurvature/HermitianCurvatureProofs/CornerBlockActionInvariant.lean",
+      "bytes": 12162,
+      "sha256": "188eccc30cf1e86208f8723724d14a3b90d69403b9b2b34ec7baf89550d6d862",
+      "lineCount": 230,
+      "hits": [
+        {
+          "line": 72,
+          "token": "macro",
+          "text": "local macro \"blks\" : tactic => `(tactic| simp only [Ux3.block3_apply, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,"
+        }
+      ],
+      "sourceRelativePath": "Formalism/HermitianCurvature/HermitianCurvatureProofs/CornerBlockActionInvariant.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/HermitianCurvature/HermitianCurvatureProofs/CornerBlockActionInvariant.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"blks\" : tactic => `(tactic| simp only [Ux3.block3_apply, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/HermitianCurvature/HermitianCurvatureProofs/CutCptCopy.lean",
+      "bytes": 4649,
+      "sha256": "2142903f6f9f969f51e2129acd7b8b00db9d3e99dacacd5c512f33654b1c0b31",
+      "lineCount": 91,
+      "hits": [
+        {
+          "line": 87,
+          "token": "elab",
+          "text": "elab \"cpt_copy_thms\" : command => do"
+        }
+      ],
+      "sourceRelativePath": "Formalism/HermitianCurvature/HermitianCurvatureProofs/CutCptCopy.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/HermitianCurvature/HermitianCurvatureProofs/CutCptCopy.lean",
+      "category": "kernel_checked_declaration_copy",
+      "purpose": "沿固定 roots 的依赖图复制 def/theorem，以固定常量映射同时替换 type/value，再经 addDecl 添加。",
+      "rationale": "分支仅 defnInfo/thmInfo；创建 defnDecl/thmDecl，其他种类报错；未创建 axiomDecl，未调用 addDeclWithoutChecking，未设置 skipKernelTC。Lean4.33.1 addDecl 仍经内核检查；替换错误应被拒绝。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/HermitianCurvature/HermitianCurvatureProofs/EmbedLoweringConstant.lean",
+      "bytes": 29301,
+      "sha256": "d5629854469ec93754a22ca89573730da599faee12294b91459c620c06897856",
+      "lineCount": 517,
+      "hits": [
+        {
+          "line": 12,
+          "token": "macro",
+          "text": "local macro \"noncomm_match_scalars\" : tactic => `(tactic|"
+        }
+      ],
+      "sourceRelativePath": "Formalism/HermitianCurvature/HermitianCurvatureProofs/EmbedLoweringConstant.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/HermitianCurvature/HermitianCurvatureProofs/EmbedLoweringConstant.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"noncomm_match_scalars\" : tactic => `(tactic|",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/HermitianCurvature/HermitianCurvatureProofs/LevelNablaStarRelations.lean",
+      "bytes": 30026,
+      "sha256": "0cae5f3637d2f4c0b114889723964088a683a3105339c699ff86d1175810dab2",
+      "lineCount": 548,
+      "hits": [
+        {
+          "line": 353,
+          "token": "macro",
+          "text": "local macro \"mx2_dg\" : tactic => `(tactic| (simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA_eq, nabsA_eq, sc,"
+        }
+      ],
+      "sourceRelativePath": "Formalism/HermitianCurvature/HermitianCurvatureProofs/LevelNablaStarRelations.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/HermitianCurvature/HermitianCurvatureProofs/LevelNablaStarRelations.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"mx2_dg\" : tactic => `(tactic| (simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA_eq, nabsA_eq, sc,",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/HermitianCurvature/HermitianCurvatureProofs/LinearFormRadicalRankOne.lean",
+      "bytes": 17129,
+      "sha256": "d67007c183a065c4a5eefdc45e42a4377ca043dbbbbc87576c26bd73b46d6642",
+      "lineCount": 329,
+      "hits": [
+        {
+          "line": 55,
+          "token": "macro",
+          "text": "local macro \"blks\" : tactic => `(tactic| simp only [Ux3.block3_apply, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,"
+        }
+      ],
+      "sourceRelativePath": "Formalism/HermitianCurvature/HermitianCurvatureProofs/LinearFormRadicalRankOne.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/HermitianCurvature/HermitianCurvatureProofs/LinearFormRadicalRankOne.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"blks\" : tactic => `(tactic| simp only [Ux3.block3_apply, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/HermitianCurvature/HermitianCurvatureProofs/RadicalUnipotentFirstBasisEqOne.lean",
+      "bytes": 35732,
+      "sha256": "bad9a3c19589c46a94d0d55595e5ce33d09a7d0ba61dd6fef02dfd45f20045aa",
+      "lineCount": 681,
+      "hits": [
+        {
+          "line": 412,
+          "token": "macro",
+          "text": "local macro \"blks\" : tactic => `(tactic| simp only [Ux3.block3_apply, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,"
+        },
+        {
+          "line": 526,
+          "token": "macro",
+          "text": "local macro \"blks\" : tactic => `(tactic| simp only [Ux3.block3_apply, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,"
+        }
+      ],
+      "sourceRelativePath": "Formalism/HermitianCurvature/HermitianCurvatureProofs/RadicalUnipotentFirstBasisEqOne.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/HermitianCurvature/HermitianCurvatureProofs/RadicalUnipotentFirstBasisEqOne.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"blks\" : tactic => `(tactic| simp only [Ux3.block3_apply, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,；local macro \"blks\" : tactic => `(tactic| simp only [Ux3.block3_apply, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/HermitianCurvature/HermitianCurvatureProofs/RttUpperRelationsFromDescent.lean",
+      "bytes": 44548,
+      "sha256": "316ff21bf397b67bc031601e9de3a48d55cb1af5584547bd3ee2cf182896183d",
+      "lineCount": 859,
+      "hits": [
+        {
+          "line": 30,
+          "token": "macro",
+          "text": "macro \"distrib_module\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Formalism/HermitianCurvature/HermitianCurvatureProofs/RttUpperRelationsFromDescent.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/HermitianCurvature/HermitianCurvatureProofs/RttUpperRelationsFromDescent.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"distrib_module\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/HermitianCurvature/StatementTA.lean",
+      "bytes": 17035,
+      "sha256": "243e2dabb8bd07f8143f3fff6261828d702a23235a59fcca0b7082e1a8af65a1",
+      "lineCount": 291,
+      "hits": [
+        {
+          "line": 66,
+          "token": "axioms",
+          "text": "section axioms"
+        },
+        {
+          "line": 90,
+          "token": "axioms",
+          "text": "end axioms"
+        }
+      ],
+      "sourceRelativePath": "Formalism/HermitianCurvature/StatementTA.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/HermitianCurvature/StatementTA.lean",
+      "category": "section_name",
+      "purpose": "section axioms / end axioms，仅给定义分组。",
+      "rationale": "axioms 是节名称，不是 axiom 声明。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/LocalToGlobal/IndefiniteForms/IndefiniteTree/FunctionalLowerBoundOfConditionsNumeric.lean",
+      "bytes": 57535,
+      "sha256": "504c8f33d619c020ccc69abf8439c6d4215218a811ea6489c8cbc6d7b2b717f8",
+      "lineCount": 1053,
+      "hits": [
+        {
+          "line": 231,
+          "token": "macro",
+          "text": "macro \"pos_tac\" : tactic =>"
+        },
+        {
+          "line": 234,
+          "token": "macro",
+          "text": "macro \"onele_tac\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Formalism/LocalToGlobal/IndefiniteForms/IndefiniteTree/FunctionalLowerBoundOfConditionsNumeric.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/LocalToGlobal/IndefiniteForms/IndefiniteTree/FunctionalLowerBoundOfConditionsNumeric.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"pos_tac\" : tactic =>；macro \"onele_tac\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/LocalToGlobal/IndefiniteReal/HeckeNonvanishing/Imports.lean",
+      "bytes": 201,
+      "sha256": "f31ce165cd4783d48da9b4c3cd10f037e3e0fccd46aab4532edb54e43a9f350c",
+      "lineCount": 8,
+      "hits": [
+        {
+          "line": 5,
+          "token": "elab",
+          "text": "elab \"kexactB \" e:term : tactic => withMainContext do"
+        }
+      ],
+      "sourceRelativePath": "Formalism/LocalToGlobal/IndefiniteReal/HeckeNonvanishing/Imports.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/LocalToGlobal/IndefiniteReal/HeckeNonvanishing/Imports.lean",
+      "category": "direct_goal_assignment",
+      "purpose": "kexactB 将用户 term 正常 elaboration / synthesize 后 instantiateMVars，再赋给当前目标。",
+      "rationale": "未显式检查目标类型，不能把 elaboration 成功当作证明通过；最终声明必须经正常内核检查和 fresh replay。无新增公理、环境改写或跳过内核的选项。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/LocalToGlobal/NumberFieldFamilies/OwnStruct.lean",
+      "bytes": 2750,
+      "sha256": "a3c982067143e5288390c77c60efe12dc2c2a0803cdb54ecf6fb913dc8339e11",
+      "lineCount": 66,
+      "hits": [
+        {
+          "line": 53,
+          "token": "elab",
+          "text": "elab \"kcopy \" t:term : tactic => withMainContext do"
+        },
+        {
+          "line": 60,
+          "token": "elab",
+          "text": "elab \"#kcopy_probe \" t:term \" : \" ty:term : command => Command.runTermElabM fun _ => do"
+        }
+      ],
+      "sourceRelativePath": "Formalism/LocalToGlobal/NumberFieldFamilies/OwnStruct.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/LocalToGlobal/NumberFieldFamilies/OwnStruct.lean",
+      "category": "constructor_term_rebuilding",
+      "purpose": "kcopy 按目标 forall / 自有结构构造器递归重建项（fuel64），最后赋给目标；#kcopy_probe 只记录不匹配路径。",
+      "rationale": "只构造 lambda/app/proj/ctor 项并读取 Kernel.isDefEq，不向 Environment 新增公理或关闭检查；直接赋值的潜在类型错误由最终内核检查/fresh replay 排除。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/LocalToGlobal/TorsionIntegrality/TorsionTranslationPowers/NonsingularJetNorms/NonsingularNorm.lean",
+      "bytes": 12523,
+      "sha256": "68af85efdf302ed1bb0bb6be6daa18e924b2e877e0f6786bdf62dd2bcba91369",
+      "lineCount": 299,
+      "hits": [
+        {
+          "line": 70,
+          "token": "macro",
+          "text": "macro \"integ\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Formalism/LocalToGlobal/TorsionIntegrality/TorsionTranslationPowers/NonsingularJetNorms/NonsingularNorm.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/LocalToGlobal/TorsionIntegrality/TorsionTranslationPowers/NonsingularJetNorms/NonsingularNorm.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"integ\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/PeriodIntegrals/UnitaryGroupMassFormula/DensityLemma/PFibreBoundV.lean",
+      "bytes": 23268,
+      "sha256": "62cc18788225bba6c4f2820c0a40f60548d451dbe5a1b65fa5b8f7e52c1ae455",
+      "lineCount": 487,
+      "hits": [
+        {
+          "line": 175,
+          "token": "macro",
+          "text": "macro \"nbt\" : tactic => `(tactic| (simp only [unipotentBlockMatrix, Matrix.of_apply]; split_ifs <;>"
+        }
+      ],
+      "sourceRelativePath": "Formalism/PeriodIntegrals/UnitaryGroupMassFormula/DensityLemma/PFibreBoundV.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/PeriodIntegrals/UnitaryGroupMassFormula/DensityLemma/PFibreBoundV.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"nbt\" : tactic => `(tactic| (simp only [unipotentBlockMatrix, Matrix.of_apply]; split_ifs <;>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/PeriodIntegrals/UnitaryGroupMassFormula/GaussianUniqueness/MulMApply.lean",
+      "bytes": 10039,
+      "sha256": "a5b54721fd46cab4c8f87a3cc042f9f1432e5507daff1f142b9b83ca6ee7fb1f",
+      "lineCount": 241,
+      "hits": [
+        {
+          "line": 12,
+          "token": "macro",
+          "text": "macro \"lvo\" : tactic => `(tactic| (intro a b c h1 h2; (try dsimp only at h1 h2 ⊢); omega))"
+        }
+      ],
+      "sourceRelativePath": "Formalism/PeriodIntegrals/UnitaryGroupMassFormula/GaussianUniqueness/MulMApply.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/PeriodIntegrals/UnitaryGroupMassFormula/GaussianUniqueness/MulMApply.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"lvo\" : tactic => `(tactic| (intro a b c h1 h2; (try dsimp only at h1 h2 ⊢); omega))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/PeriodIntegrals/UnitaryGroupMassFormula/LevelImageArithmetic/GlevImageOf.lean",
+      "bytes": 6266,
+      "sha256": "875c0ca4e81134d6ee298a749d078cef841aa26ec0161d64948170b2d673248a",
+      "lineCount": 153,
+      "hits": [
+        {
+          "line": 12,
+          "token": "macro",
+          "text": "local macro \"ifarith\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Formalism/PeriodIntegrals/UnitaryGroupMassFormula/LevelImageArithmetic/GlevImageOf.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/PeriodIntegrals/UnitaryGroupMassFormula/LevelImageArithmetic/GlevImageOf.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"ifarith\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/PeriodIntegrals/UnitaryGroupMassFormula/LocalUnimodularLattice/Transf.lean",
+      "bytes": 4684,
+      "sha256": "69394617064b5396b27419a62f66635b61aa752e5eab3617ae7ddf0a730cd035",
+      "lineCount": 100,
+      "hits": [
+        {
+          "line": 100,
+          "token": "axioms",
+          "text": "#print axioms transfer_holds"
+        }
+      ],
+      "sourceRelativePath": "Formalism/PeriodIntegrals/UnitaryGroupMassFormula/LocalUnimodularLattice/Transf.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/PeriodIntegrals/UnitaryGroupMassFormula/LocalUnimodularLattice/Transf.lean",
+      "category": "axiom_print_command",
+      "purpose": "原始源码已有 #print axioms transfer_holds。",
+      "rationale": "只打印依赖，不声明公理或替换内核。其 stdout 不能用于最终五定理审计；仍使用独立生成脚本和专用输出解析。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/PeriodIntegrals/UnitaryGroupMassFormula/UnitaryClassMass/UnitaryClassMass.lean",
+      "bytes": 1527,
+      "sha256": "d4abc7f7b689071ac81d95087a2961488ffc97b0430803026f29474e82cfcda4",
+      "lineCount": 31,
+      "hits": [
+        {
+          "line": 25,
+          "token": "axioms",
+          "text": "#print axioms PI.UnitaryGroupMassFormula.UJClassMass.tensor_localization"
+        },
+        {
+          "line": 26,
+          "token": "axioms",
+          "text": "#print axioms PI.UnitaryGroupMassFormula.UJClassMass.hermitian_approximation"
+        },
+        {
+          "line": 27,
+          "token": "axioms",
+          "text": "#print axioms PI.UnitaryGroupMassFormula.UJClassMass.unitary_class_mass"
+        }
+      ],
+      "sourceRelativePath": "Formalism/PeriodIntegrals/UnitaryGroupMassFormula/UnitaryClassMass/UnitaryClassMass.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/PeriodIntegrals/UnitaryGroupMassFormula/UnitaryClassMass/UnitaryClassMass.lean",
+      "category": "axiom_print_command",
+      "purpose": "原始源码已有三个 #print axioms（tensor_localization / hermitian_approximation / unitary_class_mass）。",
+      "rationale": "只打印依赖，不声明公理或替换内核；最终审计仍使用独立脚本和专用输出解析。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/SatakeDualWeyl/AdelicIwasawaHecke/FIwasawaC.lean",
+      "bytes": 9384,
+      "sha256": "e347ea040bd1d90518bd5b76f13fc4e1677fd42a51be8d9a9942b477dc0f1294",
+      "lineCount": 247,
+      "hits": [
+        {
+          "line": 7,
+          "token": "macro",
+          "text": "macro \"fIwasawa_omega\" : tactic =>"
+        }
+      ],
+      "sourceRelativePath": "Formalism/SatakeDualWeyl/AdelicIwasawaHecke/FIwasawaC.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/SatakeDualWeyl/AdelicIwasawaHecke/FIwasawaC.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"fIwasawa_omega\" : tactic =>",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/SharpRestriction/Divisibility/GeneratorPowers/FBMapPf.lean",
+      "bytes": 9041,
+      "sha256": "85df320d9405292dbde4740756a18e385a23c739652e1833a34a999ad9de6ce6",
+      "lineCount": 201,
+      "hits": [
+        {
+          "line": 153,
+          "token": "macro",
+          "text": "local macro \"fbm\" : tactic => `(tactic| (simp only [map_mul, map_one, FGLaw.add, map_ev', mp_cons, mp_nil, mp_pt, mp_zero,"
+        }
+      ],
+      "sourceRelativePath": "Formalism/SharpRestriction/Divisibility/GeneratorPowers/FBMapPf.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/SharpRestriction/Divisibility/GeneratorPowers/FBMapPf.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "local macro \"fbm\" : tactic => `(tactic| (simp only [map_mul, map_one, FGLaw.add, map_ev', mp_cons, mp_nil, mp_pt, mp_zero,",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/Formalism/SharpRestriction/Divisibility/LocalNonemptiness/SubsingletonRankIndicatorIff.lean",
+      "bytes": 23412,
+      "sha256": "ad43a68b1755c02e4a31433b77349f8c88aa7944c34b28d1136480fc650d4164",
+      "lineCount": 598,
+      "hits": [
+        {
+          "line": 276,
+          "token": "macro",
+          "text": "macro \"exists_prescribed_local_data\" : tactic => `(tactic| (intros; first | trivial | rfl | exact Subsingleton.elim _ _ | simp))"
+        }
+      ],
+      "sourceRelativePath": "Formalism/SharpRestriction/Divisibility/LocalNonemptiness/SubsingletonRankIndicatorIff.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/Formalism/SharpRestriction/Divisibility/LocalNonemptiness/SubsingletonRankIndicatorIff.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"exists_prescribed_local_data\" : tactic => `(tactic| (intros; first | trivial | rfl | exact Subsingleton.elim _ _ | simp))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/ReciprocityTheory/ReductiveGroups/ArithmeticGeometry/DiscreteValuationRings/ExistsRosatiGen.lean",
+      "bytes": 15600,
+      "sha256": "3e894c58047e5ce86469e0431d5511fb260cc0a155f705a427e999267411aba5",
+      "lineCount": 330,
+      "hits": [
+        {
+          "line": 34,
+          "token": "macro",
+          "text": "macro \"secTac\" : tactic => `(tactic| (simp [Sum.forall, Fin.forall_fin_succ, Over.w, Over.w_assoc, eSec, Matrix.cons_val_zero, Matrix.cons_val_succ]))"
+        }
+      ],
+      "sourceRelativePath": "ReciprocityTheory/ReductiveGroups/ArithmeticGeometry/DiscreteValuationRings/ExistsRosatiGen.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/ReciprocityTheory/ReductiveGroups/ArithmeticGeometry/DiscreteValuationRings/ExistsRosatiGen.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"secTac\" : tactic => `(tactic| (simp [Sum.forall, Fin.forall_fin_succ, Over.w, Over.w_assoc, eSec, Matrix.cons_val_zero, Matrix.cons_val_succ]))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    },
+    {
+      "path": "src/ReciprocityTheory/ReductiveGroups/ArithmeticGeometry/ExtensionDescent/Theta1.lean",
+      "bytes": 3354,
+      "sha256": "5077ef0b69e8ac6fdf904a7f053282e6720a59413fa1b78db15940ccca34c757",
+      "lineCount": 87,
+      "hits": [
+        {
+          "line": 25,
+          "token": "macro",
+          "text": "macro \"ones\" : tactic => `(tactic| (repeat (first | erw [map_one] | erw [one_zpow] | erw [one_pow] | erw [inv_one] | erw [_root_.mul_one] | erw [_root_.one_mul])))"
+        }
+      ],
+      "sourceRelativePath": "ReciprocityTheory/ReductiveGroups/ArithmeticGeometry/ExtensionDescent/Theta1.lean",
+      "url": "https://raw.githubusercontent.com/tamnd/riemann-lean/af705e0d9a5904326eb0693310e36d9484df7f8f/lean/src/ReciprocityTheory/ReductiveGroups/ArithmeticGeometry/ExtensionDescent/Theta1.lean",
+      "category": "quoted_tactic_or_term_macro",
+      "purpose": "macro \"ones\" : tactic => `(tactic| (repeat (first | erw [map_one] | erw [one_zpow] | erw [one_pow] | erw [inv_one] | erw [_root_.mul_one] | erw [_root_.one_mul])))",
+      "rationale": "已逐个阅读宏的完整引用展开体：仅拼接普通 term/tactic 语法（重写、构造、投影、exact/apply、算术或已审查的 kexactB），无 IO/环境写入/公理构造/关闭内核。所有生成项仍须经内核检查；引用 kexactB 的宏同时依赖对其固定哈希实现的审查。",
+      "decision": "approve_exact_bytes_for_pipeline_execution_only",
+      "requiredChecks": [
+        "original_archive_sha256",
+        "source_inventory_hash",
+        "normal_kernel_typecheck",
+        "five_theorem_transitive_axiom_allowlist",
+        "leanchecker_fresh_Main"
+      ],
+      "reviewedScope": "列出的元编程/误报命中及其实现；不代表数学陈述或整个证明已获接受"
+    }
+  ]
+}

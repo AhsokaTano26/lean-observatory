@@ -1,0 +1,11 @@
+name: lean-observatory-tools
+services:
+  apparmor-check:
+    build: {context: ., dockerfile: deploy/apparmor-check.Dockerfile}
+    volumes: ["./deploy/lean-observatory-worker.apparmor:/profile:ro"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true", "apparmor=unconfined"]
+    read_only: true
+    tmpfs: ["/tmp:size=64m"]
+    cpus: 1
+    mem_limit: 256m

@@ -58,6 +58,15 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(json.load(self.req('/api/state'))['capabilities'],{'readOnly':True})
         self.assertEqual(json.load(self.req('/api/runs'))[0]['id'],s['id'])
 
+    def test_task_ledger_includes_old_runs_for_resume_acceptance(self):
+        ids=[]
+        for i in range(35):
+            s=self.store.create('mock');ids.append(s['id'])
+            self.store.control(s['id'],'cancel')
+        runs=json.load(self.req('/api/runs'))
+        self.assertEqual(len(runs),35)
+        self.assertIn(ids[0],{r['id'] for r in runs})
+
     def test_full_log_download_contains_untruncated_command_output(self):
         import io,tarfile
         s=self.store.create('mock');raw=b'x'*24000+b'\n'

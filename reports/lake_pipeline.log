@@ -1,0 +1,424 @@
+Container lean-observatory-worker-run-3bd2e3a64b03 created. Synthetic fixture only.
+[fixture] dependencies $ lake -f lakefile.toml env lean --version
+[fixture] dependencies info: mathlib: cloning https://github.com/leanprover-community/mathlib4
+[fixture] dependencies info: mathlib: cloning https://github.com/leanprover-community/mathlib4
+[fixture] dependencies info: mathlib: cloning https://github.com/leanprover-community/mathlib4
+[fixture] dependencies info: mathlib: cloning https://github.com/leanprover-community/mathlib4
+[fixture] dependencies info: mathlib: cloning https://github.com/leanprover-community/mathlib4
+[fixture] dependencies info: mathlib: cloning https://github.com/leanprover-community/mathlib4
+[fixture] dependencies info: mathlib: cloning https://github.com/leanprover-community/mathlib4
+[fixture] dependencies info: mathlib: checking out revision '0df444a360eaa60ab8c11dca51a86af692955474'
+[fixture] dependencies info: importGraph: cloning https://github.com/leanprover-community/import-graph
+[fixture] dependencies info: proofwidgets: checking out revision '4be2e3d5087eeb272cf5a8853b8f9dd025ef5957'
+[fixture] dependencies info: batteries: cloning https://github.com/leanprover-community/batteries
+[fixture] dependencies info: Cli: cloning https://github.com/leanprover/lean4-cli
+[fixture] dependencies $ lake -f lakefile.toml exe mathlib/cache get Mathlib.Data.Nat.Basic
+[fixture] dependencies ✔ [2/10] Built Cache.Cli (2.0s)
+[fixture] dependencies ✔ [7/26] Built Cache.Infra (3.1s)
+[fixture] dependencies ✔ [12/26] Built Batteries.Tactic.OpenPrivate:c.o (2.6s)
+[fixture] dependencies ✔ [14/26] Built Cache.Hashing (5.3s)
+[fixture] dependencies ✔ [15/26] Built Cache.Hashing:c.o (1.6s)
+[fixture] dependencies ✔ [16/26] Built Cache.Requests (7.7s)
+[fixture] dependencies ✔ [19/26] Built Cache.Marker:c.o (1.0s)
+[fixture] dependencies ✔ [21/26] Built Cache.Query:c.o (1.6s)
+[fixture] dependencies ✔ [23/26] Built Cache.Warning:c.o (1.7s)
+[fixture] dependencies ✔ [25/26] Built Cache.Main:c.o (2.5s)
+[fixture] dependencies ✔ [26/26] Built cache:exe (1.8s)
+[fixture] dependencies Attempting to download 118 file(s) from leanprover-community/mathlib4 cache at https://lakecache.blob.core.windows.net/mathlib4-master
+[fixture] dependencies Attempting to download 118 file(s) from leanprover-community/mathlib4 cache at https://lakecache.blob.core.windows.net/mathlib4-master
+[fixture] actual transient compile process exit 42 recorded; explicitly resuming same run
+[fixture] compile $ lake --no-ansi --no-cache -f observatory-lakefile.toml build
+[fixture] compile ✔ [133/136] Built Lemmata.Fixture (2.9s)
+[fixture] audit $ lake -f lakefile.toml env lean -j1 /work/3160f815728e/audit/Audit.lean
+[fixture] audit $ lake -f lakefile.toml env lean -j1 /work/3160f815728e/audit/Axioms.lean
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+[fixture] replay $ lake -f lakefile.toml env leanchecker --fresh Main
+{
+  "scope": "SYNTHETIC TRUE PROPOSITIONS ONLY; NOT RIEMANN PROOF",
+  "pipeline": "passed",
+  "transientCompileFailureExit": 42,
+  "sameRunResumed": true,
+  "stages": {
+    "download": 0,
+    "integrity": 0,
+    "dependencies": 0,
+    "compile": 0,
+    "audit": 0,
+    "replay": 0
+  },
+  "compiledModules": 3,
+  "actualMathlib": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "commands": [
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part01",
+        "http://127.0.0.1:32829/lean.tar.gz.part01"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part02",
+        "http://127.0.0.1:32829/lean.tar.gz.part02"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part03",
+        "http://127.0.0.1:32829/lean.tar.gz.part03"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part04",
+        "http://127.0.0.1:32829/lean.tar.gz.part04"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part05",
+        "http://127.0.0.1:32829/lean.tar.gz.part05"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part06",
+        "http://127.0.0.1:32829/lean.tar.gz.part06"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part07",
+        "http://127.0.0.1:32829/lean.tar.gz.part07"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part08",
+        "http://127.0.0.1:32829/lean.tar.gz.part08"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part09",
+        "http://127.0.0.1:32829/lean.tar.gz.part09"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part10",
+        "http://127.0.0.1:32829/lean.tar.gz.part10"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part11",
+        "http://127.0.0.1:32829/lean.tar.gz.part11"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part12",
+        "http://127.0.0.1:32829/lean.tar.gz.part12"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part13",
+        "http://127.0.0.1:32829/lean.tar.gz.part13"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--location",
+        "--retry",
+        "5",
+        "--connect-timeout",
+        "30",
+        "--max-time",
+        "900",
+        "--output",
+        "/tmp/tmp2cqn8s1b/evidence/runs/3160f815728e/lean.tar.gz.part14",
+        "http://127.0.0.1:32829/lean.tar.gz.part14"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "lake",
+        "-f",
+        "lakefile.toml",
+        "env",
+        "lean",
+        "--version"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "lake",
+        "-f",
+        "lakefile.toml",
+        "exe",
+        "mathlib/cache",
+        "get",
+        "Mathlib.Data.Nat.Basic"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        ".lake/packages/mathlib",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "import json,platform;from pathlib import Path;print(json.dumps(dict(platform=platform.platform(),python=platform.python_version(),osRelease=Path('/etc/os-release').read_text())))"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "raise SystemExit(42)"
+      ],
+      "exitCode": 42,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "lake",
+        "--no-ansi",
+        "--no-cache",
+        "-f",
+        "observatory-lakefile.toml",
+        "build"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "lake",
+        "-f",
+        "lakefile.toml",
+        "env",
+        "lean",
+        "-j1",
+        "/work/3160f815728e/audit/Audit.lean"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "lake",
+        "-f",
+        "lakefile.toml",
+        "env",
+        "lean",
+        "-j1",
+        "/work/3160f815728e/audit/Axioms.lean"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    },
+    {
+      "argv": [
+        "lake",
+        "-f",
+        "lakefile.toml",
+        "env",
+        "leanchecker",
+        "--fresh",
+        "Main"
+      ],
+      "exitCode": 0,
+      "terminationCause": null
+    }
+  ],
+  "proofReproduction": "NOT_RUN"
+}

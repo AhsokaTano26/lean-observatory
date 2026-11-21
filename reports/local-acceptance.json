@@ -1,76 +1,124 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": 1795251532.247481,
-  "passed": true,
-  "sourceSha256": "e15068631090285789b0739ce37a9e094257f840e2a5d341a6fc8ef4d565bb02",
+  "generatedAt": 1795254792.117402,
+  "sourceSha256": "07b2cd8f2c01a6c87406dc2b03667d3ee5de415e3a9682e35ddcb9dbe184d85a",
   "checks": {
     "backend": {
       "exitCode": 0,
-      "count": 37,
+      "log": "native-tests.log",
       "command": [
         "npm",
         "test"
       ],
-      "log": "native-tests.log"
+      "testCount": 72
     },
     "charts": {
       "exitCode": 0,
-      "count": 10,
+      "log": "native-tests.log",
       "command": [
         "npm",
         "test"
       ],
-      "log": "native-tests.log"
-    },
-    "build": {
-      "exitCode": 0,
-      "command": [
-        "npm",
-        "test"
-      ],
-      "log": "native-tests.log"
+      "testCount": 10
     },
     "browser": {
       "exitCode": 0,
-      "count": 13,
+      "log": "native-tests.log",
       "command": [
         "npm",
         "test"
       ],
-      "log": "native-tests.log"
+      "testCount": 13
+    },
+    "build": {
+      "exitCode": 0,
+      "log": "native-tests.log",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "includes": [
+        "tsc --noEmit",
+        "vite build"
+      ]
     },
     "compose": {
       "exitCode": 0,
-      "command": "docker compose --env-file /tmp/lean-observatory-local.env --profile mock up -d --build --wait"
+      "log": "compose.log",
+      "scope": "Local API/nginx/mock-worker healthy"
     },
     "http": {
       "exitCode": 0,
-      "command": "docker compose run api python3 http_smoke.py",
-      "scope": "Actual Nginx GET/SSE/downloads; POST/PUT/PATCH/DELETE all 405, including previous token"
-    },
-    "worker_image": {
-      "exitCode": 0,
-      "command": "docker compose --profile verification build worker"
+      "log": "http.log",
+      "scope": "Nginx SSE/downloads and GET-only HTTP"
     },
     "worker_smoke": {
       "exitCode": 0,
-      "command": "docker compose -f compose.yaml -f compose.smoke.yaml run worker python3 container_smoke.py",
       "log": "worker-fixture.log",
-      "scope": "Tiny Main only; no original proof executed"
+      "scope": "Native ARM64 tiny Lean compile/fresh/isolation/cleanup"
     },
-    "live_preview": {
+    "amd64_worker_smoke": {
       "exitCode": 0,
-      "command": "node --test /tmp/lean-observatory-live.test.mjs",
-      "scope": "Actual Docker Chromium: readOnly capability, no admin/task buttons, live Mock state, SSE and five server charts"
+      "log": "amd64_worker_smoke.log",
+      "scope": "Emulated AMD64 tiny Lean compile/fresh/isolation/cleanup"
+    },
+    "lake_pipeline": {
+      "exitCode": 0,
+      "log": "lake_pipeline.log",
+      "scope": "Emulated AMD64 synthetic 3-module project, original TOML/pinned Mathlib, actual exit42 then same-run recovery and fresh Main"
+    },
+    "apparmor_profile": {
+      "exitCode": 0,
+      "log": "apparmor_profile.log",
+      "scope": "Ubuntu24 AppArmor parser only; NOT kernel enforcement"
+    },
+    "worker_image": {
+      "exitCode": 0,
+      "log": "worker_image.log",
+      "scope": "Local ARM64 worker build"
+    },
+    "amd64_image": {
+      "exitCode": 0,
+      "log": "amd64_image.log",
+      "scope": "Local AMD64 API/worker builds"
+    },
+    "bootstrap_syntax": {
+      "exitCode": 0,
+      "command": [
+        "bash",
+        "-n",
+        "scripts/bootstrap_server.sh"
+      ]
+    },
+    "compose_tls_syntax": {
+      "exitCode": 0,
+      "scope": "Compose TLS template rendering only; NOT production certificate acceptance"
+    },
+    "live_browser": {
+      "exitCode": 0,
+      "scope": "Actual http://127.0.0.1:8789 preview, read-only, mock, five server charts",
+      "command": [
+        "node",
+        "--test",
+        "/tmp/lean-observatory-live.test.mjs"
+      ]
+    },
+    "bootstrap_dry_run": {
+      "exitCode": 0,
+      "log": "bootstrap_dry_run.log",
+      "scope": "Current source gate, no network and no host changes"
     }
   },
+  "passed": true,
+  "scope": "Local platform and tiny synthetic fixtures only",
   "remoteConnected": false,
-  "serverPurchased": false,
-  "publicDomain": "lean.tano.asia (planned, not deployed)",
-  "localPreview": "http://127.0.0.1:8789",
-  "realProofVerification": "NOT_RUN",
-  "mathematicalProofAccepted": false,
-  "platform": "Local ARM64; target AMD64 must be retested after deployment",
-  "webMode": "READ_ONLY",
-  "taskAdministration": "Host CLI only; no HTTP task controls"
+  "productionEligible": false,
+  "proofReproduction": "NOT_RUN",
+  "productionPending": [
+    "Linode host resources/ports",
+    "AppArmor enforcing profile and actual fixture",
+    "DNS/ACME trusted HTTPS and renewal",
+    "Real host metrics and online acceptance",
+    "Original archive download/SHA/full compilation/five-theorem audit/fresh Main",
+    "Different-implementation kernel verification"
+  ]
 }

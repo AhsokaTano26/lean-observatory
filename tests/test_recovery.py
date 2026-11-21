@@ -14,6 +14,56 @@ from backend.runner import CommandRunner, CommandError
 from backend.integrity import safe_extract
 
 class RecoveryTests(unittest.TestCase):
+    def test_restart_marks_unfinished_evidence_without_inventing_exit(self):
+        from backend.worker import work
+        with tempfile.TemporaryDirectory() as d:
+            store=Store(Path(d));run=store.create('real')
+            completed=dict(argv=['completed'],stage='dependencies',startedAt=1,finishedAt=2,exitCode=0)
+            previously_interrupted=dict(argv=['earlier interruption'],stage='compile',startedAt=2,
+                                        finishedAt=None,exitCode=None,status='interrupted',
+                                        observedStoppedAt=3,terminationCause='worker_restart_exit_unknown')
+            unfinished=dict(argv=['unfinished'],stage='compile',startedAt=3,finishedAt=None,exitCode=None)
+            def running(state):
+                state.update(status='running',phase='compile',workerHeartbeat=1,
+                             commands=[completed,previously_interrupted,unfinished])
+                state['stages'][3].update(status='running',startedAt=3,finishedAt=None,exitCode=None)
+            store.mutate(run['id'],running)
+            stop=threading.Event();stop.set()
+            work(store,stop=stop)
+            recovered=store.raw(run['id']);command=recovered['commands'][2]
+            self.assertEqual(recovered['commands'][0],completed)
+            self.assertEqual(recovered['commands'][1],previously_interrupted)
+            self.assertEqual(command.get('status'),'interrupted')
+            self.assertEqual(command.get('terminationCause'),'worker_restart_exit_unknown')
+            self.assertIsInstance(command.get('observedStoppedAt'),(int,float))
+            self.assertIsNone(command['exitCode'])
+            self.assertIsNone(command['finishedAt'])
+            stage=recovered['stages'][3]
+            self.assertEqual(stage['status'],'interrupted')
+            self.assertIsNone(stage['exitCode'])
+            self.assertIsNone(stage['finishedAt'])
+
+    def test_cancel_during_restart_scan_is_not_resurrected(self):
+        from backend.worker import work
+        for status in ('running','paused'):
+            with self.subTest(status=status),tempfile.TemporaryDirectory() as d:
+                store=Store(Path(d));run=store.create('mock')
+                store.mutate(run['id'],lambda state:state.update(status=status))
+                original=store.active_runs;selected=False
+                def cancel_after_read():
+                    nonlocal selected
+                    result=original()
+                    if not selected:
+                        selected=True
+                        store.control(run['id'],'cancel')
+                    return result
+                stop=threading.Event();stop.set()
+                with patch.object(store,'active_runs',side_effect=cancel_after_read):
+                    work(store,stop=stop)
+                recovered=store.raw(run['id'])
+                self.assertEqual(recovered['status'],'cancelled')
+                self.assertEqual(recovered['desired'],'cancelled')
+
     def test_cancel_between_scheduler_read_and_tick_cannot_resurrect_mock(self):
         from backend.worker import work
         with tempfile.TemporaryDirectory() as d:

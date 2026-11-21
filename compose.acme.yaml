@@ -1,0 +1,7 @@
+# Initial HTTP validation only. Real tasks stay disabled until TLS acceptance.
+services:
+  nginx:
+    ports: !override
+      - "80:8080"
+    volumes:
+      - ${ACME_WEBROOT:-/opt/lean-observatory/acme}:/var/www/acme:ro

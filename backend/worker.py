@@ -11,6 +11,7 @@ from .store import Store
 from .mock import tick, metrics as mock_metrics
 from .pipeline import Pipeline
 from .metrics import collect, read_host_file
+from .readiness import require_online_gate
 
 
 def sample_loop(store, stop, host_file=None):
@@ -31,6 +32,21 @@ def work(store, stop=None, interval=1, allow_real=False):
     for s in store.active_runs():
         if s['status'] in ('running','paused'):
             def interrupt(x):
+                if x['status'] not in ('running','paused'): return
+                observed=time.time()
+                for command in x['commands']:
+                    if (command.get('status') in (None,'running','paused')
+                            and command.get('exitCode') is None and command.get('finishedAt') is None):
+                        command.update(status='interrupted',observedStoppedAt=observed,
+                                       terminationCause='worker_restart_exit_unknown')
+                for stage in x['stages']:
+                    if stage['status'] in ('running','paused'):
+                        stage.update(status='interrupted',observedStoppedAt=observed,
+                                     terminationCause='worker_restart_exit_unknown')
+                if x['desired']=='cancelled':
+                    x.update(status='cancelled',finishedAt=observed,workerHeartbeat=None)
+                    x['compile']['rate']=0
+                    return
                 x.update(status='interrupted',desired='running',error='Worker 重启；已保存检查点，请显式恢复',workerHeartbeat=None)
                 x['compile']['rate']=0
             store.mutate(s['id'],interrupt,'worker_restart')
@@ -46,6 +62,10 @@ def work(store, stop=None, interval=1, allow_real=False):
             if s['mode']=='real':
                 if not allow_real:
                     store.mutate(run,lambda x:x.update(status='failed',error='Worker 真实验证门禁未启用'))
+                    continue
+                try: require_online_gate(run)
+                except ValueError as error:
+                    store.mutate(run,lambda x:x.update(status='failed',error=str(error)))
                     continue
                 store.mutate(run,lambda x:x.update(status='running',startedAt=x['startedAt'] or time.time(),workerHeartbeat=time.time()),'worker_claimed')
                 Pipeline(store,run).run()

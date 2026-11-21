@@ -7,10 +7,23 @@ import re
 import shutil
 import time
 import tomllib
+from dataclasses import dataclass
 from pathlib import Path
 from .model import EXPECTED_HASH, EXPECTED_BYTES, MATHLIB, THEOREMS, audit_axioms
 from .integrity import sha256, verify_archive, safe_extract
 from .runner import CommandRunner, CommandError
+
+@dataclass(frozen=True)
+class Submission:
+    # The worker and CLI always use this original submission. Alternative values
+    # are injected only by the local integration fixture, never by HTTP/input files.
+    archive_hash: str = EXPECTED_HASH
+    archive_bytes: int = EXPECTED_BYTES
+    file_count: int = 175187
+    part_sizes: tuple = (18000000,)*13+(5275554,)
+    origin: str = 'https://alpo.ge'
+    min_free_bytes: int = 200*1024**3
+    cache_targets: tuple = ()
 
 
 def validate_project(root, expected_count=175187):
@@ -35,13 +48,22 @@ def validate_project(root, expected_count=175187):
     return dict(src=src, files=files, modules=modules, config=cfg)
 
 
-def audit_source(src):
-    pattern=re.compile(r'(?<![\w])(sorry|sorryAx|#eval|#reduce|macro|syntax|run_tac|eval_tactic|admit|axiom|axioms|native_decide|unsafe|implemented_by|extern|run_elab|elab|initialize|ofReduceBool|set_option\s+debug\.skipKernelTC)\b')
+def audit_source(src, reviewed=None):
+    if reviewed is None:
+        policy=json.loads(Path(__file__).with_name('reviewed_extensions.json').read_text())
+        if policy['expectedOriginalArchiveSha256']!=EXPECTED_HASH: raise ValueError('扩展审查对应其他原始归档')
+        reviewed={f['sourceRelativePath']:f for f in policy['files'] if f['decision']=='approve_exact_bytes_for_pipeline_execution_only'}
+    permitted={'macro','syntax','elab','run_tac','run_cmd','axioms'}
+    pattern=re.compile(r'(?<![\w])(sorry|sorryAx|#eval|#reduce|macro|syntax|run_tac|run_cmd|eval_tactic|admit|axiom|axioms|native_decide|unsafe|implemented_by|extern|run_elab|elab|initialize|ofReduceBool|set_option\s+debug\.skipKernelTC)\b')
     findings=[]
     for p in sorted(Path(src).rglob('*.lean')):
+        relative=str(p.relative_to(src));entry=reviewed.get(relative,{})
+        exact=bool(entry) and sha256(p)==entry.get('sha256')
+        accepted={(h['line'],h['token']) for h in entry.get('hits',[])}
         for number,line in enumerate(p.read_text().splitlines(),1):
             for m in pattern.finditer(line):
-                findings.append(dict(file=str(p.relative_to(src)),line=number,token=m[0],text=line[:500]))
+                approved=exact and m[0] in permitted and (number,m[0]) in accepted
+                findings.append(dict(file=relative,line=number,token=m[0],text=line[:500],approved=approved,reason='已审阅扩展，原始字节完全匹配；仍需正常内核与公理检查' if approved else '未审阅、字节不匹配或禁止的绕过能力'))
     return findings
 
 
@@ -66,8 +88,9 @@ def audit_program():
 
 
 class Pipeline:
-    def __init__(self, store, run):
+    def __init__(self, store, run, submission=None):
         self.store=store; self.id=run; self.root=store.root/'runs'/run
+        self.submission=submission or Submission()
         self.runner=CommandRunner(store,run)
         self.original=self.root/'source'/'lean'
         self.project=self.original
@@ -117,13 +140,12 @@ class Pipeline:
         self.store.mutate(self.id,finish,'stage_finished')
 
     def download(self):
-        if shutil.disk_usage(self.root).free < 200*1024**3: raise CommandError('可用磁盘不足 200 GiB',137)
+        if shutil.disk_usage(self.root).free < self.submission.min_free_bytes: raise CommandError('可用磁盘不足提交所需空间',137)
         parts=[]
-        for i in range(1,15):
+        for i,size in enumerate(self.submission.part_sizes,1):
             self.checkpoint(); part=self.root/f'lean.tar.gz.part{i:02}'
-            size=18000000 if i<14 else 5275554
             if not part.exists() or part.stat().st_size!=size:
-                self.runner.run(['curl','--fail','--location','--retry','5','--connect-timeout','30','--max-time','900','--output',str(part),f'https://alpo.ge/{part.name}'],self.root,'download')
+                self.runner.run(['curl','--fail','--location','--retry','5','--connect-timeout','30','--max-time','900','--output',str(part),self.submission.origin+'/'+part.name],self.root,'download')
             if part.stat().st_size!=size: raise ValueError(f'{part.name}: 大小错误，拒绝 HTTP 200 伪文件')
             parts.append(dict(name=part.name,bytes=size,sha256=sha256(part)))
             self.store.log(self.id,'info',f'原始分卷 {i}/14 已下载并记录 SHA-256','download')
@@ -134,20 +156,26 @@ class Pipeline:
         self.evidence('parts.json',parts)
 
     def integrity(self):
-        archive=self.root/'lean.tar.gz'; digest=verify_archive(archive,EXPECTED_HASH,EXPECTED_BYTES)
+        archive=self.root/'lean.tar.gz'
+        try: digest=verify_archive(archive,self.submission.archive_hash,self.submission.archive_bytes)
+        except ValueError as error:
+            self.invalidate_download(str(error))
+            raise
         self.store.mutate(self.id,lambda s:s['provenance'].update(sha256=digest,bytes=archive.stat().st_size,integrity='passed'))
         self.register(archive)
         destination=self.root/'source'; staging=self.root/'source.partial'
         # A directory's existence is never a completion marker. Publish extraction atomically.
         if staging.exists(): shutil.rmtree(staging)
         safe_extract(archive,staging)
-        validate_project(staging/'lean')
+        validate_project(staging/'lean',expected_count=self.submission.file_count)
         if destination.exists(): shutil.rmtree(destination)
         staging.rename(destination)
-        info=validate_project(self.original)
+        info=validate_project(self.original,expected_count=self.submission.file_count)
         if (self.original/'.lake').exists(): raise ValueError('原始归档包含构建缓存，拒绝复现')
         findings=audit_source(info['src']); self.evidence('pre-execution-source-scan.json',findings)
-        if findings: raise ValueError(f'执行前扫描发现 {len(findings)} 个潜在绕过点，停止执行')
+        blocked=[f for f in findings if not f['approved']]
+        self.evidence('reviewed-extension-policy.json',json.loads(Path(__file__).with_name('reviewed_extensions.json').read_text()))
+        if blocked: raise ValueError(f'执行前扫描发现 {len(blocked)} 个未批准的潜在绕过点，停止执行')
         self.config_hashes={n:sha256(self.original/n) for n in ['lean-toolchain','lakefile.toml','lake-manifest.json']}
         inventory=self.root/'source-files.sha256'
         with inventory.open('w') as out:
@@ -157,6 +185,18 @@ class Pipeline:
         self.register(inventory)
         self.evidence('original-config.json',self.config_hashes)
         self.store.mutate(self.id,lambda s:(s['compile'].update(total=len(info['files'])),s['provenance'].update(inventorySha256=sha256(inventory))))
+
+    def invalidate_download(self, reason):
+        archive=self.root/'lean.tar.gz'
+        self.evidence('rejected-download.json',dict(reason=reason,sha256=sha256(archive) if archive.exists() else None,bytes=archive.stat().st_size if archive.exists() else None,action='invalidate all untrusted parts; explicitly resume to download again'))
+        for path in [archive,*self.root.glob('lean.tar.gz.part??')]: path.unlink(missing_ok=True)
+        def reset(s):
+            s['phase']='integrity'
+            s['provenance'].update(sha256=None,bytes=None,integrity='failed')
+            for stage in s['stages']:stage.update(status='pending',exitCode=None,finishedAt=None)
+            for audit in s['audits']:audit.update(type='pending',axioms='pending',replay='pending')
+        self.store.mutate(self.id,reset,'download_cache_invalidated')
+        self.store.log(self.id,'error','归档校验失败；不可信分卷缓存已失效，显式恢复后重新下载。','integrity')
 
     def unchanged(self):
         hashes=json.loads((self.root/'original-config.json').read_text())
@@ -168,7 +208,7 @@ class Pipeline:
         output=self.execute(['lake','-f','lakefile.toml','env','lean','--version'],'dependencies')
         if not re.search(r'\bversion 4\.33\.1\b',output): raise ValueError('实际 Lean 二进制版本不匹配')
         # Qualified Mathlib executable cannot accidentally fetch root project artifacts.
-        self.execute(['lake','-f','lakefile.toml','exe','mathlib/cache','get'],'dependencies')
+        self.execute(['lake','-f','lakefile.toml','exe','mathlib/cache','get',*self.submission.cache_targets],'dependencies')
         actual=self.execute(['git','-C','.lake/packages/mathlib','rev-parse','HEAD'],'dependencies').strip()
         if actual!=MATHLIB: raise ValueError('实际 Mathlib checkout 版本不匹配')
         self.unchanged()
@@ -180,7 +220,7 @@ class Pipeline:
         self.store.mutate(self.id,lambda s:s['environment'].update(environment))
 
     def compile(self):
-        self.unchanged(); info=validate_project(self.project); jobs=self.store.raw(self.id)['compile']['jobs']
+        self.unchanged(); info=validate_project(self.project,expected_count=self.submission.file_count); jobs=self.store.raw(self.id)['compile']['jobs']
         if not self.store.raw(self.id)['compile'].get('startedFresh'):
             if any((self.project/'.lake/build').rglob('*.olean')):
                 raise ValueError('首次编译发现已有项目 .olean，拒绝将外部产物计为本次编译')
@@ -221,9 +261,10 @@ class Pipeline:
         self.verify_sources()
 
     def audit(self):
-        info=validate_project(self.project); findings=audit_source(info['src'])
+        info=validate_project(self.project,expected_count=self.submission.file_count); findings=audit_source(info['src'])
         self.evidence('source-scan.json',findings)
-        if findings: raise ValueError(f'静态扫描发现 {len(findings)} 个潜在绕过点，需人工复核；不自动判定通过')
+        blocked=[f for f in findings if not f['approved']]
+        if blocked: raise ValueError(f'静态扫描发现 {len(blocked)} 个未批准的潜在绕过点，需人工复核；不自动判定通过')
         file=self.root/'Audit.lean'; file.write_text(audit_program()); self.register(file)
         audit_dir=self.project.parent/'audit';audit_dir.mkdir(exist_ok=True)
         (audit_dir/'Audit.lean').write_text(file.read_text())
@@ -256,8 +297,11 @@ class Pipeline:
             # Resume revalidates bytes/configuration instead of trusting a completion marker.
             state=self.store.raw(self.id)
             if state['stages'][1]['status']=='passed':
-                verify_archive(self.root/'lean.tar.gz',EXPECTED_HASH,EXPECTED_BYTES)
-                validate_project(self.original); self.unchanged(); self.verify_sources()
+                try: verify_archive(self.root/'lean.tar.gz',self.submission.archive_hash,self.submission.archive_bytes)
+                except ValueError as error:
+                    self.invalidate_download(str(error))
+                    raise
+                validate_project(self.original,expected_count=self.submission.file_count); self.unchanged(); self.verify_sources()
             for name in ['download','integrity','dependencies','compile','audit','replay']:
                 if name=='dependencies':
                     if not os.environ.get('SANDBOX_ROOT'): raise RuntimeError('未配置 Lean 子进程文件系统隔离')
@@ -268,7 +312,11 @@ class Pipeline:
             self.store.mutate(self.id,lambda s:s.update(status='checks_completed',finishedAt=time.time(),error=None),'finished')
         except Exception as e:
             code=getattr(e,'code',1); raw=self.store.raw(self.id)
-            status='cancelled' if raw['desired']=='cancelled' else ('resource_exhausted' if code in (137,-9) else ('interrupted' if code<0 else 'failed'))
+            cause=getattr(e,'terminationCause',None)
+            if raw['desired']=='cancelled' or cause=='cancelled':status='cancelled'
+            elif cause=='operator_interruption':status='interrupted'
+            elif cause in ('timeout','runner_error'):status='failed'
+            else:status='resource_exhausted' if code in (137,-9) else ('interrupted' if code<0 else 'failed')
             def fail(s):
                 s.update(status=status,error=str(e),finishedAt=time.time())
                 next(x for x in s['stages'] if x['id']==s['phase']).update(status=status,exitCode=code,finishedAt=time.time())

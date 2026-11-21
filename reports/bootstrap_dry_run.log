@@ -1,0 +1,16 @@
+DRY RUN — no host changes, no network requests, no proof tasks.
+Source: 07b2cd8f2c01a6c87406dc2b03667d3ee5de415e3a9682e35ddcb9dbe184d85a
+Install only in /opt/lean-observatory as root on Ubuntu 24.04 x86_64.
+Require >=64 CPUs, >=240 GiB memory, >=500 GiB free disk and unused 80/443.
+Reject existing .env, project containers/data volumes; never stop unrelated services.
+Require AppArmor enabled; install apparmor/parser and load the exact enforcing worker profile.
+Reuse Docker Engine/Compose >=2.24.4; if absent install from official Docker apt repository.
+Create lean-metrics system user and host metrics service; /var/lib/lean-observatory-metrics.
+Write root-owned .env (0600): ENABLE_REAL=0, SOURCE_SHA256=07b2cd8f2c01a6c87406dc2b03667d3ee5de415e3a9682e35ddcb9dbe184d85a,
+METRICS_DIR=/var/lib/lean-observatory-metrics, WORKER_CPUSET=8-55, WORKER_CPUS=48, WORKER_MEMORY=208g,
+APPARMOR_PROFILE=lean-observatory-worker.
+Start api/worker/nginx only for project lean-observatory; no mock profile and no task creation.
+Use certbot webroot at /opt/lean-observatory/acme for lean.tano.asia, then switch this project's nginx to TLS.
+Install certbot renewal deploy-hook and enable certbot.timer; test renewal with certbot renew --dry-run.
+Run tiny-only production worker-fixture under the enforcing profile and save source/script/profile hashes.
+Run trusted HTTPS online_acceptance.py separately before any later real-task authorization.

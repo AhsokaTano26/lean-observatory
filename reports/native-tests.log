@@ -1,3 +1,4 @@
+
 > lean-observatory@0.1.0 test
 > npm run test:unit && npm run test:charts && npm run build && playwright test
 
@@ -10,8 +11,19 @@ test_full_log_download_contains_untruncated_command_output (test_api.ApiTests.te
 test_health_and_waiting_state (test_api.ApiTests.test_health_and_waiting_state) ... ok
 test_mock_report_and_sse_have_provenance (test_api.ApiTests.test_mock_report_and_sse_have_provenance) ... ok
 test_read_only_capability_and_task_history (test_api.ApiTests.test_read_only_capability_and_task_history) ... ok
+test_task_ledger_includes_old_runs_for_resume_acceptance (test_api.ApiTests.test_task_ledger_includes_old_runs_for_resume_acceptance) ... ok
+test_backup_api_captures_wal_and_matching_evidence (test_backup.BackupTests.test_backup_api_captures_wal_and_matching_evidence) ... ok
+test_changed_evidence_rejects_backup_without_published_output (test_backup.BackupTests.test_changed_evidence_rejects_backup_without_published_output) ... ok
+test_dry_run_never_creates_files (test_backup.BackupTests.test_dry_run_never_creates_files) ... ok
+test_registered_evidence_hash_mismatch_rejected (test_backup.BackupTests.test_registered_evidence_hash_mismatch_rejected) ... ok
+test_symlink_and_nested_or_existing_destination_rejected (test_backup.BackupTests.test_symlink_and_nested_or_existing_destination_rejected) ... ok
+test_worker_lock_blocks_backup (test_backup.BackupTests.test_worker_lock_blocks_backup) ... ok
+test_default_dry_run_checks_source_and_writes_nothing (test_bootstrap.BootstrapTests.test_default_dry_run_checks_source_and_writes_nothing) ... ok
+test_stale_gate_rejected_before_any_host_changes (test_bootstrap.BootstrapTests.test_stale_gate_rejected_before_any_host_changes) ... ok
+test_unknown_flags_cannot_execute (test_bootstrap.BootstrapTests.test_unknown_flags_cannot_execute) ... ok
 test_host_cli_creates_and_controls_mock_without_http (test_control.HostControlTests.test_host_cli_creates_and_controls_mock_without_http) ... ok
 test_host_cli_real_task_gate_and_invalid_jobs (test_control.HostControlTests.test_host_cli_real_task_gate_and_invalid_jobs) ... ok
+test_real_task_can_be_queued_after_matching_online_acceptance (test_control.HostControlTests.test_real_task_can_be_queued_after_matching_online_acceptance) ... ok
 test_body_text_cannot_mask_real_sorry_axiom (test_core.AuditParserRegressionTests.test_body_text_cannot_mask_real_sorry_axiom) ... ok
 test_duplicate_axiom_records_fail_closed (test_core.AuditParserRegressionTests.test_duplicate_axiom_records_fail_closed) ... ok
 test_history_does_not_mix_different_runs (test_core.HistoryTests.test_history_does_not_mix_different_runs) ... ok
@@ -29,38 +41,62 @@ test_missing_or_stale_receipt_blocks_remote (test_gates.GateTests.test_missing_o
 test_nonzero_check_blocks_even_matching_source (test_gates.GateTests.test_nonzero_check_blocks_even_matching_source) ... ok
 test_host_history_uses_sample_time_after_task_completion (test_mock_metrics.MockMetricsTests.test_host_history_uses_sample_time_after_task_completion) ... ok
 test_slow_demo_progress_keeps_throughput_consistent (test_mock_metrics.MockMetricsTests.test_slow_demo_progress_keeps_throughput_consistent) ... ok
+test_fixture_output_requires_kernel_filesystem_and_both_cleanup_results (test_online_acceptance.OnlineAcceptanceTests.test_fixture_output_requires_kernel_filesystem_and_both_cleanup_results) ... ok
+test_host_apparmor_requires_enabled_enforced_and_exact_profile_bytes (test_online_acceptance.OnlineAcceptanceTests.test_host_apparmor_requires_enabled_enforced_and_exact_profile_bytes) ... ok
+test_methods_must_be_405_allow_get (test_online_acceptance.OnlineAcceptanceTests.test_methods_must_be_405_allow_get) ... ok
+test_mock_history_active_or_dirty_state_rejected (test_online_acceptance.OnlineAcceptanceTests.test_mock_history_active_or_dirty_state_rejected) ... ok
+test_only_exact_production_url_accepted (test_online_acceptance.OnlineAcceptanceTests.test_only_exact_production_url_accepted) ... ok
+test_production_requires_exact_apparmor_container_profile (test_online_acceptance.OnlineAcceptanceTests.test_production_requires_exact_apparmor_container_profile) ... ok
+test_resource_gate_requires_running_exact_limits_disabled_real_and_readonly_receipt (test_online_acceptance.OnlineAcceptanceTests.test_resource_gate_requires_running_exact_limits_disabled_real_and_readonly_receipt) ... ok
+test_resume_checks_exact_stopped_real_run_without_erasing_history (test_online_acceptance.OnlineAcceptanceTests.test_resume_checks_exact_stopped_real_run_without_erasing_history) ... ok
+test_sse_snapshot_checks_host_and_source (test_online_acceptance.OnlineAcceptanceTests.test_sse_snapshot_checks_host_and_source) ... ok
+test_stale_future_local_and_small_host_metrics_rejected (test_online_acceptance.OnlineAcceptanceTests.test_stale_future_local_and_small_host_metrics_rejected) ... ok
+test_tiny_fixture_receipt_is_fresh_source_script_profile_and_worker_bound (test_online_acceptance.OnlineAcceptanceTests.test_tiny_fixture_receipt_is_fresh_source_script_profile_and_worker_bound) ... ok
+test_valid_clean_state_and_source_checked (test_online_acceptance.OnlineAcceptanceTests.test_valid_clean_state_and_source_checked) ... ok
+test_release_ownership_and_modes_work_on_a_fresh_root_server (test_package_release.PackageReleaseTests.test_release_ownership_and_modes_work_on_a_fresh_root_server) ... ok
+test_a_review_list_can_never_authorize_an_added_axiom (test_pipeline.PipelineTests.test_a_review_list_can_never_authorize_an_added_axiom) ... ok
 test_audit_program_checks_exact_expected_types (test_pipeline.PipelineTests.test_audit_program_checks_exact_expected_types) ... ok
+test_bad_archive_invalidates_download_cache_for_explicit_resume (test_pipeline.PipelineTests.test_bad_archive_invalidates_download_cache_for_explicit_resume) ... ok
+test_control_side_termination_is_not_reported_as_memory_exhaustion (test_pipeline.PipelineTests.test_control_side_termination_is_not_reported_as_memory_exhaustion) ... ok
 test_failed_file_accounting_ignores_non_source_jobs (test_pipeline.PipelineTests.test_failed_file_accounting_ignores_non_source_jobs) ... ok
 test_pin_and_inventory (test_pipeline.PipelineTests.test_pin_and_inventory) ... ok
 test_progress_only_matches_source_modules (test_pipeline.PipelineTests.test_progress_only_matches_source_modules) ... ok
+test_reviewed_extension_is_allowed_only_for_exact_bytes (test_pipeline.PipelineTests.test_reviewed_extension_is_allowed_only_for_exact_bytes) ... ok
 test_scan_catches_escapes_and_preserves_config (test_pipeline.PipelineTests.test_scan_catches_escapes_and_preserves_config) ... ok
+test_fresh_server_without_docker_still_returns_a_report (test_preflight.PreflightTests.test_fresh_server_without_docker_still_returns_a_report) ... ok
+test_all_online_checks_and_matching_source_are_required (test_readiness.ReadinessTests.test_all_online_checks_and_matching_source_are_required) ... ok
+test_real_host_receipt_is_loaded_and_fails_closed (test_readiness.ReadinessTests.test_real_host_receipt_is_loaded_and_fails_closed) ... ok
+test_resume_acceptance_cannot_authorize_a_different_or_new_task (test_readiness.ReadinessTests.test_resume_acceptance_cannot_authorize_a_different_or_new_task) ... ok
 test_cancel_between_scheduler_read_and_tick_cannot_resurrect_mock (test_recovery.RecoveryTests.test_cancel_between_scheduler_read_and_tick_cannot_resurrect_mock) ... ok
+test_cancel_during_restart_scan_is_not_resurrected (test_recovery.RecoveryTests.test_cancel_during_restart_scan_is_not_resurrected) ... ok
 test_cancel_kills_command_and_records_actual_exit (test_recovery.RecoveryTests.test_cancel_kills_command_and_records_actual_exit) ... ok
 test_resource_resume_lowers_concurrency_without_losing_progress (test_recovery.RecoveryTests.test_resource_resume_lowers_concurrency_without_losing_progress) ... ok
+test_restart_marks_unfinished_evidence_without_inventing_exit (test_recovery.RecoveryTests.test_restart_marks_unfinished_evidence_without_inventing_exit) ... ok
 test_worker_restart_requires_explicit_resume (test_recovery.RecoveryTests.test_worker_restart_requires_explicit_resume) ... ok
 test_command_capture_and_no_shell_interpolation (test_runtime.RuntimeTests.test_command_capture_and_no_shell_interpolation) ... ok
 test_metrics_explicit_source_and_non_negative (test_runtime.RuntimeTests.test_metrics_explicit_source_and_non_negative) ... ok
 test_nonzero_exit_is_persisted_and_raised (test_runtime.RuntimeTests.test_nonzero_exit_is_persisted_and_raised) ... ok
+test_operator_interruption_preserves_wait_status_and_separate_cause (test_runtime.RuntimeTests.test_operator_interruption_preserves_wait_status_and_separate_cause) ... ok
 test_paused_eta_unknown (test_runtime.RuntimeTests.test_paused_eta_unknown) ... ok
 
 ----------------------------------------------------------------------
-Ran 37 tests in 4.165s
+Ran 72 tests in 5.797s
 
 OK
 
 > lean-observatory@0.1.0 test:charts
 > node --test tests/chart-math.test.ts
 
-✔ normalize preserves missing measurements, sorts times and deduplicates snapshots (1.1215ms)
-✔ time spacing reflects elapsed time rather than sample order (0.096166ms)
-✔ domains use calm readable bounds and preserve percent scale (0.302167ms)
-✔ axis labels are compact, no fractional large-rate noise (31.950333ms)
-✔ missing data and outages break paths instead of spanning the gap (0.1805ms)
-✔ pointer inspection picks nearest timestamp including null (0.088167ms)
-✔ a sparse outage cannot become the inferred sampling cadence (0.092208ms)
-✔ one-second history retains the full thirty-minute selectable window (0.82875ms)
-✔ live and polled history merge without duplicate points or losing newer samples (0.277541ms)
-✔ stale history breaks every resource trace without discarding real compile progress (0.185292ms)
+✔ normalize preserves missing measurements, sorts times and deduplicates snapshots (1.508875ms)
+✔ time spacing reflects elapsed time rather than sample order (0.113792ms)
+✔ domains use calm readable bounds and preserve percent scale (0.505667ms)
+✔ axis labels are compact, no fractional large-rate noise (26.012833ms)
+✔ missing data and outages break paths instead of spanning the gap (0.206042ms)
+✔ pointer inspection picks nearest timestamp including null (0.116ms)
+✔ a sparse outage cannot become the inferred sampling cadence (0.112208ms)
+✔ one-second history retains the full thirty-minute selectable window (0.90025ms)
+✔ live and polled history merge without duplicate points or losing newer samples (0.172584ms)
+✔ stale history breaks every resource trace without discarding real compile progress (0.147458ms)
 ℹ tests 10
 ℹ suites 0
 ℹ pass 10
@@ -68,7 +104,7 @@ OK
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 193.697958
+ℹ duration_ms 201.067292
 
 > lean-observatory@0.1.0 build
 > tsc --noEmit && vite build
@@ -78,51 +114,51 @@ transforming...
 ✓ 2100 modules transformed.
 rendering chunks...
 computing gzip size...
-frontend/dist/index.html                   0.79 kB │ gzip:  0.54 kB
+frontend/dist/index.html                   0.79 kB │ gzip:  0.55 kB
 frontend/dist/assets/index-CrwsKo82.css   42.08 kB │ gzip:  9.08 kB
-frontend/dist/assets/index-DdogznXF.js   285.76 kB │ gzip: 88.62 kB
+frontend/dist/assets/index-_6mYtUBA.js   285.83 kB │ gzip: 88.66 kB
 
-[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "node_modules/lucide-react/dist/esm/context.mjs" may not be preserved when bundling.
-   ╭─[ node_modules/lucide-react/dist/esm/context.mjs:2:1 ]
-   │
- 2 │ "use client";
-   │ ──────┬──────
-   │       ╰──────── module level directive may not be preserved
-   │
-   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
-───╯
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/lucide-react/dist/esm/context.mjs" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/lucide-react/dist/esm/context.mjs:2:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m2 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
 
-[MODULE_LEVEL_DIRECTIVE] The semantics of the module level directive "use client" in "node_modules/lucide-react/dist/esm/Icon.mjs" may not be preserved when bundling.
-   ╭─[ node_modules/lucide-react/dist/esm/Icon.mjs:2:1 ]
-   │
- 2 │ "use client";
-   │ ──────┬──────
-   │       ╰──────── module level directive may not be preserved
-   │
-   │ Help: For more information, see https://rolldown.rs/in-depth/directives#other-directives
-───╯
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/lucide-react/dist/esm/Icon.mjs" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/lucide-react/dist/esm/Icon.mjs:2:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m2 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
 
-✓ built in 237ms
+✓ built in 286ms
 
 Running 13 tests using 1 worker
 
-(node:70755) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:95568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
 
-  ✓   1 tests/browser/charts.spec.ts:23:1 › all chart geometry is undistorted and supports pointer and keyboard inspection (1.3s)
+  ✓   1 tests/browser/charts.spec.ts:23:1 › all chart geometry is undistorted and supports pointer and keyboard inspection (1.6s)
 
-  ✓   2 tests/browser/charts.spec.ts:108:3 › touch charts › mobile charts stay legible, scroll freely and expose values on tap (530ms)
-  ✓   3 tests/browser/dashboard.spec.ts:11:1 › desktop full dashboard, navigation, theme, logs and downloads (10.4s)
+  ✓   2 tests/browser/charts.spec.ts:108:3 › touch charts › mobile charts stay legible, scroll freely and expose values on tap (547ms)
+  ✓   3 tests/browser/dashboard.spec.ts:11:1 › desktop full dashboard, navigation, theme, logs and downloads (10.5s)
   ✓   4 tests/browser/dashboard.spec.ts:91:3 › failure failure states persist and resume (8.4s)
-  ✓   5 tests/browser/dashboard.spec.ts:91:3 › interruption failure states persist and resume (8.4s)
+  ✓   5 tests/browser/dashboard.spec.ts:91:3 › interruption failure states persist and resume (9.4s)
   ✓   6 tests/browser/dashboard.spec.ts:91:3 › resource failure states persist and resume (9.4s)
-  ✓   7 tests/browser/dashboard.spec.ts:126:3 › responsive 320px and mobile navigation (517ms)
-  ✓   8 tests/browser/dashboard.spec.ts:126:3 › responsive 390px and mobile navigation (512ms)
-  ✓   9 tests/browser/dashboard.spec.ts:126:3 › responsive 768px and mobile navigation (456ms)
-  ✓  10 tests/browser/dashboard.spec.ts:126:3 › responsive 1280px and mobile navigation (454ms)
-  ✓  11 tests/browser/dashboard.spec.ts:161:1 › SSE disconnect reconnect and live data recovery (397ms)
-  ✓  12 tests/browser/dashboard.spec.ts:175:1 › read-only dashboard never exposes task controls or sends writes (875ms)
+  ✓   7 tests/browser/dashboard.spec.ts:126:3 › responsive 320px and mobile navigation (542ms)
+  ✓   8 tests/browser/dashboard.spec.ts:126:3 › responsive 390px and mobile navigation (591ms)
+  ✓   9 tests/browser/dashboard.spec.ts:126:3 › responsive 768px and mobile navigation (496ms)
+  ✓  10 tests/browser/dashboard.spec.ts:126:3 › responsive 1280px and mobile navigation (451ms)
+  ✓  11 tests/browser/dashboard.spec.ts:161:1 › SSE disconnect reconnect and live data recovery (410ms)
+  ✓  12 tests/browser/dashboard.spec.ts:175:1 › read-only dashboard never exposes task controls or sends writes (845ms)
 
-  ✓  13 tests/browser/theme.spec.ts:5:1 › editorial theme defaults to paper and adapts from phone to desktop (1.4s)
+  ✓  13 tests/browser/theme.spec.ts:5:1 › editorial theme defaults to paper and adapts from phone to desktop (1.5s)
 
-  13 passed (44.4s)
+  13 passed (46.9s)

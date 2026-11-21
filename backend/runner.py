@@ -9,8 +9,9 @@ from pathlib import Path
 
 
 class CommandError(RuntimeError):
-    def __init__(self, message, code=1):
-        super().__init__(message); self.code=code
+    def __init__(self, message, code=1, reason=None, terminationCause=None):
+        super().__init__(message)
+        self.code=code; self.reason=reason; self.terminationCause=terminationCause
 
 
 class CommandRunner:
@@ -24,12 +25,13 @@ class CommandRunner:
         filename=f'command-{index:03d}-{stage}.log'
         record=dict(argv=argv, cwd=str(cwd), stage=stage, startedAt=start, sandbox=sandbox,
                     leanThreads=self.store.raw(self.run_id)['compile']['jobs'],
-                    finishedAt=None, exitCode=None, logFile=filename)
+                    finishedAt=None, exitCode=None, logFile=filename,
+                    status='running', terminationCause=None)
         self.store.mutate(self.run_id, lambda s: s['commands'].append(record), 'command_started')
         self.store.log(self.run_id, 'info', '$ ' + ' '.join(argv), stage)
         env={**os.environ, 'NO_COLOR':'1', 'TERM':'dumb'}
         output=[]; captured=0; paused=False; last=time.monotonic(); heartbeat=0
-        process=None; code=127; reason=None
+        process=None; selector=None; code=127; reason=None; terminationCause=None
         with (self.root/filename).open('wb') as full:
             try:
                 actual=argv
@@ -48,7 +50,8 @@ class CommandRunner:
                     if now-heartbeat >= .8:
                         state=self.store.raw(self.run_id); desired=state['desired']
                         if desired == 'cancelled':
-                            reason='cancelled'; os.killpg(process.pid, signal.SIGTERM)
+                            reason='cancelled'; terminationCause='cancelled'
+                            os.killpg(process.pid, signal.SIGTERM)
                             try: process.wait(8)
                             except subprocess.TimeoutExpired: os.killpg(process.pid, signal.SIGKILL)
                         elif desired == 'paused' and not paused:
@@ -68,7 +71,8 @@ class CommandRunner:
                         self.store.mutate(self.run_id, beat)
                         heartbeat=now
                     if time.time()-start > timeout:
-                        reason='timeout'; os.killpg(process.pid, signal.SIGKILL)
+                        reason='timeout'; terminationCause='timeout'
+                        os.killpg(process.pid, signal.SIGKILL)
                     events=selector.select(.15)
                     eof=False
                     for key, _ in events:
@@ -89,17 +93,28 @@ class CommandRunner:
                     text=buffer.decode(errors='replace'); self.store.log(self.run_id, 'info', text, stage)
                     if callback: callback(text)
                     if captured<8*1024**2: output.append(text)
-                code=process.wait(); selector.close(); process.stdout.close()
+                code=process.wait()
             except BaseException as exc:
-                if process and process.poll() is None:
-                    os.killpg(process.pid, signal.SIGKILL); code=process.wait()
-                reason=str(exc); full.write((reason+'\n').encode())
-                if isinstance(exc, (KeyboardInterrupt, SystemExit)):
-                    code=-signal.SIGTERM
+                if process:
+                    if process.poll() is None:
+                        try: os.killpg(process.pid, signal.SIGKILL)
+                        except ProcessLookupError: pass
+                    code=process.wait()
+                reason=str(exc) or type(exc).__name__
+                terminationCause=('operator_interruption' if isinstance(exc,(KeyboardInterrupt,SystemExit))
+                                  else terminationCause or 'runner_error')
+                full.write((reason+'\n').encode())
             finally:
+                if selector is not None: selector.close()
+                if process and process.stdout: process.stdout.close()
                 def finish(s):
-                    s['commands'][index].update(exitCode=code, finishedAt=time.time(), reason=reason)
+                    status=('interrupted' if terminationCause=='operator_interruption' else
+                            'cancelled' if terminationCause=='cancelled' else
+                            'passed' if code==0 and not reason else 'failed')
+                    s['commands'][index].update(exitCode=code, finishedAt=time.time(), reason=reason,
+                                                terminationCause=terminationCause,status=status)
                 self.store.mutate(self.run_id, finish, 'command_finished')
         if code != 0 or reason:
-            raise CommandError(f'{stage}: 命令退出 {code}' + (f' ({reason})' if reason else ''), code)
+            raise CommandError(f'{stage}: 命令退出 {code}' + (f' ({reason})' if reason else ''), code,
+                               reason=reason,terminationCause=terminationCause)
         return '\n'.join(output)

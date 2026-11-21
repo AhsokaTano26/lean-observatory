@@ -2,6 +2,8 @@
 
 黎曼猜想 Lean 源码独立复现、审计与实时观测平台。React/TypeScript Dashboard + Python API/独立 Worker + SQLite WAL + Docker Compose/Nginx。
 
+部署、启动验证、监控及恢复均由助手执行；用户只需购买服务器并提供 SSH/DNS 条件。购机前就绪范围见 [购机就绪记录](reports/PURCHASE_READINESS.md)，助手操作规范见 [ASSISTANT_DEPLOYMENT.md](docs/ASSISTANT_DEPLOYMENT.md)。
+
 **真实项目验证未开始，未宣告证明成立。** 服务器尚未购买，计划域名 `lean.tano.asia`。本地验收与边界见 [验收报告](reports/LOCAL_QA.md)、[机器可读门禁](reports/local-acceptance.json)、[执行状态](reports/STATUS.md)。
 
 ![Dashboard](docs/screenshots/desktop-dark.png)
@@ -31,7 +33,7 @@ python3 scripts/local.py --demo --port 8787
 
 ```sh
 npm test                 # 后端 + 图表计算 + TypeScript/构建 + Playwright 浏览器
-npm run test:unit        # 后端/安全/恢复/门禁
+npm run test:unit        # 后端/安全/恢复/备份/部署门禁
 npm run test:e2e         # 已构建后的浏览器测试
 ```
 
@@ -60,11 +62,13 @@ python3 -m backend.control --data .data cancel RUN_ID
 docker compose exec mock-worker python3 -m backend.control --data /data create --mode mock
 ```
 
+正式 Ubuntu 启用专用 AppArmor profile，线上验收必须实际通过该 profile 下的 Lean/namespace 小样例；本机 Docker Desktop 无 AppArmor 时的 `unconfined` 只用于本地测试。
+
 真实 Worker 为 `verification` profile；本机小样例需叠加 `compose.smoke.yaml`，不使用 64 核服务器的默认 cpuset/内存配置。不要同时启动两个 profile 的 Worker。两个持久卷分别存放不可被 Lean 子进程访问的证据与隔离构建输出。
 
 ## 顺序与报告
 
-本地开发 → 全部本地测试 → 服务器只读检查 → 正式部署及线上验收 → 真实验证。`scripts/preflight.py` 在本地报告缺失、失败或源码指纹改变时拒绝 SSH；`ENABLE_REAL` 默认关闭。部署说明、TLS 配置、监控服务及运行命令见 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)。
+本地开发 → 全部本地测试 → 服务器只读检查 → 正式部署及线上验收 → 真实验证。`scripts/preflight.py` 在本地报告缺失、失败或源码指纹改变时拒绝 SSH；`ENABLE_REAL` 默认关闭，单独启用该变量仍不能绕过源码绑定的 HTTPS/宿主指标/镜像/隔离验收。部署说明、TLS 配置、监控服务及运行命令见 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)。
 
 报告包含任务模式、环境、源哈希、阶段状态、命令/退出码、证据清单与完整日志下载。`checks_completed` 只表示所列机器检查完成；数学陈述语义复核与不同实现内核检查单独列为待完成/未执行。`leanchecker` 使用同一 Lean 内核。
 

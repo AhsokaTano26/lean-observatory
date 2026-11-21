@@ -145,14 +145,19 @@ export function Results({ run: r }: { run: Run }) {
                     <td>
                       <Badge
                         status={
-                          c.exitCode == null
+                          c.status ||
+                          (c.exitCode == null
                             ? "running"
                             : c.exitCode === 0
                               ? "passed"
-                              : "failed"
+                              : "failed")
                         }
                       />
-                      <span className="mono"> {c.exitCode}</span>
+                      <span className="mono">
+                        {c.exitCode == null && c.status === "interrupted"
+                          ? " 退出码未知"
+                          : " " + (c.exitCode ?? "")}
+                      </span>
                     </td>
                   </tr>
                 ))}

@@ -1,0 +1,3 @@
+ Container lean-observatory-api-run-ce4a76ff5d35 Creating 
+ Container lean-observatory-api-run-ce4a76ff5d35 Created 
+{"nginx": "passed", "health": "passed", "allTaskWrites": "405", "readOnly": true, "sse": "passed", "reports": "passed", "realProof": "NOT_RUN"}

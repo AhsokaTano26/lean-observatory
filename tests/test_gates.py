@@ -10,7 +10,7 @@ class GateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d);(root/'reports').mkdir()
             with self.assertRaises(RuntimeError):g.require_local_gate(root)
-            checks={k:{'exitCode':0} for k in ['backend','charts','build','browser','compose','http','worker_smoke']}
+            checks={k:{'exitCode':0} for k in ['backend','charts','build','browser','compose','http','worker_smoke','amd64_worker_smoke','lake_pipeline','apparmor_profile']}
             report={'sourceSha256':g.fingerprint(root),'checks':checks}
             (root/'reports/local-acceptance.json').write_text(json.dumps(report))
             g.require_local_gate(root)

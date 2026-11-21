@@ -7,9 +7,14 @@ archive=Path('/tmp')/('lean-observatory-'+receipt['sourceSha256'][:12]+'.tar.gz'
 with tarfile.open(archive,'w:gz') as out:
     for p in sorted(ROOT.rglob('*')):
         rel=p.relative_to(ROOT)
-        if not p.is_file() or any(x in EXCLUDED-{'reports','docs'} for x in rel.parts):continue
+        if any(x in EXCLUDED-{'reports','docs'} for x in rel.parts):continue
+        if p.is_symlink():raise RuntimeError('Source release must not include symlinks: '+str(rel))
+        if not p.is_file():continue
         if rel.name.startswith('.env') and rel.name!='.env.example':continue
-        out.add(p,arcname=rel,recursive=False)
+        info=out.gettarinfo(str(p),arcname=str(rel))
+        info.uid=info.gid=0;info.uname=info.gname='root'
+        info.mode=0o755 if p.stat().st_mode & 0o111 else 0o644
+        with p.open('rb') as stream:out.addfile(info,stream)
 digest=hashlib.sha256(archive.read_bytes()).hexdigest()
 archive.with_suffix(archive.suffix+'.sha256').write_text(f'{digest}  {archive.name}\n')
 print(json.dumps({'archive':str(archive),'sha256':digest,'bytes':archive.stat().st_size}))

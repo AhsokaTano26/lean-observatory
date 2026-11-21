@@ -87,6 +87,12 @@ class Store:
         with self.db() as db:
             return [json.loads(r[0]) for r in db.execute('SELECT state FROM runs ORDER BY created DESC LIMIT 30')]
 
+    def run_summaries(self):
+        # Operational acceptance needs the complete ledger, not the UI's 30-row
+        # detail window. Project only small fields rather than loading all states.
+        with self.db() as db:
+            return [dict(row) for row in db.execute("SELECT id,json_extract(state,'$.mode') AS mode,json_extract(state,'$.status') AS status,json_extract(state,'$.startedAt') AS startedAt FROM runs ORDER BY created DESC")]
+
     def active_runs(self):
         with self.db() as db:
             return [json.loads(r[0]) for r in db.execute("SELECT state FROM runs WHERE json_extract(state,'$.status') IN ('queued','running','paused') ORDER BY created")]
