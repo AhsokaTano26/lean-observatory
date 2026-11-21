@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "6a8ca6d",
+  "sourceSha256": "36948319c5c0169c1f8ee363ae72b29db487b628823c83d3956be2b7d58931fe",
+  "archiveSha256": "9405925ea36a075b64a144db92fca0c128b52a4da6f304ca9895ef20092939bb",
+  "preservation": {
+    "containersUnchanged": true,
+    "configsUnchanged": true,
+    "nginxUnchanged": true,
+    "sameRun": true,
+    "progressContinued": true
+  },
+  "beforeProgress": 32681,
+  "afterProgress": 35589,
+  "online": {
+    "sampledAt": 1795281103.4444504,
+    "page": "https://lean.tano.asia:9443/ns/",
+    "status": "QUEUED",
+    "reason": "waiting_rh",
+    "budgetCapUsd": 0,
+    "startedAt": null,
+    "execution": "NOT_RUN",
+    "proofAccepted": false,
+    "controllerOnline": true,
+    "rh": {
+      "id": "20565ace60c2",
+      "status": "running",
+      "phase": "compile",
+      "compile": {
+        "expectedTotal": 175187,
+        "total": 175187,
+        "succeeded": 35555,
+        "failed": 0,
+        "rate": 4.62,
+        "currentModule": "Development.AbelianVarietyTheory.Proofs.FlagMeasures.EqZeroOnKCOfEqZeroOnKset",
+        "jobs": 48,
+        "startedFresh": true,
+        "remaining": 139632,
+        "percent": 20.3,
+        "etaSeconds": 30223
+      },
+      "startedAt": 1795273445.5077407,
+      "finishedAt": null,
+      "error": null,
+      "proofAccepted": false,
+      "workerOnline": true,
+      "metrics": {
+        "sampledAt": 1795281097.20286,
+        "source": "host_agent",
+        "hostname": "localhost",
+        "platform": "Linux-6.8.0-149-generic-x86_64-with-glibc2.39",
+        "cpuCount": 64,
+        "cpuPercent": 74.16,
+        "memoryTotalBytes": 270240256000,
+        "memoryUsedBytes": 37006577664,
+        "memoryPercent": 13.69,
+        "diskTotalBytes": 2769818460160,
+        "diskUsedBytes": 270330462208,
+        "diskPercent": 9.76,
+        "networkRxBytesPerSec": 73796.635561265,
+        "networkTxBytesPerSec": 50104.43771524392,
+        "load": [
+          48.724609375,
+          48.42041015625,
+          48.14453125
+        ],
+        "limitations": [],
+        "stale": false
+      }
+    },
+    "hostMetricsAvailable": true,
+    "sourceSha256": "36948319c5c0169c1f8ee363ae72b29db487b628823c83d3956be2b7d58931fe",
+    "mutationsHTTPStatus": 405,
+    "containers": [
+      "lean-observatory-ns-api-1",
+      "lean-observatory-ns-nginx-1"
+    ],
+    "alerts": [
+      {
+        "id": 1,
+        "title": "NS 已排队",
+        "message": "NS 后续验证队列已部署，RH继续原任务。NS额外预算为0时不会启动；RH成功后仍不足将暂停并告警。",
+        "level": "info",
+        "status": "sent",
+        "attempts": 5,
+        "createdAt": 1795280505.3170247,
+        "updatedAt": 1795280870.3562586,
+        "lastError": null
+      }
+    ]
+  },
+  "productionBrowser": {
+    "production": true,
+    "tlsVerifiedSeparatelyByCurl": true,
+    "transport": "SSH tunnel to server 9443",
+    "viewports": [
+      1440,
+      390
+    ],
+    "status": "QUEUED",
+    "capUsd": 0,
+    "writes": [],
+    "errors": []
+  },
+  "publicDirectTLS": {
+    "verified": false,
+    "error": "TLS connection closed from current local network; both domain TLS endpoints passed server-side with verified certificates; browser checks used SSH tunnel"
+  },
+  "proofAccepted": false,
+  "nsExecution": "NOT_RUN"
+}
