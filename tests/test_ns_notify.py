@@ -24,7 +24,7 @@ class NotificationTests(unittest.TestCase):
             status = 200
             def do_POST(self):
                 received.append(json.loads(self.rfile.read(int(self.headers['Content-Length']))))
-                self.send_response(self.status); self.end_headers()
+                self.send_response(self.status if self.headers.get('User-Agent')=='LeanObservatory/1.0' else 403); self.end_headers()
             def log_message(self, *args): pass
         server = ThreadingHTTPServer(('127.0.0.1', 0), Handler)
         threading.Thread(target=server.serve_forever, daemon=True).start()

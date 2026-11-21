@@ -55,7 +55,7 @@ def deliver(url, alert, *, allow_local_http=False, timeout=10):
     if parsed.scheme != 'https' and not (allow_local_http and local and parsed.scheme == 'http'):
         raise ValueError('Webhook requires verified HTTPS')
     payload = json.dumps(build_payload(alert), ensure_ascii=False).encode()
-    request = urllib.request.Request(url, data=payload, headers={'Content-Type': 'application/json'}, method='POST')
+    request = urllib.request.Request(url, data=payload, headers={'Content-Type': 'application/json', 'User-Agent': 'LeanObservatory/1.0'}, method='POST')
     try:
         with urllib.request.build_opener(_NoRedirect).open(request, timeout=timeout) as response:
             code = response.status
