@@ -1,0 +1,41 @@
+name: lean-observatory-ns
+services:
+  ns-worker:
+    image: lean-observatory-ns-worker:${NS_SOURCE_SHA256:-unbound}
+    container_name: ${NS_CONTAINER_NAME:?NS_CONTAINER_NAME required}
+    build:
+      context: .
+      dockerfile: ns_queue/NSWorker.Dockerfile
+      target: ns-worker
+      args: {SOURCE_SHA256: "${NS_SOURCE_SHA256:-unbound}"}
+    labels:
+      io.lean-observatory.ns.run: ${NS_RUN_ID:?NS_RUN_ID required}
+      io.lean-observatory.ns.commit: ${NS_SOURCE_COMMIT:?NS_SOURCE_COMMIT required}
+    user: "0:10001"
+    command: [python3, -m, ns_queue.ns_worker, --root, /data]
+    environment:
+      SANDBOX_ROOT: /sandbox
+      NS_RUN_ID: ${NS_RUN_ID:?NS_RUN_ID required}
+    volumes:
+      - ${NS_DATA_ROOT:-/var/lib/lean-observatory-queue}:/data
+      - ns-build-data:/sandbox/work
+      - /dev/null:/sandbox/dev/null
+      - /dev/urandom:/sandbox/dev/urandom:ro
+    cpus: 48
+    cpuset: "8-55"
+    mem_limit: 208g
+    memswap_limit: 208g
+    pids_limit: 1024
+    ulimits:
+      nofile: {soft: 65536, hard: 65536}
+      stack: {soft: 67108864, hard: 67108864}
+    cap_drop: [ALL]
+    cap_add: [SYS_CHROOT, SETUID, SETGID, CHOWN, DAC_OVERRIDE, KILL, SYS_ADMIN]
+    security_opt: ["no-new-privileges:true", "apparmor=lean-observatory-ns-worker"]
+    restart: "no"
+    stop_grace_period: 30s
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+volumes:
+  ns-build-data:

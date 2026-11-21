@@ -1,0 +1,51 @@
+name: lean-observatory-ns
+x-logging: &logging
+  driver: json-file
+  options: {max-size: "10m", max-file: "3"}
+services:
+  api:
+    image: lean-observatory-ns-web:${NS_SOURCE_SHA256:-unbound}
+    build:
+      context: .
+      dockerfile: ns_queue/Web.Dockerfile
+      args: {SOURCE_SHA256: "${NS_SOURCE_SHA256:-unbound}"}
+    command: [python3, -m, ns_queue.web, --root, /data, --host, 0.0.0.0, --port, "8792"]
+    user: "10001:10001"
+    environment:
+      NS_HOST_METRICS: /host-metrics/host.json
+      NS_SOURCE_SHA256: ${NS_SOURCE_SHA256:-unbound}
+    volumes:
+      - "${NS_DATA_ROOT:-/var/lib/lean-observatory-queue}:/data:ro"
+      - /var/lib/lean-observatory-metrics:/host-metrics:ro
+    expose: ["8792"]
+    cpus: 0.10
+    mem_limit: 96m
+    pids_limit: 48
+    read_only: true
+    tmpfs: ["/tmp:size=32m,mode=1777"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+    logging: *logging
+    healthcheck:
+      test: [CMD, python3, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8792/healthz',timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  nginx:
+    image: nginx:1.28-alpine
+    ports: ["9443:9443"]
+    volumes:
+      - ./deploy/ns/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on: {api: {condition: service_healthy}}
+    cpus: 0.10
+    mem_limit: 32m
+    pids_limit: 32
+    read_only: true
+    tmpfs: ["/var/cache/nginx:size=8m", "/var/run:size=1m", "/tmp:size=8m"]
+    cap_drop: [ALL]
+    cap_add: [CHOWN, SETUID, SETGID, DAC_OVERRIDE]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+    logging: *logging

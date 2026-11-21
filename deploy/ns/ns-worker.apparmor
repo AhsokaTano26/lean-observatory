@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: Apache-2.0
+# Independent NS profile. Original RH profile is never changed or reloaded.
+# Container restrictions adapted from the Moby default profile (Apache-2.0).
+abi <abi/3.0>,
+#include <tunables/global>
+
+profile lean-observatory-ns-worker flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  network,
+  deny network alg,
+  deny network vsock,
+  capability,
+  file,
+
+  mount options=(rw, rprivate) -> /,
+  mount options=(rw, rprivate) -> /sandbox/proc/,
+  mount fstype=proc -> /sandbox/proc/,
+  umount /sandbox/proc/,
+
+  deny /proc/sys/** w,
+  deny /proc/sysrq-trigger rwklx,
+  deny /proc/kcore rwklx,
+  deny /sandbox/proc/sys/** w,
+  deny /sandbox/proc/sysrq-trigger rwklx,
+  deny /sandbox/proc/kcore rwklx,
+  deny /sys/** wklx,
+  deny /sys/firmware/** rwklx,
+  deny /sys/kernel/security/** rwklx,
+
+  signal (receive),
+  signal (send) peer=lean-observatory-ns-worker,
+  signal (send) peer=lean-observatory-ns-worker//&unconfined,
+  ptrace (trace,tracedby,read,readby) peer=lean-observatory-ns-worker,
+  ptrace (trace,tracedby,read,readby) peer=lean-observatory-ns-worker//&unconfined,
+}

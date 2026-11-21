@@ -1,0 +1,10 @@
+[Unit]
+Description=Reload only the NS add-on nginx after certificate renewal
+After=lean-observatory-ns-web.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/lean-observatory-ns
+EnvironmentFile=/opt/lean-observatory-ns/.env
+ExecStart=/usr/bin/docker compose -p lean-observatory-ns -f compose.ns.yaml exec -T nginx nginx -t
+ExecStart=/usr/bin/docker compose -p lean-observatory-ns -f compose.ns.yaml exec -T nginx nginx -s reload

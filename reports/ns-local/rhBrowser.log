@@ -1,0 +1,23 @@
+
+Running 13 tests using 1 worker
+
+(node:8429) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ✓   1 tests/browser/charts.spec.ts:23:1 › all chart geometry is undistorted and supports pointer and keyboard inspection (1.1s)
+
+  ✓   2 tests/browser/charts.spec.ts:108:3 › touch charts › mobile charts stay legible, scroll freely and expose values on tap (495ms)
+  ✓   3 tests/browser/dashboard.spec.ts:11:1 › desktop full dashboard, navigation, theme, logs and downloads (10.1s)
+  ✓   4 tests/browser/dashboard.spec.ts:91:3 › failure failure states persist and resume (8.3s)
+  ✓   5 tests/browser/dashboard.spec.ts:91:3 › interruption failure states persist and resume (9.3s)
+  ✓   6 tests/browser/dashboard.spec.ts:91:3 › resource failure states persist and resume (8.3s)
+  ✓   7 tests/browser/dashboard.spec.ts:126:3 › responsive 320px and mobile navigation (445ms)
+  ✓   8 tests/browser/dashboard.spec.ts:126:3 › responsive 390px and mobile navigation (453ms)
+  ✓   9 tests/browser/dashboard.spec.ts:126:3 › responsive 768px and mobile navigation (406ms)
+  ✓  10 tests/browser/dashboard.spec.ts:126:3 › responsive 1280px and mobile navigation (404ms)
+  ✓  11 tests/browser/dashboard.spec.ts:161:1 › SSE disconnect reconnect and live data recovery (364ms)
+  ✓  12 tests/browser/dashboard.spec.ts:175:1 › read-only dashboard never exposes task controls or sends writes (670ms)
+
+  ✓  13 tests/browser/theme.spec.ts:5:1 › editorial theme defaults to paper and adapts from phone to desktop (1.2s)
+
+  13 passed (43.0s)

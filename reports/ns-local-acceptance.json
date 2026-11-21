@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-21T16:59:50.110730+00:00",
+  "sourceSha256": "840346d28f5808603bd9376026a2281a8d3e80e954af5e7e0bf91c08c9fe3d1c",
+  "scope": "Local platform tests only; no real NS build or proof execution; no remote connection",
+  "budgetCapUsd": 0,
+  "checks": {
+    "unit": {
+      "command": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-q"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/unit.log"
+    },
+    "charts": {
+      "command": [
+        "node",
+        "--test",
+        "tests/chart-math.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/charts.log"
+    },
+    "browser": {
+      "command": [
+        "node",
+        "--test",
+        "tests/ns-addon-browser.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/browser.log"
+    },
+    "rhBrowser": {
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/rhBrowser.log"
+    },
+    "uiBuild": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/uiBuild.log"
+    },
+    "compose": {
+      "command": [
+        "docker",
+        "compose",
+        "-f",
+        "compose.ns.yaml",
+        "-f",
+        "compose.ns-worker.yaml",
+        "config",
+        "--quiet"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/compose.log"
+    },
+    "compile": {
+      "command": [
+        "py_compile",
+        "ns_queue/**/*.py",
+        "deploy/ns/**/*.py"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/compile.log"
+    }
+  },
+  "execution": "NOT_RUN",
+  "proofAccepted": false,
+  "browserNote": "Browser plugin unavailable; Playwright used; NS viewports 1440/390/320"
+}

@@ -1,0 +1,30 @@
+[Unit]
+Description=Independent budget-gated NS successor controller
+After=docker.service network-online.target lean-observatory-ns-web.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User=root
+Group=10001
+WorkingDirectory=/opt/lean-observatory-ns
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=DOCKER_CONFIG=/var/lib/lean-observatory-queue/docker-config
+EnvironmentFile=/opt/lean-observatory-ns/.env
+ExecStart=/usr/bin/python3 -m ns_queue.controller --root /var/lib/lean-observatory-queue --deployment /opt/lean-observatory-ns --interval 10
+Restart=on-failure
+RestartSec=10
+CPUQuota=5%
+MemoryMax=128M
+TasksMax=32
+UMask=0027
+PrivateTmp=yes
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/lean-observatory-queue
+
+[Install]
+WantedBy=multi-user.target

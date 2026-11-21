@@ -1,0 +1,19 @@
+[Unit]
+Description=Independent read-only NS queue HTTPS page
+After=docker.service network-online.target
+Requires=docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/lean-observatory-ns
+EnvironmentFile=/opt/lean-observatory-ns/.env
+ExecStart=/usr/bin/docker compose -p lean-observatory-ns -f compose.ns.yaml up -d --no-build --wait api nginx
+ExecStop=/usr/bin/docker compose -p lean-observatory-ns -f compose.ns.yaml stop api nginx
+TimeoutStartSec=180
+TimeoutStopSec=60
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Watch existing certificate changes for the NS add-on only
+
+[Path]
+PathChanged=/etc/letsencrypt/live/lean.tano.asia
+PathChanged=/etc/letsencrypt/live/lean.tano.asia/fullchain.pem
+PathChanged=/etc/letsencrypt/live/lean.tano.asia/privkey.pem
+Unit=lean-observatory-ns-cert-reload.service
+
+[Install]
+WantedBy=multi-user.target
