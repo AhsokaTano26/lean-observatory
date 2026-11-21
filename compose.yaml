@@ -6,8 +6,6 @@ services:
   api:
     build: {context: ., target: api}
     environment:
-      ADMIN_TOKEN: ${ADMIN_TOKEN:?set ADMIN_TOKEN in .env}
-      ENABLE_REAL: ${ENABLE_REAL:-0}
       HOST_METRICS: /metrics/host.json
     volumes: ["verification-data:/data", "${METRICS_DIR:-./.data/metrics}:/metrics:ro"]
     expose: ["8787"]

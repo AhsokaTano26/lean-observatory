@@ -10,8 +10,7 @@ from gates import ROOT,fingerprint
 reports=ROOT/'reports';reports.mkdir(exist_ok=True)
 local_env=Path('/tmp/lean-observatory-local.env')
 if not local_env.exists():
-    import secrets
-    local_env.write_text('ADMIN_TOKEN='+secrets.token_urlsafe(36)+'\nENABLE_REAL=0\nHTTP_PORT=8789\nMETRICS_DIR=/tmp/lean-observatory-host-metrics\n')
+    local_env.write_text('ENABLE_REAL=0\nHTTP_PORT=8789\nMETRICS_DIR=/tmp/lean-observatory-host-metrics\n')
     local_env.chmod(0o600)
 checks={}
 steps=[('backend',['npm','run','test:unit']),('charts',['npm','run','test:charts']),('build',['npm','run','build']),('browser',['npm','run','test:e2e']),

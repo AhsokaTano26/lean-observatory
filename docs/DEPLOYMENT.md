@@ -10,7 +10,7 @@ npx playwright install chromium  # 若本机没有匹配浏览器
 npm test
 # 先构建并运行本地 Compose，真实 Lean 仅运行 tiny fixture，不下载作者项目
 cp .env.example .env
-# 将 ADMIN_TOKEN 替换为随机值，ENABLE_REAL 保持 0
+# Web 为只读服务，无管理员令牌；ENABLE_REAL 保持 0
 # macOS 的完整 Worker 冒烟必须使用 compose.smoke.yaml 资源覆盖
 
 docker compose --profile mock up -d --build --wait
@@ -34,7 +34,7 @@ python3 scripts/package_release.py
 # 建议目录 /opt/lean-observatory，源码由 root 持有，不让验证子进程写部署目录。
 ```
 
-在服务器中安装 Docker Engine / Compose 插件（复用已有 Docker，不自动重装或清理），进入平台目录，复制 `.env.example` 为权限 `0600` 的 `.env`，生成随机 `ADMIN_TOKEN`，保持 `ENABLE_REAL=0`。设置 `METRICS_DIR=/var/lib/lean-observatory-metrics`。核对实际 CPU 编号后设置 `WORKER_CPUSET=8-55`、`WORKER_CPUS=48`、`WORKER_MEMORY=208g`。API 限额 2 CPU / 2 GiB，Nginx 1 CPU / 256 MiB，给系统和其他服务保留空间。
+在服务器中安装 Docker Engine / Compose 插件（复用已有 Docker，不自动重装或清理），进入平台目录，复制 `.env.example` 为权限 `0600` 的 `.env`，保持 `ENABLE_REAL=0`。设置 `METRICS_DIR=/var/lib/lean-observatory-metrics`。核对实际 CPU 编号后设置 `WORKER_CPUSET=8-55`、`WORKER_CPUS=48`、`WORKER_MEMORY=208g`。API 限额 2 CPU / 2 GiB，Nginx 1 CPU / 256 MiB，给系统和其他服务保留空间。
 
 启动真实 Worker 但不创建真实任务：
 
@@ -64,13 +64,25 @@ docker compose -f compose.yaml -f compose.tls.yaml exec nginx nginx -t
 
 ## 6. 线上验收后才启用真实任务
 
-先以 `ENABLE_REAL=0` 验证页面、SSE、实际 host_agent 指标、下载、管理员令牌和资源限制。用隔离的 Mock 数据卷演练故障，不在正式验证卷留模拟结论。
+先以 `ENABLE_REAL=0` 验证页面、SSE、实际 host_agent 指标、下载、HTTP 写入均返回 405 和资源限制。用隔离的 Mock 数据卷演练故障，不在正式验证卷留模拟结论。
 
 ```sh
 python3 scripts/online_acceptance.py --url https://lean.tano.asia
 ```
 
-线上报告通过且实际页面功能已检查后，才将 `.env` 的 `ENABLE_REAL` 改为 `1`，重建 API/Worker 容器（保留卷）。在页面管理员令牌入口保存该令牌，创建一次真实任务。默认 48 个 Lake 调度线程，各 Lean 子进程 `-j1`，根据实测资源调整。资源不足后的恢复会把该任务的 Lake 并发减半（最低为 1），保留已有模块进度，并在新命令记录中保留生效线程数。暂停并不释放已有内存；需要释放资源时取消任务，再从持久化检查点恢复。
+线上报告通过且实际页面功能已检查后，才将 `.env` 的 `ENABLE_REAL` 改为 `1`，重建 Worker 容器（保留卷）。然后仅在服务器命令行创建一次真实任务：
+
+```sh
+docker compose exec worker python3 -m backend.control --data /data create --mode real --jobs 48
+# 查询任务编号与状态
+docker compose exec worker python3 -m backend.control --data /data list
+# 需要时从命令行暂停、恢复或取消
+docker compose exec worker python3 -m backend.control --data /data pause RUN_ID
+docker compose exec worker python3 -m backend.control --data /data resume RUN_ID
+docker compose exec worker python3 -m backend.control --data /data cancel RUN_ID
+```
+
+Web 服务仅提供 GET/SSE 与下载，创建、暂停、恢复、取消均不暴露为 HTTP 操作。默认 48 个 Lake 调度线程，各 Lean 子进程 `-j1`，根据实测资源调整。资源不足后的恢复会把该任务的 Lake 并发减半（最低为 1），保留已有模块进度，并在新命令记录中保留生效线程数。暂停并不释放已有内存；取消会终止任务，取消状态不可恢复；需要保留检查点释放内存时，应停止 Worker，重启后从中断状态显式恢复。
 
 ## 7. 正式复现
 

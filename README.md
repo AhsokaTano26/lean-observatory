@@ -11,6 +11,7 @@
 - 六个视图：验证总览、编译监控、服务器监控、证明审计、时间线、结果中心。
 - 参考 bandori.fans 的暖白/暖黑编辑式主题，横向导航、320px 起响应式布局。
 - D3 时间曲线、读数浮层、键盘/触控、下载/上传双曲线，过期/断线/缺测明确标识。
+- 纯展示 Web：仅 GET/SSE/下载，所有任务写入接口返回 405；无账号、密码或管理员入口。
 - SSE/心跳/断线重连、日志筛选与完整导出。
 - Mock 成功、失败、中断、资源不足、暂停/恢复；数据与报告始终注明 MOCK。
 - 持久化队列、阶段与实际命令退出码；独立 Web/Worker 限额、宿主机指标 agent。
@@ -38,11 +39,25 @@ npm run test:e2e         # 已构建后的浏览器测试
 
 ## Compose
 
-复制 `.env.example` 为 `.env`，生成随机 `ADMIN_TOKEN`，保持 `ENABLE_REAL=0`：
+复制 `.env.example` 为 `.env`，保持 `ENABLE_REAL=0`：
 
 ```sh
 docker compose --profile mock up -d --build --wait
-# 本地 http://127.0.0.1:8789；右上角钥匙入口输入本机 ADMIN_TOKEN 才可控制任务。
+# 本地只读页面 http://127.0.0.1:8789
+```
+
+任务只通过宿主机/容器命令行管理，不向浏览器暴露控制接口：
+
+```sh
+# 本地原生模式
+python3 -m backend.control --data .data create --mode mock --scenario success
+python3 -m backend.control --data .data list
+python3 -m backend.control --data .data pause RUN_ID
+python3 -m backend.control --data .data resume RUN_ID
+python3 -m backend.control --data .data cancel RUN_ID
+
+# Compose Mock 模式，命令只在本机执行
+docker compose exec mock-worker python3 -m backend.control --data /data create --mode mock
 ```
 
 真实 Worker 为 `verification` profile；本机小样例需叠加 `compose.smoke.yaml`，不使用 64 核服务器的默认 cpuset/内存配置。不要同时启动两个 profile 的 Worker。两个持久卷分别存放不可被 Lean 子进程访问的证据与隔离构建输出。

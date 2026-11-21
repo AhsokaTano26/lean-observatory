@@ -2,10 +2,8 @@
 import argparse
 import hashlib
 import io
-import hmac
 import json
 import mimetypes
-import os
 import threading
 import time
 import tarfile
@@ -17,7 +15,7 @@ from .store import Store
 from .metrics import collect, read_host_file
 
 
-def make_server(store, address, token='', frontend=None, allow_real=False, host_metrics=None):
+def make_server(store, address, frontend=None, host_metrics=None):
     frontend=Path(frontend or 'frontend/dist').resolve()
     stream_slots=threading.BoundedSemaphore(24)
     stopping=threading.Event()
@@ -43,7 +41,7 @@ def make_server(store, address, token='', frontend=None, allow_real=False, host_
         heartbeat=s['workerHeartbeat']
         return dict(run=s, metrics=metrics(s), serverTime=time.time(),
                     workerOnline=bool(heartbeat and time.time()-heartbeat < 15),
-                    capabilities=dict(realEnabled=allow_real, authRequired=bool(token)))
+                    capabilities=dict(readOnly=True))
 
     class Handler(BaseHTTPRequestHandler):
         protocol_version='HTTP/1.1'
@@ -60,6 +58,7 @@ def make_server(store, address, token='', frontend=None, allow_real=False, host_
             self.send_response(status)
             self.send_header('Content-Type',content_type)
             self.send_header('Content-Length',str(len(raw)))
+            if status==405: self.send_header('Allow','GET')
             self.send_header('Cache-Control','no-store' if self.path.startswith('/api') else 'no-cache')
             self.send_header('X-Content-Type-Options','nosniff')
             self.send_header('Content-Security-Policy',"default-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self'; base-uri 'self'; frame-ancestors 'none'")
@@ -149,42 +148,25 @@ def make_server(store, address, token='', frontend=None, allow_real=False, host_
             except (BrokenPipeError,ConnectionResetError,TimeoutError): pass
             finally: stream_slots.release()
 
-        def do_POST(self):
-            # JSON-only + same-origin prevents cross-site form and fetch mutations.
-            origin=self.headers.get('Origin')
-            if origin and urlparse(origin).netloc != self.headers.get('Host'):
-                return self.respond(403,{'error':'跨域操作被拒绝'})
-            if token and not hmac.compare_digest(self.headers.get('Authorization',''), 'Bearer '+token):
-                return self.respond(401,{'error':'需要管理员令牌'})
-            try:
-                size=int(self.headers.get('Content-Length','0'))
-                if size>8192: return self.respond(413,{'error':'请求过大'})
-                if not self.headers.get('Content-Type','').startswith('application/json'):
-                    return self.respond(415,{'error':'仅支持 JSON'})
-                data=json.loads(self.rfile.read(size))
-                if not isinstance(data,dict): raise ValueError('JSON 请求体必须是对象')
-                if self.path=='/api/runs':
-                    mode=data.get('mode','mock')
-                    if mode=='real' and not allow_real:
-                        return self.respond(403,{'error':'真实任务尚未通过部署验收门禁'})
-                    s=store.create(mode,data.get('scenario','success'),data.get('jobs',48))
-                    return self.respond(201,s)
-                if self.path=='/api/control':
-                    return self.respond(200,store.control(data.get('run'),data.get('action')))
-                return self.respond(404,{'error':'接口不存在'})
-            except (ValueError,KeyError,TypeError) as e:
-                return self.respond(409 if '已有活动' in str(e) or '另一个任务' in str(e) else 400,{'error':str(e)})
+        def reject_write(self):
+            # Close rather than interpreting an unread request body as another request.
+            self.close_connection=True
+            self.respond(405,{'error':'只读观测服务不接受写入操作'})
+
+        do_POST=reject_write
+        do_PUT=reject_write
+        do_PATCH=reject_write
+        do_DELETE=reject_write
 
     server=Server(address,Handler)
     return server
 
 
 def main():
+    import os
     parser=argparse.ArgumentParser(); parser.add_argument('--host',default='127.0.0.1'); parser.add_argument('--port',type=int,default=8787); parser.add_argument('--data',default='.data')
-    a=parser.parse_args(); token=os.environ.get('ADMIN_TOKEN','')
-    if a.host not in ('127.0.0.1','localhost') and not token:
-        raise SystemExit('公网或容器监听必须设置 ADMIN_TOKEN')
-    make_server(Store(Path(a.data)),(a.host,a.port),token,allow_real=os.environ.get('ENABLE_REAL')=='1',host_metrics=os.environ.get('HOST_METRICS')).serve_forever()
+    a=parser.parse_args()
+    make_server(Store(Path(a.data)),(a.host,a.port),host_metrics=os.environ.get('HOST_METRICS')).serve_forever()
 
 
 if __name__=='__main__': main()

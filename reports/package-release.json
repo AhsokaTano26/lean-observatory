@@ -1,7 +1,7 @@
 {
-  "archive": "/Users/tano/Documents/GitHub/Lean/artifacts/lean-observatory-be56c7c7145f.tar.gz",
-  "sha256": "5c90dd23a2713be36bc7f7b0db455932850e10360e0da25001e7a70b357b7aa9",
-  "bytes": 3618702,
-  "sourceSha256": "be56c7c7145f11cd4d987a2edee15fe82cd899d5254d4bca780759c94f520d04",
-  "scope": "Platform source and local Mock/tiny-fixture evidence; original proof NOT_RUN"
+  "archive": "/Users/tano/Documents/GitHub/Lean/artifacts/lean-observatory-e15068631090.tar.gz",
+  "sha256": "9c09f732362eb72017cc33fe0724096fe829984c19e11fde932b59afca5b7188",
+  "bytes": 3585467,
+  "sourceSha256": "e15068631090285789b0739ce37a9e094257f840e2a5d341a6fc8ef4d565bb02",
+  "scope": "Read-only Web platform + local Mock/tiny-fixture evidence; original proof NOT_RUN"
 }

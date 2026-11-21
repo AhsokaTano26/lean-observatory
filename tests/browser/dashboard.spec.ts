@@ -1,34 +1,12 @@
 import { test, expect } from "@playwright/test";
 import fs from "node:fs";
+import { hostControl, resetMock, startMock } from "./backend";
 const evidence = "/tmp/lean-observatory-qa";
 test.beforeAll(() => fs.mkdirSync(evidence, { recursive: true }));
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem("lean-theme", "dark"));
 });
-test.beforeEach(async ({ request }) => {
-  const { run } = await (await request.get("/api/state")).json();
-  if (
-    run.id &&
-    [
-      "running",
-      "queued",
-      "paused",
-      "failed",
-      "interrupted",
-      "resource_exhausted",
-    ].includes(run.status)
-  )
-    await request.post("/api/control", {
-      data: { run: run.id, action: "cancel" },
-    });
-});
-async function start(request: any, scenario = "success") {
-  const res = await request.post("/api/runs", {
-    data: { mode: "mock", scenario },
-  });
-  expect(res.status()).toBe(201);
-  return res.json();
-}
+test.beforeEach(() => resetMock());
 
 test("desktop full dashboard, navigation, theme, logs and downloads", async ({
   page,
@@ -40,7 +18,7 @@ test("desktop full dashboard, navigation, theme, logs and downloads", async ({
       errors.push(m.type() + ": " + m.text());
   });
   page.on("pageerror", (e) => errors.push(e.message));
-  const s = await start(request);
+  const s = startMock();
   await page.setViewportSize({ width: 1600, height: 1100 });
   await page.goto("/");
   await expect(page).toHaveTitle(/Lean Observatory/);
@@ -65,11 +43,8 @@ test("desktop full dashboard, navigation, theme, logs and downloads", async ({
     fullPage: true,
     animations: "disabled",
   });
-  await page.getByRole("button", { name: "暂停任务", exact: true }).click();
-  await expect(
-    page.getByRole("button", { name: "恢复任务", exact: true }),
-  ).toBeVisible();
-  const paused = await (await request.get("/api/state")).json();
+  hostControl("pause", s.id);
+  await expect(page.locator(".run-strip .badge")).toContainText("已暂停");
   await page.getByRole("button", { name: "切换浅色主题" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.screenshot({
@@ -100,7 +75,7 @@ test("desktop full dashboard, navigation, theme, logs and downloads", async ({
   ).json();
   expect(report.run.mode).toBe("mock");
   expect(report.run.proofAccepted).toBe(false);
-  await page.getByRole("button", { name: "恢复任务", exact: true }).click();
+  hostControl("resume", s.id);
   await expect
     .poll(
       async () => {
@@ -117,7 +92,7 @@ for (const scenario of ["failure", "interruption", "resource"])
     page,
     request,
   }) => {
-    await start(request, scenario);
+    const run = startMock(scenario);
     await page.goto("/");
     const expected = {
       failure: "failed",
@@ -134,10 +109,8 @@ for (const scenario of ["failure", "interruption", "resource"])
     const before = (await (await request.get("/api/state")).json()).run.compile
       .succeeded;
     await page.reload();
-    await expect(
-      page.getByRole("button", { name: "恢复任务", exact: true }),
-    ).toBeVisible();
-    await page.getByRole("button", { name: "恢复任务", exact: true }).click();
+    await expect(page.getByRole("alert")).toBeVisible();
+    hostControl("resume", run.id);
     await expect
       .poll(
         async () => (await (await request.get("/api/state")).json()).run.status,
@@ -154,7 +127,7 @@ for (const width of [320, 390, 768, 1280])
     page,
     request,
   }) => {
-    await start(request);
+    startMock();
     await page.setViewportSize({ width, height: width < 700 ? 844 : 900 });
     await page.goto("/");
     await expect(page.getByText("SSE 已连接")).toBeVisible();
@@ -190,7 +163,7 @@ test("SSE disconnect reconnect and live data recovery", async ({
   request,
   context,
 }) => {
-  await start(request);
+  startMock();
   await page.goto("/");
   await expect(page.getByText("SSE 已连接")).toBeVisible();
   await context.setOffline(true);
@@ -199,14 +172,44 @@ test("SSE disconnect reconnect and live data recovery", async ({
   await expect(page.getByText("SSE 已连接")).toBeVisible({ timeout: 15000 });
 });
 
-test("new task dialog and real gate", async ({ page, request }) => {
+test("read-only dashboard never exposes task controls or sends writes", async ({
+  page,
+  request,
+}) => {
+  startMock();
+  await page.addInitScript(() =>
+    sessionStorage.setItem("lean-admin-token", "local-compose-test-only"),
+  );
+  const writes: string[] = [];
+  page.on("request", (r) => {
+    if (r.method() !== "GET") writes.push(r.method() + " " + r.url());
+  });
   await page.goto("/");
-  await page.getByRole("button", { name: "新建任务" }).click();
-  await expect(page.getByRole("dialog")).toBeVisible();
-  const real = page.locator('option[value="real"]');
-  await expect(real).toBeDisabled();
-  await page.getByLabel("模拟场景").selectOption("failure");
-  await page.getByRole("button", { name: "创建并开始" }).click();
-  await expect(page.getByRole("dialog")).not.toBeVisible();
   await expect(page.getByText("SSE 已连接")).toBeVisible();
+  await expect(
+    page.getByRole("button", {
+      name: /管理员|新建任务|创建并开始|暂停任务|恢复任务|取消任务/,
+    }),
+  ).toHaveCount(0);
+  await expect(page.locator('input[type="password"]')).toHaveCount(0);
+  await page.getByRole("button", { name: "切换浅色主题" }).click();
+  await page.getByRole("button", { name: "暂停日志滚动" }).click();
+  await expect(
+    page.getByRole("button", { name: "恢复日志滚动" }),
+  ).toBeVisible();
+  for (const name of [
+    "服务器监控",
+    "证明审计",
+    "验证时间线",
+    "结果中心",
+    "总览",
+  ])
+    await page.getByRole("link", { name, exact: true }).click();
+  const download = page.waitForEvent("download");
+  await page.getByRole("link", { name: "下载报告", exact: true }).click();
+  expect((await download).suggestedFilename()).toBe("verification-report.json");
+  expect((await (await request.get("/api/state")).json()).run.status).not.toBe(
+    "paused",
+  );
+  expect(writes).toEqual([]);
 });

@@ -12,7 +12,7 @@ from backend.store import Store
 class ApiTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory(); self.store=Store(Path(self.tmp.name))
-        self.server=make_server(self.store, ('127.0.0.1',0), token='test-secret')
+        self.server=make_server(self.store, ('127.0.0.1',0))
         self.thread=threading.Thread(target=self.server.serve_forever,daemon=True); self.thread.start()
         self.base=f'http://127.0.0.1:{self.server.server_port}'
 
@@ -28,21 +28,23 @@ class ApiTests(unittest.TestCase):
         self.assertTrue(json.load(self.req('/healthz'))['ok'])
         self.assertIsNone(json.load(self.req('/api/state'))['run']['id'])
 
-    def test_mutation_auth_and_invalid_scenario(self):
-        with self.assertRaises(urllib.error.HTTPError) as e:
-            self.req('/api/runs', {'mode':'mock'})
-        self.assertEqual(e.exception.code,401); e.exception.close()
-        with self.assertRaises(urllib.error.HTTPError) as e:
-            self.req('/api/runs', {'mode':'mock','scenario':'oops'},'test-secret')
-        self.assertEqual(e.exception.code,400); e.exception.close()
-
-    def test_real_is_disabled_until_deployment_gate(self):
-        with self.assertRaises(urllib.error.HTTPError) as e:
-            self.req('/api/runs', {'mode':'real'},'test-secret')
-        self.assertEqual(e.exception.code,403); e.exception.close()
+    def test_dashboard_rejects_all_task_writes_even_with_previous_admin_token(self):
+        s=self.store.create('mock')
+        before=self.store.raw(s['id'])
+        for method in ['POST','PUT','PATCH','DELETE']:
+            for path in ['/api/runs','/api/control']:
+                with self.subTest(method=method,path=path):
+                    request=urllib.request.Request(self.base+path,data=json.dumps({'mode':'mock','run':s['id'],'action':'pause'}).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer test-secret'},method=method)
+                    with self.assertRaises(urllib.error.HTTPError) as e:
+                        urllib.request.urlopen(request,timeout=3)
+                    self.assertEqual(e.exception.code,405)
+                    self.assertEqual(e.exception.headers.get('Allow'),'GET')
+                    e.exception.close()
+        self.assertEqual(self.store.raw(s['id']),before)
+        self.assertEqual(len(self.store.runs()),1)
 
     def test_mock_report_and_sse_have_provenance(self):
-        s=json.load(self.req('/api/runs',{'mode':'mock','scenario':'success'},'test-secret'))
+        s=self.store.create('mock','success')
         report=json.load(self.req('/api/report.json?run='+s['id']))
         self.assertEqual(report['run']['mode'],'mock')
         self.assertFalse(report['run']['proofAccepted'])
@@ -51,11 +53,10 @@ class ApiTests(unittest.TestCase):
         self.assertIn('event: snapshot\n',lines)
         self.assertIn('"mode":"mock"',''.join(lines))
 
-    def test_conflicting_task_rejected(self):
-        self.req('/api/runs',{'mode':'mock'},'test-secret').close()
-        with self.assertRaises(urllib.error.HTTPError) as e:
-            self.req('/api/runs',{'mode':'mock'},'test-secret')
-        self.assertEqual(e.exception.code,409); e.exception.close()
+    def test_read_only_capability_and_task_history(self):
+        s=self.store.create('mock')
+        self.assertEqual(json.load(self.req('/api/state'))['capabilities'],{'readOnly':True})
+        self.assertEqual(json.load(self.req('/api/runs'))[0]['id'],s['id'])
 
     def test_full_log_download_contains_untruncated_command_output(self):
         import io,tarfile

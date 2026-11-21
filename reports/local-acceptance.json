@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "generatedAt": 1795250720.992928,
+  "generatedAt": 1795251532.247481,
   "passed": true,
-  "sourceSha256": "be56c7c7145f11cd4d987a2edee15fe82cd899d5254d4bca780759c94f520d04",
+  "sourceSha256": "e15068631090285789b0739ce37a9e094257f840e2a5d341a6fc8ef4d565bb02",
   "checks": {
     "backend": {
       "exitCode": 0,
-      "count": 36,
+      "count": 37,
       "command": [
         "npm",
         "test"
@@ -46,7 +46,7 @@
     "http": {
       "exitCode": 0,
       "command": "docker compose run api python3 http_smoke.py",
-      "scope": "Actual Nginx health, auth, Mock controls, SSE, report and logs"
+      "scope": "Actual Nginx GET/SSE/downloads; POST/PUT/PATCH/DELETE all 405, including previous token"
     },
     "worker_image": {
       "exitCode": 0,
@@ -61,7 +61,7 @@
     "live_preview": {
       "exitCode": 0,
       "command": "node --test /tmp/lean-observatory-live.test.mjs",
-      "scope": "Read-only live Docker Chromium: matching built assets, Mock state, SSE, overview and 5 server charts"
+      "scope": "Actual Docker Chromium: readOnly capability, no admin/task buttons, live Mock state, SSE and five server charts"
     }
   },
   "remoteConnected": false,
@@ -70,5 +70,7 @@
   "localPreview": "http://127.0.0.1:8789",
   "realProofVerification": "NOT_RUN",
   "mathematicalProofAccepted": false,
-  "platform": "Local ARM64; target AMD64 must be retested after deployment"
+  "platform": "Local ARM64; target AMD64 must be retested after deployment",
+  "webMode": "READ_ONLY",
+  "taskAdministration": "Host CLI only; no HTTP task controls"
 }

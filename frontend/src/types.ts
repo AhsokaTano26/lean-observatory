@@ -131,6 +131,6 @@ export interface Snapshot {
   metrics: Metrics;
   serverTime: number;
   workerOnline: boolean;
-  capabilities: { realEnabled: boolean; authRequired: boolean };
+  capabilities: { readOnly: boolean };
   logs?: Log[];
 }

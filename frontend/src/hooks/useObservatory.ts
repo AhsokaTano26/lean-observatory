@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Snapshot, Log, Metrics } from "../types";
 import { mergeSamples, chartSample } from "../chartMath";
 
@@ -9,8 +9,7 @@ export function useObservatory() {
   const [connection, setConnection] = useState<
       "connecting" | "live" | "reconnecting"
     >("connecting"),
-    [error, setError] = useState<string | null>(null),
-    [busy, setBusy] = useState(false);
+    [error, setError] = useState<string | null>(null);
   const currentRun = useRef<string | null>(null);
   useEffect(() => {
     let disposed = false;
@@ -110,29 +109,6 @@ export function useObservatory() {
       window.removeEventListener("online", online);
     };
   }, []);
-  const mutate = useCallback(async (path: string, data: unknown) => {
-    setBusy(true);
-    setError(null);
-    try {
-      const token = sessionStorage.getItem("lean-admin-token") || "";
-      const response = await fetch(path, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify(data),
-      });
-      const p = await response.json();
-      if (!response.ok) throw Error(p.error || `HTTP ${response.status}`);
-      return p;
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "操作失败");
-      return null;
-    } finally {
-      setBusy(false);
-    }
-  }, []);
   return {
     snapshot: snapshot
       ? {
@@ -150,8 +126,6 @@ export function useObservatory() {
         : history.filter((m) => m.mode !== "mock"),
     connection,
     error,
-    busy,
-    mutate,
     clearError: () => setError(null),
   };
 }
