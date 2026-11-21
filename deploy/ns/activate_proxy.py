@@ -89,7 +89,7 @@ def activate(expected_id,config,ops_dir,execute=False,executor=subprocess.run):
     # Syntax-only validation uses the original trusted image; no live server or
     # private key is copied and no existing service is restarted.
     run(['docker','run','--rm','--network','lean-observatory_default','--read-only','--cpus','0.2','--memory','64m','--pids-limit','32',
-         '--tmpfs','/var/run','--tmpfs','/var/cache/nginx','--tmpfs','/tmp','--cap-drop','ALL',
+         '--tmpfs','/var/run','--tmpfs','/var/cache/nginx','--tmpfs','/tmp','--cap-drop','ALL','--cap-add','CHOWN',
          '-v',str(candidate_path)+':/etc/nginx/nginx.conf:ro','-v','/etc/letsencrypt:/etc/letsencrypt:ro',
          '--entrypoint','nginx',before['Image'],'-t'],60)
     if config.read_bytes()!=original:raise ValueError('Live configuration changed during validation')
@@ -127,7 +127,9 @@ def main():
     config=Path(mount['Source'])
     allowed=[Path('/opt/lean-observatory/.data/ops/nginx-tls.conf'),Path('/opt/lean-observatory/deploy/nginx-tls.conf')]
     if config not in allowed:raise SystemExit('Unknown RH Nginx mount; refusing modification')
-    print(json.dumps(activate(a.expected_id or row['Id'],config,'/opt/lean-observatory/.data/ops',a.execute),indent=2))
+    try:report=activate(a.expected_id or row['Id'],config,'/opt/lean-observatory/.data/ops',a.execute)
+    except subprocess.CalledProcessError as error:raise SystemExit('Nginx validation/update failed: '+(error.stderr or str(error)))
+    print(json.dumps(report,indent=2))
 
 
 if __name__=='__main__':main()

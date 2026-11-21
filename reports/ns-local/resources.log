@@ -1,4 +1,4 @@
-✔ Both RH and NS profiles reserve four host vCPUs and use 250 decimal GB without swap (233.394958ms)
+✔ Both RH and NS profiles reserve four host vCPUs and use 250 decimal GB without swap (223.019167ms)
 ℹ tests 1
 ℹ suites 0
 ℹ pass 1
@@ -6,4 +6,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 353.253083
+ℹ duration_ms 334.378333

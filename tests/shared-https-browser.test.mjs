@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
-import {mkdtempSync,mkdirSync,writeFileSync,rmSync} from 'node:fs';
+import {mkdtempSync,chmodSync,mkdirSync,writeFileSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {resolve,join} from 'node:path';
 import {chromium} from 'playwright';
@@ -18,6 +18,8 @@ test('Shared HTTPS: root entrance, RH/NS isolation, SSE, assets, downloads and H
   const cert=join(fixture,'certs/live/lean.tano.asia');mkdirSync(cert,{recursive:true});
   execFileSync('openssl',['req','-x509','-newkey','rsa:2048','-nodes','-days','1','-keyout',join(cert,'privkey.pem'),'-out',join(cert,'fullchain.pem'),'-subj','/CN=localhost'],{stdio:'ignore'});
   execFileSync(python,['-c',`import importlib.util,json,os,time\nfrom pathlib import Path\nfrom ns_queue.store import QueueStore\nfrom ns_queue.budget import normalize\nr=Path(os.environ['PROXY_FIXTURE_ROOT']);s=QueueStore(r/'data');s.initialize(json.loads(Path('ns_queue/manifest.json').read_text()),'20565ace60c2',{'capHours':0});s.mutate(lambda x:x.update(budget=normalize({'scope':'server','enforcement':'notify_only','capHours':20,'rentalStartedAt':time.time()-10800}),controllerHeartbeat=time.time(),rh={'id':'20565ace60c2','status':'running','phase':'compile','compile':{'succeeded':56985,'total':175187,'failed':0}}));s.log('scheduler','NS waiting for RH');[(p.chmod(0o755 if p.is_dir() else 0o644)) for p in (r/'data').rglob('*')];(r/'data').chmod(0o755)\nspec=importlib.util.spec_from_file_location('p','deploy/ns/activate_proxy.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);(r/'nginx.conf').write_text(m.render(Path('deploy/nginx-tls.conf').read_text()))`],{cwd:root,env});
+  chmodSync(join(cert,'privkey.pem'),0o644); // Ephemeral self-signed fixture only; no production keys.
+  compose(['run','--rm','validator']);
   compose(['up','-d','--build']);
   browser=await chromium.launch();const context=await browser.newContext({ignoreHTTPSErrors:true,viewport:{width:1440,height:1000}});const page=await context.newPage();const errors=[],writes=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(r.method()!=='GET')writes.push(r.method());});
