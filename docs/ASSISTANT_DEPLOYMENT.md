@@ -1,6 +1,6 @@
 # 助手部署与运行记录规范
 
-本项目由助手负责部署、启动、监控、恢复和备份。用户仅提供可用 SSH 入口和 `lean.tano.asia` 的 DNS 配置；下述命令是助手的操作记录模板，不要求用户自行执行。服务器尚未购买，本仓库中的本地测试不代表云主机、正式 HTTPS 或完整证明已经验收。
+本项目由助手负责部署、启动、监控、恢复和备份。用户仅提供可用 SSH 入口和 `lean.tano.asia` 的 DNS 配置；下述命令是助手的操作记录模板，不要求用户自行执行。服务器已购置并部署；当前进展见 [STATUS.md](../reports/STATUS.md)。本地测试与真实证明结论仍严格区分。
 
 目标为 Linode G8 Dedicated：64 vCPU、256 GB 内存、2.6 TB 磁盘，Ubuntu 24.04 x86_64。购机前先完成源码绑定的本地门禁，任何后续源码修改都会使旧门禁失效。本地只运行小型夹具；不提前下载或编译完整原始证明。
 
@@ -59,3 +59,17 @@ python3 scripts/backup.py --data DATA_VOLUME_MOUNTPOINT --output NEW_BACKUP_DIRE
 ## 本地验证边界
 
 购机前可以验证 shell 语法、临时发布包 dry-run、纯验收校验函数和真实 SQLite WAL/文件一致性备份。主机 apt 安装、systemd、实际 Docker 限额、DNS、ACME 签发/续期和可信 HTTPS 必须在购机且授权连接以后验收；这些没有被本地夹具证明。
+
+## 当前实例的运行时配置
+
+地址 `104.105.149.244`，两个入口为 `lean.tano.asia` 与 `lean.lanunion.org.cn`；同一证书 SAN 覆盖两者，自动续期配置保存在现有证书 lineage。后台真实任务 ID 为 `20565ace60c2`，不得为查看进度重复创建任务。
+
+64CPU宿主机上，Nginx `worker_processes auto` 在原有64-PID限制下会使重载失败。已在本地相同限额下验证固定1个Worker及连续重载，再将运行时配置存于部署目录 `.data/ops/nginx-tls.conf`、覆盖文件 `.data/ops/compose.nginx.runtime.yaml`，只重建Nginx，证明Worker未重启。重建Web时必须追加该覆盖文件：
+
+```sh
+docker compose -p lean-observatory -f compose.yaml -f compose.tls.yaml -f .data/ops/compose.nginx.runtime.yaml --profile verification up -d --no-deps --wait nginx
+```
+
+续期hook的 `exec nginx -t` / `exec nginx -s reload` 会读取当前容器内已修正的配置，无需重建。覆盖配置、局部测试和生产重载证据见 [online/ops](../reports/online/ops)。CPU、内存与PID上限均保留原配置；原验收核心源码保持不变。
+
+纯Python完整性扫描期间，原版本心跳存在更新空档；外部编译命令阶段由CommandRunner持续更新，已恢复正常。该问题记录待后续版本修正，不为消除告警伪造心跳或进度，不为热更新而中断当前编译。

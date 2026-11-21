@@ -1,0 +1,4 @@
+services:
+  nginx:
+    volumes:
+      - /opt/lean-observatory/.data/ops/nginx-tls.conf:/etc/nginx/nginx.conf:ro

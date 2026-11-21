@@ -1,0 +1,17 @@
+{
+  "url": "https://lean.tano.asia",
+  "scope": "Real production UI before starting proof",
+  "mode": "real",
+  "status": "waiting",
+  "metrics": "host_agent",
+  "sourceSha256": "07b2cd8f2c01a6c87406dc2b03667d3ee5de415e3a9682e35ddcb9dbe184d85a",
+  "views": 6,
+  "viewports": [
+    1440,
+    390
+  ],
+  "consoleErrors": [],
+  "writes": [],
+  "proofReproduction": "NOT_RUN",
+  "passed": true
+}

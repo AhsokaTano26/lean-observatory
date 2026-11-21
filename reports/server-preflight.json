@@ -1,0 +1,42 @@
+{
+  "os": "PRETTY_NAME=\"Ubuntu 24.04.5 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.5 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo\n",
+  "kernel": "6.8.0-149-generic",
+  "architecture": "x86_64",
+  "cpuCount": 64,
+  "memoryBytes": 270240256000,
+  "availableMemoryBytes": 267781419008,
+  "diskTotalBytes": 2769818460160,
+  "diskFreeBytes": 2626611048448,
+  "ports": {
+    "exitCode": 0,
+    "stdout": "LISTEN 0      4096   127.0.0.53%lo:53 0.0.0.0:* users:((\"systemd-resolve\",pid=1105,fd=15))            \nLISTEN 0      4096      127.0.0.54:53 0.0.0.0:* users:((\"systemd-resolve\",pid=1105,fd=17))            \nLISTEN 0      4096         0.0.0.0:22 0.0.0.0:* users:((\"sshd\",pid=1591,fd=3),(\"systemd\",pid=1,fd=90))\nLISTEN 0      4096            [::]:22    [::]:* users:((\"sshd\",pid=1591,fd=4),(\"systemd\",pid=1,fd=91))\n",
+    "stderr": ""
+  },
+  "docker": {
+    "exitCode": 127,
+    "stdout": "",
+    "stderr": "not installed: docker"
+  },
+  "compose": {
+    "exitCode": 127,
+    "stdout": "",
+    "stderr": "not installed: docker"
+  },
+  "services": {
+    "exitCode": 127,
+    "stdout": "",
+    "stderr": "not installed: docker"
+  },
+  "existingInstall": false,
+  "canAdmin": true,
+  "listeningPorts": [
+    22,
+    53
+  ],
+  "resourceGate": true,
+  "portGate": true,
+  "deployGate": true,
+  "target": "root@104.105.149.244",
+  "sshHostKey": "SHA256:A0CK9Nl40vCZ9WGz7OBBWZ3SQOtfFoWDdwMLxj9ZdBY",
+  "checkedAt": "2026-11-21T14:47:23.543Z"
+}

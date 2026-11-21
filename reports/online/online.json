@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "productionEligible": true,
+  "checkedAt": 1795272925.9464066,
+  "sourceSha256": "07b2cd8f2c01a6c87406dc2b03667d3ee5de415e3a9682e35ddcb9dbe184d85a",
+  "url": "https://lean.tano.asia",
+  "checks": {
+    "tls": true,
+    "source": true,
+    "resources": true,
+    "metrics": true,
+    "clean": true,
+    "readOnly": true,
+    "methods": true,
+    "sse": true
+  },
+  "host": "localhost",
+  "note": "CA-verified production inspection; no proof work started",
+  "AppArmorProfile": "lean-observatory-worker",
+  "workerFixture": {
+    "passed": true,
+    "productionEligible": false,
+    "environment": "production-worker-profile",
+    "scope": "tiny-only",
+    "checkedAt": 1795272925.3982887,
+    "sourceSha256": "07b2cd8f2c01a6c87406dc2b03667d3ee5de415e3a9682e35ddcb9dbe184d85a",
+    "scriptSha256": "40cd2046eddc665bf4d70df1a8fe454ea2967cf28b64349afcc567d8f2ee1600",
+    "profileSha256": "3351e03ae3d972a553ece2a2b65897f63561bfc80f7811312c3c4a7e4e2d9692",
+    "AppArmorProfile": "lean-observatory-worker",
+    "workerContainerId": "b8d4ca0e14a9eba3dff552e1dff1d014ecff8d3af72350f44d590428261603a5",
+    "workerImageId": "sha256:97c552eb0c7263ca5ce065a7eff02359ebcb2f4f051fc8bb5a46b5cf1b96f50c",
+    "proofReproduction": "NOT_RUN",
+    "exitCode": 0,
+    "logSha256": "c2214b719eb7777eaee4c90b5fab707f45d04fabca1f093c4543b17581308ce6"
+  }
+}

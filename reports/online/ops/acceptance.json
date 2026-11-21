@@ -1,0 +1,17 @@
+{
+  "checkedAt": 1795273733.5807989,
+  "scope": "Runtime nginx configuration; core tested source remains unchanged",
+  "reason": "64 detected CPUs exceeded the 64-PID budget during nginx reload",
+  "workerProcesses": 1,
+  "pidsLimit": 64,
+  "localSyntaxExit": 0,
+  "localReloadAndHTTPSProbeExits": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "localTLS": "self-signed fixture only; production uses trusted SAN certificate",
+  "configurationSha256": "801c1c60cd6c3150637f34cab10985a4fb705af7afd1132bfc4461390de1b94e",
+  "proofWorkerRestarted": false
+}
