@@ -28,14 +28,14 @@
 ### Task2: Read-only display and local acceptance
 - [x] Extend API/browser checks for20h total, used/remaining/deadline, distinct NS cost and GET-only traffic; observe RED then change web.py/web assets.
 - [x] Update operations docs; run exact-source local_acceptance.py (full unit/charts/RH browser/NS browser/build/compose/compile), independent review.
-- [ ] Local gitcommit then push; package exact accepted source.
+- [x] Local gitcommit then push; package exact accepted source.
 
 ### Task3: Addon-only deploy
-- [ ] Record fresh RH identities/config hashes and external9443 check.
-- [ ] Update only own addon; CLI set-budget --hours20 --started-at2026-11-21T14:42:36+00:00 --mode notify-only; restart only NS services.
-- [ ] Verify public HTTPS, real20h deadline, NSqueued, notice delivery, RH unchanged/counters increasing. Save report, commit/push and synchronize workspace.
+- [x] Record fresh RH identities/config hashes and external9443 check.
+- [x] Update only own addon; CLI set-budget --hours20 --started-at2026-11-21T14:42:36+00:00 --mode notify-only; restart only NS services.
+- [x] Verify public HTTPS, real20h deadline, NSqueued, notice delivery, RH unchanged/counters increasing. Save report, commit/push and synchronize workspace.
 
 ### Resource update
 - [x] Test RH docker update identity preservation; validate both Compose profiles60vCPU/250000000000bytes/cpuset4-63.
-- [ ] After local receipt+commit/push, apply tested update_resources.py to exact original RH containerID, without stopping/recreating it; save runtime Compose override and evidence.
-- [ ] Preserve running RH48-thread Lake command and all artifacts; new tasks/NS scheduler default60.
+- [x] After local receipt+commit/push, apply tested update_resources.py to exact original RH containerID, without stopping/recreating it; save runtime Compose override and evidence.
+- [x] Preserve running RH48-thread Lake command and all artifacts; new tasks/NS scheduler default60.

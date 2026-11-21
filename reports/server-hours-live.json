@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "codeCommit": "662aeae",
+  "sourceSha256": "d00d344a227a79dad178207e3fc7b2a4e0b8dadae70289d50879c5910dca3e05",
+  "archiveSha256": "ff5152ff6e623aeaf19c56b4fbf643487e4b23b2af6ff64cf93da53ece7dba2b",
+  "checks": {
+    "allProcessIdentitiesPreserved": true,
+    "webHostConfigUnchanged": true,
+    "originalConfigFilesUnchanged": true,
+    "nginxConfigUnchanged": true,
+    "sameRun": true,
+    "progressContinued": true
+  },
+  "resources": {
+    "resources": {
+      "dryRun": false,
+      "command": [
+        "docker",
+        "update",
+        "--cpus",
+        "60",
+        "--cpuset-cpus",
+        "4-63",
+        "--memory",
+        "250000000000",
+        "--memory-swap",
+        "250000000000",
+        "f214289894a9e3925cf95cdbde108b65d8075660da5821aa42e0e67ad001f651"
+      ],
+      "before": {
+        "id": "f214289894a9e3925cf95cdbde108b65d8075660da5821aa42e0e67ad001f651",
+        "pid": 15538,
+        "startedAt": "2026-11-21T15:04:04.120575095Z",
+        "image": "sha256:97c552eb0c7263ca5ce065a7eff02359ebcb2f4f051fc8bb5a46b5cf1b96f50c",
+        "configSha256": "204901d8434f43144d6cb256f83929e02558a06b1a75ed6d90b050edb9603c0d",
+        "mountsSha256": "c04736ce851c4605007644eff3a457bc7fff967e90956e6806584cde56b0d34b"
+      },
+      "beforeLimits": {
+        "NanoCpus": 48000000000,
+        "CpusetCpus": "8-55",
+        "Memory": 223338299392,
+        "MemorySwap": 223338299392
+      },
+      "after": {
+        "id": "f214289894a9e3925cf95cdbde108b65d8075660da5821aa42e0e67ad001f651",
+        "pid": 15538,
+        "startedAt": "2026-11-21T15:04:04.120575095Z",
+        "image": "sha256:97c552eb0c7263ca5ce065a7eff02359ebcb2f4f051fc8bb5a46b5cf1b96f50c",
+        "configSha256": "204901d8434f43144d6cb256f83929e02558a06b1a75ed6d90b050edb9603c0d",
+        "mountsSha256": "c04736ce851c4605007644eff3a457bc7fff967e90956e6806584cde56b0d34b"
+      },
+      "afterLimits": {
+        "NanoCpus": 60000000000,
+        "CpusetCpus": "4-63",
+        "Memory": 250000000000,
+        "MemorySwap": 250000000000
+      },
+      "identityPreserved": true
+    },
+    "alerts": [
+      {
+        "id": 2,
+        "title": "服务器运行时限已更新",
+        "message": "RH与NS从同一租用时刻累计 20.0 小时。RH成功归档后NS自动启动，时限和资源预检只告警，到期继续运行，由管理员决定停止。",
+        "level": "info",
+        "status": "sent",
+        "attempts": 1,
+        "createdAt": 1795285209.882178,
+        "updatedAt": 1795285240.9798567,
+        "lastError": null
+      },
+      {
+        "id": 1,
+        "title": "NS 已排队",
+        "message": "NS 后续验证队列已部署，RH继续原任务。NS额外预算为0时不会启动；RH成功后仍不足将暂停并告警。",
+        "level": "info",
+        "status": "sent",
+        "attempts": 5,
+        "createdAt": 1795280505.3170247,
+        "updatedAt": 1795280870.3562586,
+        "lastError": null
+      }
+    ],
+    "kernelLimits": "6000000 100000\n249999998976\n4-63\n"
+  },
+  "publicBrowser": {
+    "publicHTTPS": true,
+    "tlsVerified": true,
+    "status": "QUEUED",
+    "enforcement": "notify_only",
+    "budget": {
+      "capUsd": 67.2,
+      "hourlyUsd": 3.36,
+      "minStartSeconds": 300,
+      "estimatedUsd": 12.241858464082082,
+      "scope": "server",
+      "capHours": 20,
+      "rentalStartedAt": 1795272156,
+      "enforcement": "notify_only",
+      "unit": "hours",
+      "usedHours": 3.6434102571672864,
+      "remainingHours": 16.356589742832714,
+      "deadlineAt": 1795344156
+    },
+    "nsEstimatedUsd": 0,
+    "rh": {
+      "expectedTotal": 175187,
+      "total": 175187,
+      "succeeded": 56960,
+      "failed": 0,
+      "rate": 4.98,
+      "currentModule": "Development.AutomorphicSpectrum.Proofs.GeometryProofs.OrthogonalMetricHermitianBundleStatement",
+      "jobs": 48,
+      "startedFresh": true,
+      "remaining": 118227,
+      "percent": 32.51,
+      "etaSeconds": 23740
+    },
+    "errors": [],
+    "writes": [],
+    "sourceSha256": "d00d344a227a79dad178207e3fc7b2a4e0b8dadae70289d50879c5910dca3e05"
+  },
+  "rhBefore": {
+    "id": "20565ace60c2",
+    "status": "running",
+    "phase": "compile",
+    "compile": {
+      "expectedTotal": 175187,
+      "total": 175187,
+      "succeeded": 56415,
+      "failed": 0,
+      "rate": 4.25,
+      "currentModule": "Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMulEqOfPolynomialGrowth",
+      "jobs": 48,
+      "startedFresh": true,
+      "remaining": 118772,
+      "percent": 32.2,
+      "etaSeconds": 27946
+    },
+    "startedAt": 1795273445.5077407,
+    "finishedAt": null
+  },
+  "rhAfter": {
+    "id": "20565ace60c2",
+    "status": "running",
+    "phase": "compile",
+    "compile": {
+      "expectedTotal": 175187,
+      "total": 175187,
+      "succeeded": 56985,
+      "failed": 0,
+      "rate": 4.93,
+      "currentModule": "ReciprocityTheory.DualLattices.ExistsReductionOfCoordinateCombination",
+      "jobs": 48,
+      "startedFresh": true,
+      "remaining": 118202,
+      "percent": 32.53,
+      "etaSeconds": 23976
+    },
+    "startedAt": 1795273445.5077407,
+    "finishedAt": null
+  },
+  "nsExecution": "NOT_RUN",
+  "proofAccepted": false
+}
