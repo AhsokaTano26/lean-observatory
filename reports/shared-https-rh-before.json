@@ -1,0 +1,166 @@
+{
+  "sampledAt": 1795287142.3130515,
+  "containers": {
+    "/lean-observatory-api-1": {
+      "id": "65b9a04186cb7689790a80460817569755180d667bb87ff4f775e01e3798fb9f",
+      "pid": 9385,
+      "startedAt": "2026-11-21T14:51:27.113102006Z",
+      "running": true,
+      "image": "sha256:36fcd238725356a09654ffccc7348df3c570363f1841652f9cfcf5e3b8382cf9",
+      "hostConfigSha256": "28a014974ed76301d0752bc8a884c544eace928b42934ff37bd53b785c380d1f",
+      "mounts": [
+        {
+          "Type": "volume",
+          "Name": "lean-observatory_verification-data",
+          "Source": "/var/lib/docker/volumes/lean-observatory_verification-data/_data",
+          "Destination": "/data",
+          "Driver": "local",
+          "Mode": "rw",
+          "RW": true,
+          "Propagation": ""
+        },
+        {
+          "Type": "bind",
+          "Source": "/var/lib/lean-observatory-metrics",
+          "Destination": "/metrics",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ],
+      "configSha256": "b45e690b72a0fe867ed01d879c98157a2010533a1509137480673a2709185f79"
+    },
+    "/lean-observatory-nginx-1": {
+      "id": "697f9c760d3ef0fd37811232529c899a242553fccd78872c507352196d209b2d",
+      "pid": 29826,
+      "startedAt": "2026-11-21T15:09:20.263571297Z",
+      "running": true,
+      "image": "sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236",
+      "hostConfigSha256": "cd8f02be3c252a02ffe162b1f3a27322c60e98d2d0b64bf94699c7e9c57bc86a",
+      "mounts": [
+        {
+          "Type": "bind",
+          "Source": "/etc/letsencrypt",
+          "Destination": "/etc/letsencrypt",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/opt/lean-observatory/.data/ops/nginx-tls.conf",
+          "Destination": "/etc/nginx/nginx.conf",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/opt/lean-observatory/acme",
+          "Destination": "/var/www/acme",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ],
+      "configSha256": "e4643f0814040d79362c6feff6ea842d57b7959be8882dc356714389c5c50d06"
+    },
+    "/lean-observatory-worker-1": {
+      "id": "f214289894a9e3925cf95cdbde108b65d8075660da5821aa42e0e67ad001f651",
+      "pid": 15538,
+      "startedAt": "2026-11-21T15:04:04.120575095Z",
+      "running": true,
+      "image": "sha256:97c552eb0c7263ca5ce065a7eff02359ebcb2f4f051fc8bb5a46b5cf1b96f50c",
+      "hostConfigSha256": "a35492490d39a2fe72b1ecdd902373ce6097dabb11b9db38280b4287974f56a3",
+      "mounts": [
+        {
+          "Type": "bind",
+          "Source": "/opt/lean-observatory/.data/approval",
+          "Destination": "/approval",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "volume",
+          "Name": "lean-observatory_verification-data",
+          "Source": "/var/lib/docker/volumes/lean-observatory_verification-data/_data",
+          "Destination": "/data",
+          "Driver": "local",
+          "Mode": "rw",
+          "RW": true,
+          "Propagation": ""
+        },
+        {
+          "Type": "bind",
+          "Source": "/var/lib/lean-observatory-metrics",
+          "Destination": "/metrics",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "volume",
+          "Name": "lean-observatory_build-data",
+          "Source": "/var/lib/docker/volumes/lean-observatory_build-data/_data",
+          "Destination": "/sandbox/work",
+          "Driver": "local",
+          "Mode": "rw",
+          "RW": true,
+          "Propagation": ""
+        },
+        {
+          "Type": "bind",
+          "Source": "/dev/null",
+          "Destination": "/sandbox/dev/null",
+          "Mode": "rw",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/dev/urandom",
+          "Destination": "/sandbox/dev/urandom",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ],
+      "configSha256": "204901d8434f43144d6cb256f83929e02558a06b1a75ed6d90b050edb9603c0d"
+    }
+  },
+  "configHashes": {
+    "/opt/lean-observatory/.env": "b1d0978a8d6c1d095f71b0ca6a0bfa8389801e76682f6e9ffa2fc78582c19639",
+    "/opt/lean-observatory/compose.amd64.yaml": "2adf703e9a8fd500f2955600c0df6b4a5abee0833833211c803aa467b854f999",
+    "/opt/lean-observatory/compose.yaml": "4dbf841480421bac52f0121dd193c50951b4d24b99c591daad0c604d75aeb83e",
+    "/opt/lean-observatory/compose.tls.yaml": "f2b9daa4377e746e2e74ff9fc3ef4403966362d0e39315d57221c286311a945d",
+    "/opt/lean-observatory/compose.acme.yaml": "cd641aaf96a300e2dfd1750d111fff4eba9f7ad64c287719948c0a920fb32668",
+    "/opt/lean-observatory/compose.tools.yaml": "e6e890630471172f783e89f6b040d891669eac79bfebedb63fffcb810d413bdb",
+    "/opt/lean-observatory/compose.smoke.yaml": "40ed7e4c558a9999efa5446108bcefb816258971b7527e08302bf0f6762f887d",
+    "/opt/lean-observatory/.data/ops/nginx-tls.conf": "801c1c60cd6c3150637f34cab10985a4fb705af7afd1132bfc4461390de1b94e",
+    "/opt/lean-observatory/.data/ops/compose.nginx.runtime.yaml": "3826cb49c0d38d2e6a952a5cb7ae98f383bc695ff3a3bc54b68eae630c360a70",
+    "/etc/apparmor.d/lean-observatory-worker": "3351e03ae3d972a553ece2a2b65897f63561bfc80f7811312c3c4a7e4e2d9692"
+  },
+  "nginxConfigSha256": "801c1c60cd6c3150637f34cab10985a4fb705af7afd1132bfc4461390de1b94e",
+  "rh": {
+    "id": "20565ace60c2",
+    "status": "running",
+    "phase": "compile",
+    "compile": {
+      "expectedTotal": 175187,
+      "total": 175187,
+      "succeeded": 66087,
+      "failed": 0,
+      "rate": 4.48,
+      "currentModule": "Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRegularKodairaSpencerCoordinateAffineOffBoStatement",
+      "jobs": 48,
+      "startedFresh": true,
+      "remaining": 109100,
+      "percent": 37.72,
+      "etaSeconds": 24353
+    },
+    "startedAt": 1795273445.5077407,
+    "finishedAt": null
+  },
+  "workerOnline": true
+}

@@ -1,0 +1,107 @@
+{
+  "codeCommit": "17f089a",
+  "sourceSha256": "aee6954722e0ac13c014827ba52c62f8566e3e4e3ea101555d60b2127f9f7f6e",
+  "archiveSha256": "5b20325365a13da6b96e68ee44b1d3c207f2e064501067ad936a9bb118dc3902",
+  "checks": {
+    "sameRun": true,
+    "progressContinued": true,
+    "allProcessIdentitiesPreserved": true,
+    "onlyRouterFileChanged": true
+  },
+  "online": {
+    "state": {
+      "status": "QUEUED",
+      "budget": {
+        "capUsd": 67.2,
+        "hourlyUsd": 3.36,
+        "minStartSeconds": 300,
+        "estimatedUsd": 14.854540558433532,
+        "scope": "server",
+        "capHours": 20,
+        "rentalStartedAt": 1795272156,
+        "enforcement": "notify_only",
+        "unit": "hours",
+        "usedHours": 4.420994213819504,
+        "remainingHours": 15.579005786180495,
+        "deadlineAt": 1795344156
+      },
+      "rh": {
+        "expectedTotal": 175187,
+        "total": 175187,
+        "succeeded": 70815,
+        "failed": 0,
+        "rate": 5.6,
+        "currentModule": "Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagCoverArithmeticEighthStatement",
+        "jobs": 48,
+        "startedFresh": true,
+        "remaining": 104372,
+        "percent": 40.42,
+        "etaSeconds": 18638
+      },
+      "controllerOnline": true
+    },
+    "sourceSha256": "aee6954722e0ac13c014827ba52c62f8566e3e4e3ea101555d60b2127f9f7f6e",
+    "public9443Closed": true,
+    "httpRedirect": "https://lean.tano.asia/rh/",
+    "routeUpdate": {
+      "dryRun": false,
+      "before": {
+        "id": "697f9c760d3ef0fd37811232529c899a242553fccd78872c507352196d209b2d",
+        "pid": 29826,
+        "startedAt": "2026-11-21T15:09:20.263571297Z",
+        "image": "sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236",
+        "configSha256": "e4643f0814040d79362c6feff6ea842d57b7959be8882dc356714389c5c50d06",
+        "mountsSha256": "cc285a348ddd3232c0570be741b0eaa0c82a494606fcdcb701a3eff09f9c95d5"
+      },
+      "oldConfigSha256": "801c1c60cd6c3150637f34cab10985a4fb705af7afd1132bfc4461390de1b94e",
+      "newConfigSha256": "f915af8ec18922ce9c776b6cac6b4defd2aa4820669edad3d5bf4f07bcfdd4c5",
+      "after": {
+        "id": "697f9c760d3ef0fd37811232529c899a242553fccd78872c507352196d209b2d",
+        "pid": 29826,
+        "startedAt": "2026-11-21T15:09:20.263571297Z",
+        "image": "sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236",
+        "configSha256": "e4643f0814040d79362c6feff6ea842d57b7959be8882dc356714389c5c50d06",
+        "mountsSha256": "cc285a348ddd3232c0570be741b0eaa0c82a494606fcdcb701a3eff09f9c95d5"
+      },
+      "network": "lean-observatory-ns_default",
+      "networkAdded": true
+    }
+  },
+  "publicBrowser": {
+    "passed": true,
+    "tlsVerified": true,
+    "domains": [
+      "lean.tano.asia",
+      "lean.lanunion.org.cn"
+    ],
+    "routes": [
+      "/",
+      "/rh/",
+      "/ns/"
+    ],
+    "viewports": [
+      1440,
+      390,
+      320
+    ],
+    "errors": [],
+    "writes": []
+  },
+  "qa": {
+    "score": "15/16",
+    "localViewports": [
+      1440,
+      1280,
+      768,
+      390,
+      320
+    ],
+    "pythonTests": 175,
+    "charts": 10,
+    "rhBrowserTests": 13,
+    "entryBrowser": true,
+    "nsBrowser": true,
+    "realProxyTest": true
+  },
+  "proofAccepted": false
+}

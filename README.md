@@ -1,5 +1,9 @@
 # Lean Observatory · 黎曼验证观测台
 
+线上入口：[Lean Observatory](https://lean.tano.asia/) · [RH](https://lean.tano.asia/rh/) · [NS](https://lean.tano.asia/ns/)。所有页面只读，统一使用80/443。
+
+RH成功归档后自动衔接NS；共享服务器20小时计时仅提醒，资源预检只告警。当前运行状态与[入口验收报告](reports/SHARED_HTTPS_ENTRY.md)、[队列操作说明](docs/NS_QUEUE.md)分列，未完成的证明检查保持待验证。
+
 黎曼猜想 Lean 源码独立复现、审计与实时观测平台。React/TypeScript Dashboard + Python API/独立 Worker + SQLite WAL + Docker Compose/Nginx。
 
 部署、启动验证、监控及恢复均由助手执行；用户只需购买服务器并提供 SSH/DNS 条件。购机前就绪范围见 [购机就绪记录](reports/PURCHASE_READINESS.md)，助手操作规范见 [ASSISTANT_DEPLOYMENT.md](docs/ASSISTANT_DEPLOYMENT.md)。
