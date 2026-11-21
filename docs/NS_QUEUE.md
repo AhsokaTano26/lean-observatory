@@ -4,15 +4,17 @@ This add-on preserves the deployed RH stack. It has a separate Compose project, 
 
 ## Current authorization
 
-NS extra budget is **USD 0**. NS remains `QUEUED` while RH runs. After all required RH machine checks and complete result/log persistence succeed, a zero budget transitions NS to `PAUSED` and sends a budget alert. No NS source/tool/image build or verification worker is started at zero budget. The small queue/UI services share the already-paid host; they do not buy additional compute. Host billing continues even when both jobs are paused.
+The owner authorizes a shared **20-hour server clock** from **2026-11-21T14:42:36Z** to **2026-11-22T10:42:36Z** (Beijing18:42:36). RH, idle and NS time all count from rental, without resetting at service restart or NS handoff.
 
-The UI is GET-only and mounts only NS data plus the existing host metric feed read-only. Queue controls are available only through the host CLI. There is no public task-control API.
+Latest policy is `notify_only`: RH necessary machine checks and complete durable evidence must succeed, then NS automatically starts. Remaining time and available-resource preflight only warn; they do not prevent or stop NS. Alerts are sent at1h/15m remaining and expiry. At expiry both jobs are left to the owner's decision, with continued server billing. No automatic shutdown or deletion is configured. USD3.36/hour is an auxiliary estimate, not provider credit or a spending ceiling. Fresh installations still initialize to0 hours until this policy and a rental start are explicitly configured.
+
+The UI is GET-only. Host CLI operations are not exposed publicly.
 
 ## Isolation and evidence
 
 - `/opt/lean-observatory-ns`: additive deployment; `/var/lib/lean-observatory-queue`: durable SQLite WAL queue, events, alerts, checkpoints and evidence.
 - Light services: API 0.10 CPU/96 MiB, Nginx 0.10 CPU/32 MiB, controller 0.05 CPU/128 MiB. No existing RH service restart or Nginx reload.
-- Future NS worker: separate image, 48 CPU, CPUs 8–55, 208 GiB, no swap; no Docker socket or RH mounts. It only starts after fresh RH success, matching durable report/log hashes, no other active verification, available memory/disk/CPU, and a positive budget with a five-minute reserve.
+- Future NS worker: separate image, 60 vCPU, CPUs 4–63, 250 GB decimal (232.83 GiB), no swap; no Docker socket or RH mounts. It only starts after fresh RH success, matching durable report/log hashes, no other active verification, and the configured startup policy. In notify_only mode, time/resource preflight only warns. Legacy hard mode requires a five-minute reserve.
 - The controller rechecks RH after evidence persistence and again after image build immediately before worker creation or resume. A deterministic container name, owner labels and exclusive controller lock prevent duplicate launches. Completed stages are skipped only if source, implementation, prior checkpoint and recorded output hashes still match.
 - Explicit RH failure or a stopped RH worker pauses NS and preserves logs. A stale heartbeat alone is not proof of RH failure. Temporary API loss keeps the queue blocked; API loss plus a stopped RH worker pauses it.
 - Notifications use a persistent deduplicated outbox. HTTP 200 means confirmed send; HTTP 202 means queued by the webhook and awaiting delivery, with no false delivery claim. Non-success responses retry with backoff.
@@ -52,11 +54,14 @@ python3 -m ns_queue.control --root /var/lib/lean-observatory-queue status
 
 Page: `https://lean.tano.asia:9443/ns/` (also `lean.lanunion.org.cn:9443`). The original RH page remains on port 443. Only the new certificate-path watcher may reload the new Nginx after certificate renewal.
 
-After the owner explicitly authorizes a positive additional budget, an administrator can run the following host commands. Do not execute them with the current zero-budget authorization:
+Configure the confirmed shared window on the host:
 
 ```sh
-python3 -m ns_queue.control --root /var/lib/lean-observatory-queue set-budget --usd APPROVED_AMOUNT
-python3 -m ns_queue.control --root /var/lib/lean-observatory-queue resume
+python3 -m ns_queue.control --root /var/lib/lean-observatory-queue set-budget --hours 20 --started-at 2026-11-21T14:42:36+00:00 --mode notify-only
 ```
 
-The budget is an estimated compute allocation at USD 3.36/hour, not provider account credit or an actual invoice. Startup resource checks use host measurements; NS usage uses only its own Docker container samples. Unavailable measurements display as unknown. The worker and controller both reject zero budgets. Reaching a positive cap stops only the NS container and preserves checkpoints; stopping NS does not stop host billing.
+The rental origin locks once set. Repeating the same settings is idempotent and does not reset time. `resume` is only needed for a genuinely paused/failed NS job; the current QUEUED job follows RH automatically. Lost launch acknowledgement and service restart adopt the same deterministic NS container. Failed mandatory proof/tool checks still preserve logs and pause; no result is fabricated.
+
+Both RH and NS are configured for60vCPU and250000000000 bytes (250GB decimal), cpuset4-63, no swap. RH live resizing uses `deploy/ns/update_resources.py --expected-id ... --execute`; it checks identity and uses only `docker update`, preserving PID/start/image/command/mounts. It saves `/opt/lean-observatory/.data/ops/compose.resources.runtime.yaml` for future Compose recreations. The current RH compiler process keeps its original48-thread scheduler, while resource ceilings become60 and new tasks/NS use60 threads. Updating the ceilings does not rebuild/restart the running RH image.
+
+Shared host metrics, per-NS Docker usage, elapsed rental hours and costs remain distinct. NS estimated cost is0 until its own start; total server cost includes the rental interval. Unavailable measurements display as unknown.

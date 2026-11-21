@@ -38,11 +38,11 @@ class Store:
         finally:
             db.close()
 
-    def create(self, mode='mock', scenario='success', jobs=48):
+    def create(self, mode='mock', scenario='success', jobs=60):
         if mode not in ('mock', 'real') or scenario not in ('success', 'failure', 'interruption', 'resource'):
             raise ValueError('无效的模式或场景')
-        if type(jobs) is not int or not 1 <= jobs <= 52:
-            raise ValueError('并发必须在 1 到 52 之间')
+        if type(jobs) is not int or not 1 <= jobs <= 60:
+            raise ValueError('并发必须在 1 到 60 之间')
         s = initial_state(mode)
         s.update(scenario=scenario, status='queued')
         s['compile']['jobs'] = jobs

@@ -1,6 +1,7 @@
 ns_queue/store.py OK
 ns_queue/web.py OK
 ns_queue/controller.py OK
+ns_queue/budget.py OK
 ns_queue/control.py OK
 ns_queue/ns_worker.py OK
 ns_queue/__init__.py OK
@@ -11,4 +12,5 @@ ns_queue/child.py OK
 ns_queue/process.py OK
 ns_queue/driver.py OK
 deploy/ns/local_acceptance.py OK
+deploy/ns/update_resources.py OK
 deploy/ns/install.py OK

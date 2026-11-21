@@ -38,6 +38,18 @@ class WebTests(unittest.TestCase):
         self.assertEqual(state['nsResources']['source'],'unavailable')
         self.assertIsNone(state['nsResources']['memoryBytes'])
 
+    def test_shared_window_and_ns_cost_have_separate_sources(self):
+        from tests.test_ns_budget import START,server_budget
+        from unittest.mock import patch
+        self.store.mutate(lambda s:s.update(budget=server_budget()))
+        with patch('ns_queue.web.time.time',return_value=START+4*3600):data=payload(self.store)
+        self.assertEqual(data['queue']['budget']['capHours'],20)
+        self.assertEqual(data['queue']['budget']['usedHours'],4)
+        self.assertEqual(data['queue']['budget']['remainingHours'],16)
+        self.assertEqual(data['nsEstimatedUsd'],0)
+        self.assertAlmostEqual(data['serverEstimatedUsd'],13.44)
+        self.assertIn('剩余时长',self.get('/ns/').decode())
+
     def test_all_mutations_are_rejected_without_changing_state(self):
         before=self.store.snapshot()
         for method in ['POST','PUT','PATCH','DELETE']:

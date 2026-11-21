@@ -151,29 +151,22 @@ def rh_gate(payload, ledger, expected_run):
     return decision('READY', 'rh_checks_completed')
 
 
-def start_gate(state, resources):
+def start_gate(state, resources, now=None):
     """Require durable RH, 300 seconds of remaining budget, and host resources."""
     def blocked(reason):
         return {'allowed': False, 'reason': reason}
 
     if not isinstance(state, dict) or not isinstance(state.get('rhEvidence'), dict) or state['rhEvidence'].get('persisted') is not True:
         return blocked('rh_evidence')
-    budget = state.get('budget')
-    if not isinstance(budget, dict):
-        return blocked('budget')
-    numbers = {key: budget.get(key, default) for key, default in
-               (('capUsd', 0), ('hourlyUsd', 3.36), ('minStartSeconds', 300), ('estimatedUsd', 0))}
-    if any(not _number(value) or value < 0 for value in numbers.values()) or numbers['hourlyUsd'] <= 0:
-        return blocked('budget')
-    # Decimal avoids rejecting exactly $0.28 for the 300-second reservation.
-    available = Decimal(str(numbers['capUsd'])) - Decimal(str(numbers['estimatedUsd']))
-    required = Decimal(str(numbers['hourlyUsd'])) * Decimal(str(max(300, numbers['minStartSeconds']))) / Decimal(3600)
-    if available <= 0 or available < required:
+    from .budget import can_start, normalize
+    if not can_start(state.get('budget'), now):
         return blocked('budget')
     if not isinstance(resources, dict):
         return blocked('resources_unknown')
     if resources.get('rhActive') is not False:
         return blocked('rh_active')
+    if normalize(state['budget'],now)['enforcement']=='notify_only':
+        return {'allowed':True,'reason':'ready_advisory'}
     for key, threshold, reason in (('cpuCount', 64, 'cpu'),
                                    ('memoryAvailableBytes', 224 * 1024**3, 'memory'),
                                    ('diskFreeBytes', 100 * 1024**3, 'disk')):

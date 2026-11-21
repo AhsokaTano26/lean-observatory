@@ -23,6 +23,7 @@ def main():
          'NS_RUN_ID':manifest['id'],'NS_SOURCE_COMMIT':manifest['commit']}
     commands={
         'unit':[sys.executable,'-m','unittest','discover','-s','tests','-q'],
+        'resources':['node','--test','tests/resource-profile.test.mjs'],
         'charts':['node','--test','tests/chart-math.test.ts'],
         'browser':['node','--test','tests/ns-addon-browser.test.mjs'],
         'rhBrowser':['node','node_modules/@playwright/test/cli.js','test'],

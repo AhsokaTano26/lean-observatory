@@ -38,7 +38,7 @@ Require AppArmor enabled; install apparmor/parser and load the exact enforcing w
 Reuse Docker Engine/Compose >=2.24.4; if absent install from official Docker apt repository.
 Create lean-metrics system user and host metrics service; /var/lib/lean-observatory-metrics.
 Write root-owned .env (0600): ENABLE_REAL=0, SOURCE_SHA256=$SOURCE_SHA256,
-METRICS_DIR=/var/lib/lean-observatory-metrics, WORKER_CPUSET=8-55, WORKER_CPUS=48, WORKER_MEMORY=208g,
+METRICS_DIR=/var/lib/lean-observatory-metrics, WORKER_CPUSET=4-63, WORKER_CPUS=60, WORKER_MEMORY=250000000000,
 APPARMOR_PROFILE=lean-observatory-worker.
 Start api/worker/nginx only for project lean-observatory; no mock profile and no task creation.
 Use certbot webroot at $INSTALL_DIR/acme for $DOMAIN, then switch this project's nginx to TLS.
@@ -138,9 +138,9 @@ SOURCE_SHA256=$SOURCE_SHA256
 HTTP_PORT=8789
 METRICS_DIR=/var/lib/lean-observatory-metrics
 ACME_WEBROOT=$INSTALL_DIR/acme
-WORKER_CPUS=48
-WORKER_CPUSET=8-55
-WORKER_MEMORY=208g
+WORKER_CPUS=60
+WORKER_CPUSET=4-63
+WORKER_MEMORY=250000000000
 APPARMOR_PROFILE=lean-observatory-worker
 ENV
 chmod 0600 .env

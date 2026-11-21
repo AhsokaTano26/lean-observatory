@@ -17,6 +17,7 @@ from pathlib import Path
 from .gates import rh_gate, start_gate, validate_result
 from .notify import DEFAULT_WEBHOOK, deliver
 from .store import QueueStore
+from .budget import normalize, runtime_usage
 
 
 def digest(path):
@@ -96,7 +97,7 @@ class Controller:
 
     def pause(self, reason, message):
         state=self.store.snapshot()
-        self.store.mutate(lambda s:s.update(status='PAUSED',reason=reason),'paused')
+        self.store.mutate(lambda s:s.update(status='PAUSED',reason=reason,pausedAt=self.clock()),'paused')
         self.store.log('scheduler',message,'warning')
         self.store.alert(state['id']+':'+reason,'NS 验证暂停',message,'error' if reason.startswith('rh_') else 'warning',
                          {'project':'NS','run':state['id'],'RH':state['rhRunId'],'reason':reason})
@@ -142,16 +143,46 @@ class Controller:
         self.store.mutate(lambda s:s.update(rhEvidence=manifest),'rh_persisted')
         self.store.log('scheduler','RH 全部必要机器检查与完整日志已校验并持久化；数学语义/额外独立内核状态仍单列。')
 
+    def budget_tick(self):
+        state=self.store.mutate(lambda s:s.update(budget=normalize(s['budget'],self.clock()),controllerHeartbeat=self.clock()),event=None)
+        budget=state['budget']
+        if budget['scope']!='server':return True
+        remaining=budget['remainingHours']*3600
+        key=state['id']+':window:'+str(budget['rentalStartedAt'])+':'+str(budget['capHours'])
+        if remaining>0:
+            for seconds,label in [(3600,'1小时'),(900,'15分钟')]:
+                if remaining<=seconds:
+                    self.store.alert(key+':'+str(seconds),'服务器总时限即将到期',
+                        '服务器租用窗口剩余不足'+label+'；RH和NS共用总计时。'+('按自动衔接设置继续运行，到期后由管理员判断。' if budget['enforcement']=='notify_only' else '到期暂停NS并保留成果，RH与服务器后续处理由管理员决定。'),
+                        'warning',{'remainingHours':round(budget['remainingHours'],4),'deadlineUnix':budget['deadlineAt']})
+            self.flush_notices();return True
+        if budget['enforcement']=='notify_only':
+            self.store.alert(key+':expired','20小时计时已到',
+                '服务器20小时计时已到。按管理员要求保持自动衔接与运行：RH成功归档后NS自动启动；由管理员判断何时停止，服务器计费继续。',
+                'warning',{'deadlineUnix':budget['deadlineAt'],'mode':'notify_only'})
+            self.flush_notices();return True
+        job=self.driver.inspect(state)
+        if job and job.get('running'):
+            self.driver.stop(state)
+            self.store.mutate(lambda s:s.update(worker=self.driver.inspect(state)),event=None)
+        message='服务器总运行时限已到；NS已停止或禁止启动，日志和成果已保留。RH保持原样，请管理员决定后续处理；服务器计费仍继续。'
+        if state['status'] not in ('COMPLETED','CHECKS_COMPLETED'):
+            if state.get('reason')!='budget_deadline':self.pause('budget_deadline',message)
+        else:
+            self.store.alert(state['id']+':budget_deadline','服务器总运行时限已到',message,'warning',{'deadlineUnix':budget['deadlineAt']})
+            self.flush_notices()
+        return False
+
     def _reconcile(self, state):
         job=self.driver.inspect(state)
-        if state.get('startedAt'):
+        if state.get('startedAt') and state['budget'].get('scope')!='server':
             elapsed=max(0,(state.get('finishedAt') or self.clock())-state['startedAt'])
-            self.store.mutate(lambda s:s['budget'].update(estimatedUsd=elapsed/3600*s['budget']['hourlyUsd']),event=None)
+            self.store.mutate(lambda s:s.update(budget=runtime_usage(s['budget'],elapsed/3600,self.clock())),event=None)
             state=self.store.snapshot()
         if job and job.get('running'):
             if hasattr(self.driver,'metrics'):job['resources']=self.driver.metrics(state)
             self.store.mutate(lambda s:s.update(worker=job,controllerHeartbeat=self.clock()),event=None)
-            if state['budget']['estimatedUsd']>=state['budget']['capUsd']:
+            if state['budget']['remainingHours']<=0 and state['budget']['enforcement']!='notify_only':
                 self.driver.stop(state)
                 self.pause('budget','NS 预算额度已到，已停止自己的 NS Worker并保留检查点。服务器仍按小时计费。')
             return
@@ -170,7 +201,11 @@ class Controller:
     def tick(self):
         self.flush_notices(); state=self.store.snapshot()
         if not state: return
-        self.store.mutate(lambda s:s.update(controllerHeartbeat=self.clock()),event=None)
+        try:
+            if not self.budget_tick():return
+        except (ValueError,TypeError,KeyError) as error:
+            self.pause('budget','运行时限配置无效，NS不启动：'+str(error));return
+        state=self.store.snapshot()
         if state['status'] in ('RUNNING','STARTING'):
             self._reconcile(state); return
         if state['status'] in ('PAUSED','FAILED') and state.get('execution')=='INCOMPLETE' and state.get('startedAt'):
@@ -191,10 +226,18 @@ class Controller:
                 self.pause(gate['reason'],'RH 状态在证据归档期间发生异常；NS 不启动。'); return
             if gate['decision']!='READY':
                 self.store.mutate(lambda s:s.update(reason=gate['reason']),event=None); return
-            state=self.store.snapshot(); resources=self.driver.resources(); resources['rhActive']=False
-            start=start_gate(state,resources)
+            state=self.store.snapshot()
+            try:resources=self.driver.resources()
+            except OSError as error:
+                if state['budget']['enforcement']!='notify_only':raise
+                resources={'samplingError':str(error)[:300]}
+            resources['rhActive']=False
+            start=start_gate(state,resources,now=self.clock())
+            if start['allowed'] and state['budget']['enforcement']=='notify_only':
+                warnings=[name for name,key,minimum in [('CPU','cpuCount',64),('内存','memoryAvailableBytes',250000000000),('磁盘','diskFreeBytes',100*1024**3)] if not isinstance(resources.get(key),(int,float)) or resources[key]<minimum]
+                if warnings:self.store.alert(state['id']+':resources_advisory','NS资源预检告警','资源预检提示 '+','.join(warnings)+' 不足；按管理员要求仍自动尝试启动，容器保留硬资源上限。','warning',{'run':state['id']})
             if not start['allowed']:
-                self.pause(start['reason'],'RH 已完成，但 NS '+('额外预算不足（当前为0时不会启动）。服务器仍按小时计费。' if start['reason']=='budget' else '资源启动门禁未满足。')); return
+                self.pause(start['reason'],'RH 已完成，但 NS '+('剩余运行时限不足（启动至少需要5分钟）。服务器仍按小时计费。' if start['reason']=='budget' else '资源启动门禁未满足。')); return
             self.store.mutate(lambda s:s.update(status='STARTING',reason='starting',startedAt=s.get('startedAt') or self.clock()),'starting')
             job=self.driver.launch(self.store.snapshot())
             self.store.mutate(lambda s:s.update(status='RUNNING',reason='running',worker=job),'launched')

@@ -74,7 +74,7 @@ def installation_plan(source_sha, execute=False):
             'commands': [
                 ['groupadd', '--system', '--gid', '10001', 'lean-observatory-ns'],
                 ['apparmor_parser', '-r', '/etc/apparmor.d/' + PROFILE],
-                ['python3', '-m', 'ns_queue.control', '--root', str(DATA), 'init', '--budget', '0', '--rh-run', '20565ace60c2'],
+                ['python3', '-m', 'ns_queue.control', '--root', str(DATA), 'init', '--hours', '0', '--rh-run', '20565ace60c2'],
                 [*compose, 'up', '-d', '--build', '--wait', 'api', 'nginx'],
                 ['systemctl', 'daemon-reload'],
                 ['systemctl', 'enable', '--now', 'lean-observatory-ns-web.service',

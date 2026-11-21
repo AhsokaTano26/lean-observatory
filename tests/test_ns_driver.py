@@ -161,6 +161,16 @@ class DockerDriverTests(unittest.TestCase):
             self.driver.launch(self.state)
         self.assertEqual(self.fake.calls, [])
 
+    def test_advisory_sampler_failure_before_and_after_build_does_not_block(self):
+        from tests.test_ns_budget import server_budget
+        self.state['budget']={**server_budget(),'enforcement':'notify_only'}
+        calls=[]
+        def unavailable():calls.append(1);raise OSError('sampler unavailable')
+        self.driver.resources=unavailable
+        self.assertTrue(self.driver.launch(self.state)['running'])
+        self.assertEqual(len(calls),2)
+        self.assertTrue(any('run' in argv for argv,_ in self.fake.calls))
+
     def test_resource_gate_is_rechecked_before_build(self):
         self.resources['memoryAvailableBytes'] = 1
         with self.assertRaisesRegex(ValueError, 'memory'):

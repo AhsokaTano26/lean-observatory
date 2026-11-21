@@ -74,7 +74,7 @@ def validate_resources(containers, source_sha):
         if name in services: raise ValueError('duplicate Compose service')
         services[name]=c
     if set(services)!={'api','nginx','worker'}: raise ValueError('only api, nginx and verification worker must run')
-    for name,cpus,memory in [('api',2,2*GIB),('nginx',1,256*1024**2),('worker',48,208*GIB)]:
+    for name,cpus,memory in [('api',2,2*GIB),('nginx',1,256*1024**2),('worker',60,250000000000)]:
         c=services[name];h=c.get('HostConfig',{})
         if c.get('State',{}).get('Running') is not True or h.get('NanoCpus')!=cpus*10**9 or h.get('Memory')!=memory:
             raise ValueError('container resource limits mismatch: '+name)
@@ -86,7 +86,7 @@ def validate_resources(containers, source_sha):
             if name=='worker':
                 if c.get('AppArmorProfile')!=APPARMOR_PROFILE:
                     raise ValueError('production worker requires the exact enforcing AppArmor profile')
-                if env.get('ENABLE_REAL')!='0' or h.get('CpusetCpus')!='8-55' or h.get('MemorySwap')!=208*GIB or h.get('PidsLimit')!=1024:
+                if env.get('ENABLE_REAL')!='0' or h.get('CpusetCpus')!='4-63' or h.get('MemorySwap')!=250000000000 or h.get('PidsLimit')!=1024:
                     raise ValueError('worker must stay disabled with bounded CPUs, RAM, swap and processes')
                 if not any(m.get('Destination')=='/approval' and m.get('RW') is False for m in c.get('Mounts',[])):
                     raise ValueError('worker receipt mount must be read-only')

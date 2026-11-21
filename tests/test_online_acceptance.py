@@ -12,11 +12,11 @@ def state():
 
 def containers():
     out=[]
-    for service,cpu,memory in [('api',2,2*1024**3),('nginx',1,256*1024**2),('worker',48,208*1024**3)]:
+    for service,cpu,memory in [('api',2,2*1024**3),('nginx',1,256*1024**2),('worker',60,250000000000)]:
         out.append({'Config':{'Labels':{'com.docker.compose.service':service,'com.docker.compose.project':'lean-observatory','io.lean-observatory.source-sha256':SHA},
                               'Env':['SOURCE_SHA256='+SHA,'ENABLE_REAL=0']},
                     'AppArmorProfile':'lean-observatory-worker','Id':'worker-container-'+service,'Image':'sha256:worker-image-'+service,'ImageLabels':{'io.lean-observatory.source-sha256':SHA},'State':{'Running':True},'HostConfig':{'NanoCpus':cpu*10**9,'Memory':memory,'MemorySwap':memory,
-                    'CpusetCpus':'8-55' if service=='worker' else '', 'PidsLimit':1024 if service=='worker' else 128},
+                    'CpusetCpus':'4-63' if service=='worker' else '', 'PidsLimit':1024 if service=='worker' else 128},
                     'Mounts':[{'Destination':'/approval','RW':False}] if service=='worker' else []})
     return out
 

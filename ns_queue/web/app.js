@@ -1,8 +1,9 @@
 const $=id=>document.getElementById(id), esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const hours=x=>Number(x).toFixed(2)+' 小时',date=x=>x==null?'尚未配置':new Date(x*1000).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
 const money=x=>x==null?'—':'$'+Number(x).toFixed(2), num=x=>Number.isFinite(Number(x))?Number(x).toLocaleString('en-US'):'—';
 const stageNames={source:'源码校验',dependencies:'锁定依赖',compile:'全量编译',audit:'定理审计',kernel:'内核重放',independent:'独立验证',persist:'结果落盘'};
 const statuses={QUEUED:'排队中',STARTING:'准备启动',RUNNING:'验证中',PAUSED:'已暂停',FAILED:'失败',COMPLETED:'检查完成',CHECKS_COMPLETED:'检查完成',PENDING:'未执行',PASSED:'通过',BLOCKED:'待处理'};
-const reasons={waiting_rh:'等待 RH 全部必要检查成功',budget:'预算不足，禁止启动 NS',rh_evidence:'RH 完整证据尚未持久化',rh_unreachable:'暂时无法确认 RH 状态',rh_other_active_run:'其他验证仍在运行',rh_result_artifact:'等待 RH 最终报告落盘',rh_failed:'RH 失败，NS 已暂停',rh_interrupted:'RH 异常中断，NS 已暂停',rh_resource_exhausted:'RH 资源不足，NS 已暂停',memory:'可用内存不足',disk:'可用磁盘不足',cpu:'CPU 资源不足',ready:'启动门禁通过',running:'按真实日志推进'};
+const reasons={waiting_rh:'等待 RH 全部必要检查成功',budget:'剩余时限不足，禁止启动 NS',budget_deadline:'服务器总时限已到，NS 已暂停',rh_evidence:'RH 完整证据尚未持久化',rh_unreachable:'暂时无法确认 RH 状态',rh_other_active_run:'其他验证仍在运行',rh_result_artifact:'等待 RH 最终报告落盘',rh_failed:'RH 失败，NS 已暂停',rh_interrupted:'RH 异常中断，NS 已暂停',rh_resource_exhausted:'RH 资源不足，NS 已暂停',memory:'可用内存不足',disk:'可用磁盘不足',cpu:'CPU 资源不足',ready:'启动门禁通过',running:'按真实日志推进'};
 let rows=new Map(),lastData=null,connected=false;
 function setTheme(theme){document.documentElement.dataset.theme=theme;localStorage.setItem('ns-theme',theme);$('theme').setAttribute('aria-label',theme==='dark'?'切换浅色主题':'切换深色主题');}
 setTheme(localStorage.getItem('ns-theme')||'light');$('theme').onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
@@ -12,9 +13,11 @@ function render(data){lastData=data;const s=data.queue,c=s.compile,b=s.budget,r=
  $('status').textContent=statuses[s.status]||s.status;$('reason').textContent=reasons[s.reason]||s.reason;$('ns-chain').textContent=s.status;
  const total=c.total||s.spec.expectedFileCount||2659,percentage=c.total?100*c.succeeded/c.total:0;
  $('progress').textContent=percentage.toFixed(1)+'%';$('files').textContent=`${num(c.succeeded)} / ${num(total)} ${c.total?'已扫描 Lean 文件':'计划 Lean 文件'}`;
- $('cost').textContent=money(data.nsEstimatedUsd);$('budget').textContent=money(b.capUsd);
- $('banner').dataset.warning=String(s.status==='PAUSED'||b.capUsd===0);
- $('banner').textContent=s.status==='QUEUED'?'RH 优先 · NS 已排队。额外预算为 '+money(b.capUsd)+'；若 RH 完成后预算仍不足，NS 将暂停并通知管理员。':(reasons[s.reason]||s.reason)+'。未执行的检查不会提前标记成功。';
+ $('cost').textContent=money(data.nsEstimatedUsd);$('server-cost').textContent=money(data.serverEstimatedUsd);
+ $('budget').innerHTML=Number(b.capHours).toFixed(2)+' <span class="unit">小时</span>';$('remaining').innerHTML=Number(b.remainingHours).toFixed(2)+' <span class="unit">小时</span>';
+ $('usage').textContent='服务器已用 '+hours(b.usedHours);$('deadline').textContent=b.deadlineAt?'截止（北京时间）'+date(b.deadlineAt):'等待配置租用起点';$('rental-start').textContent=date(b.rentalStartedAt);
+ $('banner').dataset.warning=String(s.status==='PAUSED'||b.remainingHours===0);
+ $('banner').textContent=s.status==='QUEUED'?(b.scope==='server'?'RH 优先 · NS 已排队。服务器共用 '+hours(b.capHours)+'，剩余 '+hours(b.remainingHours)+'；RH 全部必要检查成功并归档后自动启动 NS。'+(b.enforcement==='notify_only'?'计时与资源预检只告警，由管理员决定停止。':''):'RH 优先 · NS 已排队。时长额度为 '+hours(b.capHours)+'；配置服务器租用起点和总时限后生效。'):(reasons[s.reason]||s.reason)+'。未执行的检查不会提前标记成功。';
  $('phase').textContent=stageNames[s.phase]||s.phase;
  $('stages').innerHTML=s.stages.map((stage,i)=>`<li data-state="${esc(stage.status)}"><span class="step">${String(i+1).padStart(2,'0')} ${stage.status==='PASSED'?'✓':''}</span><b>${esc(stageNames[stage.id]||stage.id)}</b><small>${esc(statuses[stage.status]||stage.status)}</small><small>${stage.exitCode===null||stage.exitCode===undefined?'退出码 —':'退出码 '+esc(stage.exitCode)}</small></li>`).join('');
  $('rh-status').textContent=r.status||'等待采集';$('rh-progress').textContent=rc.total?(100*rc.succeeded/rc.total).toFixed(1)+'%':'—';$('rh-bar').value=rc.total?100*rc.succeeded/rc.total:0;

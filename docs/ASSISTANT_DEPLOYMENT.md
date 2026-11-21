@@ -9,7 +9,7 @@
 1. 助手完成 `scripts/accept_local.py`，确认 `reports/local-acceptance.json` 对应当前 `scripts.gates.fingerprint`，再生成并校验发布包。购机之后，助手通过 `scripts/preflight.py` 只读检查目标主机。必须为 Ubuntu 24.04 x86_64、有 root 权限、至少 64 CPU / 240 GiB 实测内存 / 500 GiB 空闲磁盘，且 80、443 无监听冲突。生产主机的 AppArmor 内核功能必须已启用；不支持时停止部署，不以 unconfined 降级。
 2. 助手核对服务器身份和发布包 SHA-256，将发布包解至固定 `/opt/lean-observatory`。部署源码归 root 所有，其他用户无写权限。遇到现有安装、项目卷、端口冲突或不符合要求的 Docker，先检查原因；不停止已有服务、不卸载已有 Docker、不清理卷。
 3. 助手先运行 `bash scripts/bootstrap_server.sh --dry-run` 阅读计划。该默认模式只校验本地门禁并输出计划，不联网、不写主机。确认目标实测符合后，助手在服务器运行 `bash scripts/bootstrap_server.sh --execute`，可选 `--email ADDRESS` 提供 ACME 联系地址。不得在开发电脑执行 `--execute`。
-4. 初装脚本仅在 Docker 缺失时按 [Docker 官方 Ubuntu apt 流程](https://docs.docker.com/engine/install/ubuntu/) 安装 Engine、Buildx 与 Compose；已有可用 Docker 则复用，要求 Compose ≥2.24.4。它创建无登录权限的 `lean-metrics` 用户、宿主指标目录与 systemd 采集服务，将 `.env` 设为 root 所有、`0600`，并写入当前源码 SHA-256、`ENABLE_REAL=0`、`METRICS_DIR=/var/lib/lean-observatory-metrics`、`WORKER_CPUSET=8-55`、`WORKER_CPUS=48`、`WORKER_MEMORY=208g`、`APPARMOR_PROFILE=lean-observatory-worker`。脚本安装 `apparmor`（包含 `apparmor_parser`），把经过源码门禁的 `deploy/lean-observatory-worker.apparmor` 安装至 `/etc/apparmor.d/lean-observatory-worker` 并加载，必须确认内核中该 profile 为 enforce；不会使用会阻止 mount 的 `docker-default` 运行正式 Worker。
+4. 初装脚本仅在 Docker 缺失时按 [Docker 官方 Ubuntu apt 流程](https://docs.docker.com/engine/install/ubuntu/) 安装 Engine、Buildx 与 Compose；已有可用 Docker 则复用，要求 Compose ≥2.24.4。它创建无登录权限的 `lean-metrics` 用户、宿主指标目录与 systemd 采集服务，将 `.env` 设为 root 所有、`0600`，并写入当前源码 SHA-256、`ENABLE_REAL=0`、`METRICS_DIR=/var/lib/lean-observatory-metrics`、`WORKER_CPUSET=4-63`、`WORKER_CPUS=60`、`WORKER_MEMORY=250000000000`、`APPARMOR_PROFILE=lean-observatory-worker`。脚本安装 `apparmor`（包含 `apparmor_parser`），把经过源码门禁的 `deploy/lean-observatory-worker.apparmor` 安装至 `/etc/apparmor.d/lean-observatory-worker` 并加载，必须确认内核中该 profile 为 enforce；不会使用会阻止 mount 的 `docker-default` 运行正式 Worker。
 5. 初装只启动 `lean-observatory` 项目的 API、正式 Worker 和 Nginx；空队列不创建真实任务，也不运行 mock profile。先使用 `compose.acme.yaml` 的 80 端口 webroot 签发 `lean.tano.asia` 证书，再以 `compose.tls.yaml` 切换到正式 HTTPS。用户应将正确 A/AAAA 指向目标主机；没有 IPv6 时移除旧 AAAA。脚本启用 `certbot.timer`，安装仅在本域名证书更新后校验并 reload 本项目 Nginx 的 deploy hook，并执行 ACME staging 的 `certbot renew --dry-run`。完成后助手调用 `online_acceptance.py --worker-fixture-only`，在真实 `ENABLE_REAL=0` Worker 中通过标准输入执行当前 `scripts/container_smoke.py`，验证私有 proc、受限 UID、无外网路由、源码/工具链不可写、小型 Lean 编译与 fresh 内核重放，以及脱离进程/父进程死亡清理。失败保留日志并停止；不下载或编译完整证明。续期机制参见 [Certbot 官方文档](https://eff-certbot.readthedocs.io/en/stable/using.html#renewing-certificates)。
 
 初装中途失败时保留输出、日志、证书和卷，不用 `down -v` 或重复覆盖配置“修复”。脚本是首次安装工具，已有 `.env` 或部署状态会拒绝重跑；助手先诊断失败点，再按已完成步骤有针对性地恢复。
@@ -29,7 +29,7 @@
 
 全部通过后才原子生成 root 所有、可读的 `.data/approval/online.json`，包含八项检查、时间、目标 URL 和源码指纹。测试夹具只检查纯校验函数，不生成可开启生产任务的线上回执。在线回执有效 24 小时；源码变化、过期或任一检查缺失都要求重验。
 
-此时仍未启动证明。助手完成实际浏览器只读页面检查并记录验收后，才在服务器将 `ENABLE_REAL` 设为 `1`、仅重建 Worker，再通过 `backend.control create --mode real --jobs 48` 创建一次任务。创建前再次检查任务列表为空，创建后记录任务 ID，后续恢复使用同一任务，避免重复创建。控制命令与 Worker 领取任务都会验证线上回执。
+此时仍未启动证明。助手完成实际浏览器只读页面检查并记录验收后，才在服务器将 `ENABLE_REAL` 设为 `1`、仅重建 Worker，再通过 `backend.control create --mode real --jobs 60` 创建一次任务。创建前再次检查任务列表为空，创建后记录任务 ID，后续恢复使用同一任务，避免重复创建。控制命令与 Worker 领取任务都会验证线上回执。
 
 运行中助手负责检查宿主指标、磁盘余量、完整命令日志和阶段状态；资源不足、失败或中断时保留证据，按任务检查点恢复。48 个 Lake 调度线程、每个 Lean 子进程 `-j1`；`resource_exhausted` 恢复时调度线程减半。任何通过都只指记录中的检查，不自动宣称数学陈述已经人工复核。
 

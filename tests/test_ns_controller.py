@@ -105,7 +105,7 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(self.driver.launches, 0)
 
     def test_restart_adopts_existing_job_without_repeating_successful_steps(self):
-        self.store.mutate(lambda s:s['budget'].update(capUsd=10))
+        self.store.mutate(lambda s:s['budget'].update(capHours=10))
         self.controller.tick()
         self.assertEqual(self.driver.launches, 1)
         self.store.mutate(lambda s:s['stages'][0].update(status='PASSED', exitCode=0))
@@ -116,7 +116,7 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(self.store.snapshot()['stages'][0]['status'], 'PASSED')
 
     def test_another_run_appearing_during_persistence_blocks_start(self):
-        self.store.mutate(lambda s:s['budget'].update(capUsd=10))
+        self.store.mutate(lambda s:s['budget'].update(capHours=10))
         original = self.rh.download_logs
         def download(run, path): original(run, path); self.rh.other_active = True
         self.rh.download_logs = download
@@ -125,10 +125,76 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(self.store.snapshot()['status'], 'QUEUED')
 
     def test_budget_stop_targets_only_own_worker(self):
-        self.store.mutate(lambda s:s['budget'].update(capUsd=0.28))
+        self.store.mutate(lambda s:s['budget'].update(capHours=1/12))
         self.controller.tick(); self.now += 400; self.controller.tick()
         self.assertEqual(self.driver.stops, 1)
         self.assertEqual(self.store.snapshot()['reason'], 'budget')
+
+    def test_shared_rental_budget_warns_and_expires_while_rh_keeps_running(self):
+        from tests.test_ns_budget import START,server_budget
+        self.rh.data['run']['status']='running'
+        self.store.mutate(lambda s:s.update(budget=server_budget()))
+        self.now=START+19.5*3600
+        self.controller.tick();self.controller.tick()
+        self.assertEqual(len(self.notices),1)
+        self.assertEqual(self.store.snapshot()['budget']['remainingHours'],0.5)
+        self.now=START+19.9*3600;self.controller.tick()
+        self.assertEqual(len(self.notices),2)
+        self.now=START+20*3600;self.controller.tick();self.controller.tick()
+        state=self.store.snapshot()
+        self.assertEqual((state['status'],state['reason']),('PAUSED','budget_deadline'))
+        self.assertEqual(len(self.notices),3)
+        self.assertEqual(self.driver.stops,0);self.assertEqual(self.driver.launches,0)
+
+    def test_shared_deadline_stops_only_own_running_ns(self):
+        from tests.test_ns_budget import START,server_budget
+        self.driver.job={'running':True,'containerId':'own-ns'}
+        self.store.mutate(lambda s:s.update(status='RUNNING',budget=server_budget(),startedAt=START+3600))
+        self.now=START+20*3600
+        self.controller.tick();self.controller.tick()
+        self.assertEqual(self.driver.stops,1)
+        self.assertEqual(self.store.snapshot()['reason'],'budget_deadline')
+        self.assertEqual(len(self.notices),1)
+
+    def test_notify_only_expired_window_automatically_starts_ns_once_after_rh(self):
+        from tests.test_ns_budget import START,server_budget
+        self.store.mutate(lambda s:s.update(budget={**server_budget(),'enforcement':'notify_only'}))
+        self.now=START+21*3600
+        self.rh.data['run']['status']='running';self.controller.tick()
+        self.assertEqual(self.store.snapshot()['status'],'QUEUED')
+        self.assertEqual(self.driver.stops,0)
+        self.rh.data['run']['status']='checks_completed'
+        self.driver.resources=lambda:{'cpuCount':1,'memoryAvailableBytes':1,'diskFreeBytes':1}
+        self.controller.tick();self.controller.tick()
+        self.assertEqual(self.store.snapshot()['status'],'RUNNING')
+        self.assertEqual(self.driver.launches,1);self.assertEqual(self.driver.stops,0)
+        restarted=Controller(QueueStore(self.temp.name),self.rh,self.driver,notifier=self.notify,clock=lambda:self.now)
+        restarted.tick()
+        self.assertEqual(self.driver.launches,1);self.assertEqual(self.driver.stops,0)
+        self.assertEqual(self.store.snapshot()['budget']['rentalStartedAt'],START)
+
+    def test_timer_refresh_cannot_overwrite_concurrent_admin_hours_change(self):
+        from tests.test_ns_budget import START,server_budget
+        self.store.mutate(lambda s:s.update(budget={**server_budget(),'enforcement':'notify_only'}))
+        self.now=START+3600
+        original=self.store.mutate;changed=[False]
+        def race(fn,event='updated'):
+            if not changed[0]:
+                changed[0]=True;original(lambda s:s['budget'].update(capHours=24))
+            return original(fn,event)
+        self.store.mutate=race
+        self.controller.budget_tick()
+        self.assertEqual(self.store.snapshot()['budget']['capHours'],24)
+
+    def test_advisory_sampler_failure_cannot_block_handoff(self):
+        from tests.test_ns_budget import START,server_budget
+        self.store.mutate(lambda s:s.update(budget={**server_budget(),'enforcement':'notify_only'}))
+        self.now=START+21*3600
+        def unavailable():raise OSError('disk sampler unavailable')
+        self.driver.resources=unavailable
+        self.controller.tick()
+        self.assertEqual(self.driver.launches,1)
+        self.assertEqual(self.store.snapshot()['status'],'RUNNING')
 
     def test_single_controller_lease_is_exclusive(self):
         with controller_lease(self.temp.name):
@@ -136,7 +202,7 @@ class ControllerTests(unittest.TestCase):
                 with controller_lease(self.temp.name): pass
 
     def test_lost_launch_ack_adopts_instead_of_starting_a_duplicate(self):
-        self.store.mutate(lambda s:s['budget'].update(capUsd=10))
+        self.store.mutate(lambda s:s['budget'].update(capHours=10))
         launch=self.driver.launch
         def ambiguous(state): launch(state); raise TimeoutError('client acknowledgement lost')
         self.driver.launch=ambiguous

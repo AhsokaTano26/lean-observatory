@@ -25,7 +25,7 @@ def initial_state(mode='real'):
                 updatedAt=time.time(), elapsedSeconds=0, activeSeconds=0,
                 workerHeartbeat=None, error=None, proofAccepted=False,
                 compile=dict(expectedTotal=175187, total=None, succeeded=0, failed=0,
-                             rate=0, recent=[], currentModule=None, jobs=48),
+                             rate=0, recent=[], currentModule=None, jobs=60),
                 stages=[dict(id=i, label=l, status='pending', startedAt=None,
                              finishedAt=None, exitCode=None) for i, l in STAGES],
                 audits=[dict(name=n, expectedType=t, type='pending', axioms='pending',

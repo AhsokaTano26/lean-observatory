@@ -10,8 +10,9 @@ const root=resolve(import.meta.dirname,'..');
 test('NS queued page: desktop, mobile, theme, logs, readonly requests and reconnect',async()=>{
  const data=mkdtempSync(join(tmpdir(),'lean-ns-browser-'));
  const python=process.env.NS_TEST_PYTHON||'/opt/homebrew/bin/python3';
- const init=spawnSync(python,['-m','ns_queue.control','--root',data,'init','--budget','0'],{cwd:root,encoding:'utf8'});
+ const init=spawnSync(python,['-m','ns_queue.control','--root',data,'init','--hours','0'],{cwd:root,encoding:'utf8'});
  assert.equal(init.status,0,init.stderr);
+ const budget=spawnSync(python,['-m','ns_queue.control','--root',data,'set-budget','--hours','20','--started-at','2026-11-21T14:42:36Z','--mode','notify-only'],{cwd:root,encoding:'utf8'});assert.equal(budget.status,0,budget.stderr);
  const seed=spawnSync(python,['-c',`from ns_queue.store import QueueStore;s=QueueStore(${JSON.stringify(data)});s.log('scheduler','Waiting for RH; NS budget is zero');s.mutate(lambda x:x.update(controllerHeartbeat=__import__('time').time()))`],{cwd:root,encoding:'utf8'});
  assert.equal(seed.status,0,seed.stderr);
  let output='';
@@ -30,7 +31,9 @@ test('NS queued page: desktop, mobile, theme, logs, readonly requests and reconn
   await page.getByRole('heading',{name:'Navier–Stokes',exact:true}).waitFor();
   await page.waitForFunction(()=>document.querySelector('#status').textContent==='排队中');
   assert.match(await page.locator('#banner').innerText(),/RH 优先/);
-  assert.equal(await page.locator('#budget').innerText(),'$0.00');assert.equal(await page.locator('#cost').innerText(),'$0.00');
+  assert.equal(await page.locator('#budget').innerText(),'20.00 小时');
+  assert.match(await page.locator('#remaining').innerText(),/小时/);assert.match(await page.locator('#deadline').innerText(),/18:42:36/);
+  const state=await (await page.request.get('http://127.0.0.1:8793/api/state')).json();assert.equal(state.queue.budget.capHours,20);assert.ok(state.queue.budget.remainingHours<20);assert.equal(state.nsEstimatedUsd,0);assert.equal(state.queue.budget.enforcement,'notify_only');assert.equal(state.queue.compile.jobs,60);assert.match(await page.locator('#banner').innerText(),/只告警/);assert.match(await page.locator('body').innerText(),/60 vCPU.*250 GB/);assert.equal(await page.locator('#cost').innerText(),'$0.00');
   assert.equal(await page.getByRole('button',{name:/启动|暂停|恢复|管理员/}).count(),0);
   assert.equal(await page.locator('nextjs-portal,vite-error-overlay').count(),0);
   const evidence='/tmp/lean-observatory-ns-ui-qa';mkdirSync(evidence,{recursive:true});

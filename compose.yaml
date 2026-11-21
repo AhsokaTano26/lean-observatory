@@ -36,10 +36,10 @@ services:
       ONLINE_RECEIPT: /approval/online.json
     volumes: ["verification-data:/data", "build-data:/sandbox/work", "${METRICS_DIR:-./.data/metrics}:/metrics:ro", "./.data/approval:/approval:ro", "/dev/null:/sandbox/dev/null", "/dev/urandom:/sandbox/dev/urandom:ro"]
     depends_on: {api: {condition: service_healthy}}
-    cpus: ${WORKER_CPUS:-48}
-    cpuset: ${WORKER_CPUSET:-8-55}
-    mem_limit: ${WORKER_MEMORY:-208g}
-    memswap_limit: ${WORKER_MEMORY:-208g}
+    cpus: ${WORKER_CPUS:-60}
+    cpuset: ${WORKER_CPUSET:-4-63}
+    mem_limit: ${WORKER_MEMORY:-250000000000}
+    memswap_limit: ${WORKER_MEMORY:-250000000000}
     pids_limit: 1024
     ulimits: {nofile: {soft: 65536, hard: 65536}, stack: {soft: 67108864, hard: 67108864}}
     cap_drop: [ALL]

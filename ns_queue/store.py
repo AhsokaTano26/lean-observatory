@@ -13,6 +13,7 @@ import sqlite3
 import tempfile
 import time
 from pathlib import Path
+from .budget import normalize
 
 
 STAGES = ('source', 'dependencies', 'compile', 'audit', 'kernel', 'independent', 'persist')
@@ -105,12 +106,7 @@ class QueueStore:
             raise ValueError('source commit required')
         if not isinstance(rh_run, str) or not rh_run:
             raise ValueError('RH run ID required')
-        limits = {'capUsd': 0, 'hourlyUsd': 3.36, 'minStartSeconds': 300, 'estimatedUsd': 0}
-        limits.update(budget)
-        for key in ('capUsd', 'hourlyUsd', 'minStartSeconds', 'estimatedUsd'):
-            number = limits[key]
-            if type(number) not in (int, float) or not math.isfinite(number) or number < 0:
-                raise ValueError('invalid budget: ' + key)
+        limits = normalize(budget)
         now = time.time()
         state = dict(id='ns-' + spec['commit'][:12], mode='real', spec=copy.deepcopy(spec),
                      source=copy.deepcopy(spec), rhRunId=rh_run, status='QUEUED', reason='waiting_rh',
@@ -120,7 +116,7 @@ class QueueStore:
                                   startedAt=None, finishedAt=None) for stage in STAGES],
                      compile=dict(expectedTotal=spec.get('expectedFileCount'), total=None,
                                   succeeded=0, failed=0, rate=0, etaSeconds=None,
-                                  currentModule=None, jobs=48),
+                                  currentModule=None, jobs=60),
                      commands=[], artifacts=[], audits=[], proofAccepted=False)
         with self.db() as db:
             db.execute('BEGIN IMMEDIATE')

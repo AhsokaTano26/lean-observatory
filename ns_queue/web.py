@@ -10,6 +10,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 from .store import QueueStore
+from .budget import normalize
 
 ASSETS=Path(__file__).with_name('web')
 
@@ -17,7 +18,8 @@ ASSETS=Path(__file__).with_name('web')
 def payload(store, host_file=None):
     state=store.snapshot()
     if state is None: raise ValueError('NS queue has not been initialized')
-    now=time.time(); rh=state.get('rh') or {}; rate=state['budget']['hourlyUsd']
+    now=time.time(); state['budget']=normalize(state['budget'],now); rh=state.get('rh') or {}; rate=state['budget']['hourlyUsd']
+    ns_seconds=max(0,(state.get('finishedAt') or state.get('pausedAt') or now)-state['startedAt']) if state.get('startedAt') else 0
     rh_seconds=max(0,(rh.get('finishedAt') or now)-rh['startedAt']) if rh.get('startedAt') else None
     host=None
     if host_file:
@@ -31,7 +33,8 @@ def payload(store, host_file=None):
                 deployment={'sourceSha256':os.environ.get('NS_SOURCE_SHA256')},
                 controllerOnline=bool(state.get('controllerHeartbeat') and now-state['controllerHeartbeat']<45),
                 actualInvoiceAvailable=False,rhEstimatedUsd=rh_seconds/3600*rate if rh_seconds is not None else None,
-                nsEstimatedUsd=state['budget'].get('estimatedUsd',0),readOnly=True)
+                serverEstimatedUsd=state['budget']['estimatedUsd'] if state['budget']['scope']=='server' else None,
+                nsEstimatedUsd=ns_seconds/3600*rate,readOnly=True)
 
 
 def make_server(store, address, host_file=None):

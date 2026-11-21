@@ -21,6 +21,7 @@ import urllib.request
 from .process import run_process
 from . import sandbox
 from .store import QueueStore
+from .budget import normalize, can_start, runtime_usage
 from .gates import validate_result
 
 STAGES = ('source', 'dependencies', 'compile', 'audit', 'kernel', 'independent', 'persist')
@@ -63,13 +64,8 @@ def validate_spec(spec):
         raise ValueError('NS specification differs from the fixed reviewed manifest')
 
 
-def budget_available(budget):
-    values = [budget.get(key, default) for key, default in
-              [('capUsd', 0), ('hourlyUsd', 3.36), ('estimatedUsd', 0), ('minStartSeconds', 300)]]
-    if any(type(value) not in (int, float) or not math.isfinite(value) or value < 0 for value in values):
-        return False
-    cap, rate, spent, minimum = map(lambda value: Decimal(str(value)), values)
-    return rate > 0 and cap > 0 and cap - spent >= rate * max(Decimal(300), minimum) / Decimal(3600)
+def budget_available(budget, now=None):
+    return can_start(budget, now)
 
 
 def durable_rh(root, state):
@@ -297,15 +293,15 @@ class NSWorker:
         return entries
 
     def _beat(self):
-        state = self.store.snapshot(); budget = state['budget']
+        state = self.store.snapshot(); budget = normalize(state['budget'])
         if state.get('desired') in {'PAUSED', 'CANCELLED', 'paused', 'cancelled'}:
             raise Blocked('operator_requested_stop')
-        estimate = self.initial_estimate + (time.monotonic() - self.run_start) * budget['hourlyUsd'] / 3600
+        estimate = self.initial_estimate + (time.monotonic() - self.run_start) / 3600
         def beat(s):
-            s['workerHeartbeat'] = time.time(); s['budget']['estimatedUsd'] = round(estimate, 8)
+            s['workerHeartbeat'] = time.time(); s['budget'] = runtime_usage(s['budget'],estimate)
             s['execution'] = 'RUNNING'; s['status'] = 'RUNNING'
-        self.store.mutate(beat)
-        if budget['capUsd'] <= estimate: raise Blocked('budget')
+        updated_budget=self.store.mutate(beat)['budget']
+        if updated_budget['remainingHours']<=0 and updated_budget['enforcement']!='notify_only': raise Blocked('budget')
 
     def _command(self, argv, cwd=None, network=False, environment=None, stdout_path=None, timeout=259200):
         self._beat(); cwd = Path(cwd or self.project)
@@ -541,7 +537,7 @@ class NSWorker:
         return [path]
 
     def run(self):
-        state = self.store.snapshot(); budget = state['budget']
+        state = self.store.snapshot(); budget = normalize(state['budget'])
         reason = 'budget' if not budget_available(budget) else None
         # Budget is checked first: even hashing the potentially large RH archive
         # is deferred when this successor has no authorized compute budget.
@@ -559,10 +555,10 @@ class NSWorker:
         lock = (self.root / 'ns-worker.lock').open('a')
         try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError: lock.close(); raise RuntimeError('another NS worker owns this volume')
-        self.run_start = time.monotonic(); self.initial_estimate = budget.get('estimatedUsd', 0)
+        self.run_start = time.monotonic(); self.initial_estimate = budget['usedHours']
         checkpoint = Checkpoints(self.work / 'checkpoints')
         implementation = {name: file_hash(Path(__file__).with_name(name)) for name in
-                          ['ns_worker.py', 'process.py', 'sandbox.py', 'child.py', 'build-tools.sh', 'manifest.json']}
+                          ['ns_worker.py', 'process.py', 'sandbox.py', 'child.py', 'build-tools.sh', 'manifest.json', 'budget.py']}
         previous = json_hash({'spec': self.spec, 'implementation': implementation})
         try:
             def recover(s):
@@ -570,7 +566,8 @@ class NSWorker:
                     if cmd['status'] == 'RUNNING': cmd.update(status='INTERRUPTED', exitCode=None, finishedAt=None)
                 s.update(status='RUNNING', execution='RUNNING', reason=None,
                          startedAt=s.get('startedAt') or time.time(), workerHeartbeat=time.time())
-                s.setdefault('compile', {'succeeded': 0, 'failed': 0, 'jobs': 48})
+                s.setdefault('compile', {'succeeded': 0, 'failed': 0, 'jobs': 60})
+                s['compile']['jobs']=60
                 s['compile']['total'] = 2659
             self.store.mutate(recover, 'worker_claimed')
             for stage in STAGES:

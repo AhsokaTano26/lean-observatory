@@ -14,7 +14,7 @@ def main(argv=None):
     create=commands.add_parser('create')
     create.add_argument('--mode',choices=['mock','real'],default='mock')
     create.add_argument('--scenario',choices=['success','failure','interruption','resource'],default='success')
-    create.add_argument('--jobs',type=int,default=48)
+    create.add_argument('--jobs',type=int,default=60)
     commands.add_parser('list')
     for name in ['pause','resume','cancel']:
         commands.add_parser(name).add_argument('run')

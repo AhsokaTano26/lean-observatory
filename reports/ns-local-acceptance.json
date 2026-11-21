@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "createdAt": "2026-11-21T17:10:04.656551+00:00",
-  "sourceSha256": "36948319c5c0169c1f8ee363ae72b29db487b628823c83d3956be2b7d58931fe",
+  "createdAt": "2026-11-21T18:17:18.650153+00:00",
+  "sourceSha256": "d00d344a227a79dad178207e3fc7b2a4e0b8dadae70289d50879c5910dca3e05",
   "scope": "Local platform tests only; no real NS build or proof execution; no remote connection",
   "budgetCapUsd": 0,
   "checks": {
@@ -17,6 +17,15 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/unit.log"
+    },
+    "resources": {
+      "command": [
+        "node",
+        "--test",
+        "tests/resource-profile.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/resources.log"
     },
     "charts": {
       "command": [

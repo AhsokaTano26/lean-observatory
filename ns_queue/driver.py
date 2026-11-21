@@ -12,6 +12,7 @@ import subprocess
 import time
 from pathlib import Path
 from .gates import start_gate, validate_result
+from .budget import normalize, available_seconds, runtime_usage
 
 
 PROJECT = 'lean-observatory-ns'
@@ -69,6 +70,13 @@ class DockerDriver:
             disk_root = disk_root.parent
         return {'cpuCount': os.cpu_count() or 0, 'memoryAvailableBytes': available,
                 'diskFreeBytes': shutil.disk_usage(disk_root).free}
+
+    def start_resources(self, state):
+        try:resources=self.resources()
+        except (OSError,subprocess.SubprocessError) as error:
+            if normalize(state['budget'])['enforcement']!='notify_only':raise
+            resources={'samplingError':str(error)[:300]}
+        return {**resources,'rhActive':False}
 
     def inspect(self, state):
         name = self._name(state)
@@ -142,7 +150,7 @@ class DockerDriver:
         existing = self.inspect(state)
         if existing is not None and existing['running']:
             return existing
-        allowed = start_gate(state, {**self.resources(), 'rhActive': False})
+        allowed = start_gate(state, self.start_resources(state))
         if not allowed['allowed']:
             raise ValueError(allowed['reason'])
         if existing is not None:
@@ -155,8 +163,8 @@ class DockerDriver:
                'NS_CONTAINER_NAME': name, 'NS_SOURCE_COMMIT': state.get('spec', {}).get('commit', '')}
         compose = ['docker', 'compose', '-p', PROJECT, '--project-directory', str(self.deployment),
                    '--env-file', str(self.deployment / '.env'), '-f', str(self.deployment / 'compose.ns-worker.yaml')]
-        budget = state['budget']
-        remaining_seconds = (budget['capUsd'] - budget.get('estimatedUsd', 0)) / budget.get('hourlyUsd', 3.36) * 3600
+        budget = normalize(state['budget'])
+        remaining_seconds = 7200 if budget['enforcement']=='notify_only' else available_seconds(budget)
         began = time.monotonic()
         result = self._run([*compose, 'build', 'ns-worker'], timeout=min(7200, max(1, int(remaining_seconds))), env=env)
         if result.returncode:
@@ -166,9 +174,8 @@ class DockerDriver:
         existing = self.inspect(state)
         if existing is not None:
             return existing
-        charged_state = {**state, 'budget': {**budget, 'estimatedUsd': budget.get('estimatedUsd', 0) +
-                                            max(0, time.monotonic() - began) / 3600 * budget.get('hourlyUsd', 3.36)}}
-        allowed = start_gate(charged_state, {**self.resources(), 'rhActive': False})
+        charged_state = {**state, 'budget': runtime_usage(budget, budget['usedHours']+max(0,time.monotonic()-began)/3600)}
+        allowed = start_gate(charged_state, self.start_resources(state))
         if not allowed['allowed']:
             raise ValueError(allowed['reason'])
         if not self.rh_barrier or not self.rh_barrier():raise ValueError('rh_active')

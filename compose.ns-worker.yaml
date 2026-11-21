@@ -21,10 +21,10 @@ services:
       - ns-build-data:/sandbox/work
       - /dev/null:/sandbox/dev/null
       - /dev/urandom:/sandbox/dev/urandom:ro
-    cpus: 48
-    cpuset: "8-55"
-    mem_limit: 208g
-    memswap_limit: 208g
+    cpus: 60
+    cpuset: "4-63"
+    mem_limit: 250000000000
+    memswap_limit: 250000000000
     pids_limit: 1024
     ulimits:
       nofile: {soft: 65536, hard: 65536}

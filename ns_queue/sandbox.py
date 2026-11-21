@@ -29,7 +29,7 @@ def prepare(root, original, name='project'):
     return project
 
 
-def command(root, cwd, argv, jobs=48, network=False, home=None, environment=None):
+def command(root, cwd, argv, jobs=60, network=False, home=None, environment=None):
     root = Path(root).resolve(); cwd = Path(cwd).resolve()
     if not cwd.is_relative_to(root / 'work/ns'): raise ValueError('sandbox cwd outside NS work root')
     home = Path(home or cwd.parent / ('home-' + cwd.name)).resolve()
