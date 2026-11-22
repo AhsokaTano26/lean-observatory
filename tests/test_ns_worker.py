@@ -244,7 +244,7 @@ class NSWorkerTests(unittest.TestCase):
         attempts = {'build': 0, 'cache': 0}
         outside = self.root / 'outside'; outside.write_text('must remain unchanged')
         def tiny_executor(argv, **kwargs):
-            command = argv[argv.index('--exec') + 1:]
+            command = argv[next(i for i,arg in enumerate(argv) if arg in ('--exec','--exec-network')) + 1:]
             if command == ['/bin/bash', '/opt/ns-queue/build-tools.sh']:
                 attempts['build'] += 1
                 code = ('from pathlib import Path\n'

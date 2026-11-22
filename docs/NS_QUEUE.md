@@ -18,6 +18,7 @@ The UI is GET-only. Host CLI operations are not exposed publicly.
 - Light services: API 0.10 CPU/96 MiB, Nginx 0.10 CPU/32 MiB, controller 0.05 CPU/256 MiB (`GOMAXPROCS=2`, 128 tasks; Docker CLI plugins need bounded Go runtime concurrency). RH verification/API are not restarted; the router is gracefully reloaded when routes change.
 - NS worker: separate image, 60 vCPU, CPUs 4–63, no swap; no Docker socket or RH mounts. Default serial admission requires fresh RH success, matching durable report/log hashes, no other active verification, and the configured startup policy, with a 250 GB decimal (232.83 GiB) limit. The explicitly authorized RH replay overlap instead uses the recorded replay admission and a 220 GB limit until promotion. In notify_only mode, time/resource preflight only warns. Legacy hard mode requires a five-minute reserve.
 - The controller rechecks RH after evidence persistence and again after image build immediately before worker creation or resume. A deterministic container name, owner labels and exclusive controller lock prevent duplicate launches. Completed stages are skipped only if source, implementation, prior checkpoint and recorded output hashes still match.
+- Network-enabled dependency preparation allows local Unix resolver sockets needed by Cargo/libcurl. Offline proof commands and Comparator wrappers retain the AF_UNIX seccomp filter; real Linux negative tests verify denial and that nested preparation mode cannot remove an inherited filter.
 - Explicit RH failure or a stopped RH worker pauses NS and preserves logs. A stale heartbeat alone is not proof of RH failure. Temporary API loss keeps the queue blocked; API loss plus a stopped RH worker pauses it.
 - Notifications use a persistent deduplicated outbox. HTTP 200 means confirmed send; HTTP 202 means queued by the webhook and awaiting delivery, with no false delivery claim. Non-success responses retry with backoff.
 
@@ -62,6 +63,8 @@ Configure the confirmed shared window on the host:
 ```sh
 python3 -m ns_queue.control --root /var/lib/lean-observatory-queue set-budget --hours 20 --started-at 2026-11-21T14:42:36+00:00 --mode notify-only
 ```
+
+Before the first NS launch, the host-only command `python3 -m ns_queue.control --root /var/lib/lean-observatory-queue set-scheduling --mode parallel-replay` explicitly authorizes replay overlap; scheduling authorization locks after a task starts.
 
 The rental origin locks once set. Repeating the same settings is idempotent and does not reset time. `resume` is only needed for a genuinely paused/failed NS job; the current QUEUED job follows RH automatically. Lost launch acknowledgement and service restart adopt the same deterministic NS container. Failed mandatory proof/tool checks still preserve logs and pause; no result is fabricated.
 

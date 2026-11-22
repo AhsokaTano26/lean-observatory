@@ -1,5 +1,5 @@
 {"localNginx":true,"routes":["/","/rh/","/ns/"],"legacyRhApiUnchanged":true,"nsSSE":true,"downloads":true,"httpRedirect":true,"writes":[],"errors":[]}
-✔ Shared HTTPS: root entrance, RH/NS isolation, SSE, assets, downloads and HTTP redirect (7292.779875ms)
+✔ Shared HTTPS: root entrance, RH/NS isolation, SSE, assets, downloads and HTTP redirect (7434.151667ms)
 ℹ tests 1
 ℹ suites 0
 ℹ pass 1
@@ -7,4 +7,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 7613.731875
+ℹ duration_ms 7709.791542

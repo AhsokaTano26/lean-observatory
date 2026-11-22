@@ -53,7 +53,7 @@ def command(root, cwd, argv, jobs=60, network=False, home=None, environment=None
         env[key] = value
     return isolation + ['chroot', '--userspec=10002:10002', str(root), '/usr/bin/env', '-i',
         '--chdir=/' + str(cwd.relative_to(root)), *[k + '=' + v for k, v in env.items()],
-        '/usr/bin/python3', '/opt/ns-queue/child.py', '--exec', *argv]
+        '/usr/bin/python3', '/opt/ns-queue/child.py', '--exec-network' if network else '--exec', *argv]
 
 
 def freeze(path):

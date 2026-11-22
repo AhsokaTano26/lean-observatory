@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "createdAt": "2026-11-22T04:45:20.038Z",
-  "sourceSha256": "631ce9e21acde36b12fe8111c74eadaf22087cf3e5508de637b1e16422fa3658",
+  "createdAt": "2026-11-22T04:50:59.376Z",
+  "sourceSha256": "499eec2f1bd5df2c97559a467537647660132bf560b1d31a94d4a477af32bb80",
   "scope": "Local platform tests only; no real proof execution; same command groups as deploy/ns/local_acceptance.py",
   "executionMode": "parallel independent groups",
   "checks": {
@@ -46,15 +46,6 @@
       "exitCode": 0,
       "log": "reports/ns-local/resources.log"
     },
-    "sandboxPermissions": {
-      "command": [
-        "node",
-        "--test",
-        "tests/ns-supervisor-permissions.test.mjs"
-      ],
-      "exitCode": 0,
-      "log": "reports/ns-local/sandboxPermissions.log"
-    },
     "uiBuild": {
       "command": [
         "npm",
@@ -63,6 +54,15 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/uiBuild.log"
+    },
+    "sandboxPermissions": {
+      "command": [
+        "node",
+        "--test",
+        "tests/ns-supervisor-permissions.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/sandboxPermissions.log"
     },
     "browser": {
       "command": [

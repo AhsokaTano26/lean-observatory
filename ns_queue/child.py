@@ -77,6 +77,10 @@ def main(argv):
         finally:
             watcher.terminate(); watcher.wait()
     if os.geteuid() == 0: raise RuntimeError('source commands must never execute as root')
+    # Network-enabled dependency preparation needs libcurl's local resolver
+    # wakeup socketpair. Offline checks inherit their irreversible filter;
+    # invoking this mode underneath a strict check cannot remove that filter.
+    if argv[0] == '--exec-network': os.execvp(argv[1], argv[1:])
     forbid_unix_sockets()
     if argv[0] == '--probe-af-unix':
         for factory in [socket.socket, socket.socketpair]:

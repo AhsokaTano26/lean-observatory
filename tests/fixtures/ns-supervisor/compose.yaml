@@ -14,3 +14,16 @@ services:
     cap_drop: [ALL]
     cap_add: [CHOWN, DAC_OVERRIDE]
     security_opt: ['no-new-privileges:true']
+  sockets:
+    image: python:3.13-slim-bookworm
+    user: '10002:10002'
+    working_dir: /app
+    command: [python3, /fixture/check-sockets.py]
+    environment: {PYTHONDONTWRITEBYTECODE: '1', PYTHONPATH: /app}
+    volumes:
+      - ../../../ns_queue:/app/ns_queue:ro
+      - ./check-sockets.py:/fixture/check-sockets.py:ro
+    read_only: true
+    network_mode: none
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
