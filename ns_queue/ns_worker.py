@@ -23,6 +23,7 @@ from . import sandbox
 from .store import QueueStore
 from .budget import normalize, can_start, runtime_usage
 from .gates import validate_result
+from .admission import verify_parallel, has_parallel
 
 STAGES = ('source', 'dependencies', 'compile', 'audit', 'kernel', 'independent', 'persist')
 PIN = 'f9e8bc5b38b6e212696e8a30e3e91517af887bbd'
@@ -70,6 +71,10 @@ def budget_available(budget, now=None):
 
 def durable_rh(root, state):
     evidence = state.get('rhEvidence', {})
+    if evidence.get('persisted') is not True and has_parallel(state):
+        try:verify_parallel(root,state)
+        except ValueError:return False
+        return True
     if evidence.get('persisted') is not True or evidence.get('runId') != state['rhRunId']: return False
     try:
         for prefix in ['result', 'logs']:
@@ -558,7 +563,7 @@ class NSWorker:
         self.run_start = time.monotonic(); self.initial_estimate = budget['usedHours']
         checkpoint = Checkpoints(self.work / 'checkpoints')
         implementation = {name: file_hash(Path(__file__).with_name(name)) for name in
-                          ['ns_worker.py', 'process.py', 'sandbox.py', 'child.py', 'build-tools.sh', 'manifest.json', 'budget.py']}
+                          ['ns_worker.py', 'process.py', 'sandbox.py', 'child.py', 'build-tools.sh', 'manifest.json', 'budget.py', 'admission.py', 'gates.py']}
         previous = json_hash({'spec': self.spec, 'implementation': implementation})
         try:
             def recover(s):

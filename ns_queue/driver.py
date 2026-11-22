@@ -12,6 +12,7 @@ import subprocess
 import time
 from pathlib import Path
 from .gates import start_gate, validate_result
+from .admission import verify_parallel, has_parallel
 from .budget import normalize, available_seconds, runtime_usage
 
 
@@ -114,6 +115,9 @@ class DockerDriver:
             return {'source':'unavailable','cpuPercent':None,'memoryBytes':None}
 
     def _evidence(self, state):
+        if not state.get('rhEvidence',{}).get('persisted') and has_parallel(state):
+            verify_parallel(self.data_root,state)
+            return
         evidence = state.get('rhEvidence', {})
         if evidence.get('runId') != state.get('rhRunId') or not evidence.get('runId'):
             raise ValueError('RH evidence run identity mismatch')
@@ -160,7 +164,8 @@ class DockerDriver:
                 raise RuntimeError('NS resume failed: ' + result.stderr[:400])
             return self.inspect(state)
         env = {**os.environ, 'NS_DATA_ROOT': str(self.data_root), 'NS_RUN_ID': state['id'],
-               'NS_CONTAINER_NAME': name, 'NS_SOURCE_COMMIT': state.get('spec', {}).get('commit', '')}
+               'NS_CONTAINER_NAME': name, 'NS_SOURCE_COMMIT': state.get('spec', {}).get('commit', ''),
+               'NS_MEMORY_BYTES':str(220000000000 if has_parallel(state) and not state.get('rhEvidence',{}).get('persisted') else 250000000000)}
         compose = ['docker', 'compose', '-p', PROJECT, '--project-directory', str(self.deployment),
                    '--env-file', str(self.deployment / '.env'), '-f', str(self.deployment / 'compose.ns-worker.yaml')]
         budget = normalize(state['budget'])
@@ -194,3 +199,14 @@ class DockerDriver:
         result = self._run(['docker', 'container', 'stop', '--time', '30', self._name(state)], timeout=45)
         if result.returncode:
             raise RuntimeError('NS stop failed: ' + result.stderr[:400])
+
+    def promote(self, state):
+        """Raise only the matching NS container's memory ceiling, without restart."""
+        if state.get('rhEvidence',{}).get('persisted') is not True:
+            raise ValueError('RH final evidence required for NS resource promotion')
+        self._evidence(state)
+        info=self.inspect(state)
+        if info is None:return
+        result=self._run(['docker','container','update','--memory','250000000000',
+                          '--memory-swap','250000000000',self._name(state)])
+        if result.returncode:raise RuntimeError('NS resource promotion failed: '+result.stderr[:400])

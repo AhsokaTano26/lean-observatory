@@ -19,6 +19,8 @@ def main(argv=None):
     budget.add_argument('--mode',choices=['enforce','notify-only'],help='notify-only：计时和资源预检只告警，RH成功后自动启动NS')
     budget.add_argument('--started-at',help='服务器租用起点，带时区ISO时间；后续设置沿用同一起点')
     commands.add_parser('resume');commands.add_parser('status')
+    schedule=commands.add_parser('set-scheduling')
+    schedule.add_argument('--mode',choices=['serial','parallel-replay'],required=True)
     args=parser.parse_args(argv)
     try:
         amount=getattr(args,'hours',0)
@@ -38,7 +40,13 @@ def main(argv=None):
             if result:result['budget']=normalize(result['budget'])
         else:
             store=QueueStore(args.root)
-            if args.command=='set-budget':
+            if args.command=='set-scheduling':
+                def scheduling(s):
+                    if s.get('startedAt') is not None:raise ValueError('已启动任务的调度授权不能在运行中更改')
+                    s.update(schedulingMode=args.mode.replace('-','_'),schedulingAuthorizedAt=__import__('time').time())
+                result=store.mutate(scheduling,'scheduling_authorized')
+                store.log('scheduler','管理员设置调度模式：'+args.mode+'；RH 成功状态仍须真实最终证据确认。')
+            elif args.command=='set-budget':
                 state=store.snapshot();existing=state['budget']
                 requested_start=parse_start(args.started_at) if args.started_at else None
                 def configure(s):

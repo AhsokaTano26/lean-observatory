@@ -6,7 +6,9 @@ This add-on preserves the deployed RH stack. It has a separate Compose project, 
 
 The owner authorizes a shared **20-hour server clock** from **2026-11-21T14:42:36Z** to **2026-11-22T10:42:36Z** (Beijing18:42:36). RH, idle and NS time all count from rental, without resetting at service restart or NS handoff.
 
-Latest policy is `notify_only`: RH necessary machine checks and complete durable evidence must succeed, then NS automatically starts. Remaining time and available-resource preflight only warn; they do not prevent or stop NS. Alerts are sent at1h/15m remaining and expiry. At expiry both jobs are left to the owner's decision, with continued server billing. No automatic shutdown or deletion is configured. USD3.36/hour is an auxiliary estimate, not provider credit or a spending ceiling. Fresh installations still initialize to0 hours until this policy and a rental start are explicitly configured.
+The owner additionally authorizes NS to run during RH's pending kernel replay. This explicit `schedulingMode: parallel_replay` records a `parallelAdmission` replay snapshot with run identity, timestamp, file path, SHA-256, byte count and `finalSuccess: false`. The snapshot admits overlap; it is not final RH success evidence. `rhEvidence.persisted` remains false until RH's real required checks succeed and their final evidence is archived. During overlap NS has 60 vCPU and 220000000000 bytes (220 GB decimal); its recorded `resourceProfile` changes to 250000000000 bytes only after actual RH success and the resource promotion. The NS detail page displays that current profile, the pending RH replay and NS's parallel status. The project entrance remains minimal and shows the two actual task statuses without additional fine print.
+
+The unchanged default is serial: RH necessary machine checks and complete durable evidence must succeed, then NS automatically starts. The server policy is `notify_only`: remaining time and available-resource preflight only warn; they do not prevent or stop NS. Alerts are sent at1h/15m remaining and expiry. At expiry both jobs are left to the owner's decision, with continued server billing. No automatic shutdown or deletion is configured. USD3.36/hour is an auxiliary estimate, not provider credit or a spending ceiling. Fresh installations still initialize to0 hours until this policy and a rental start are explicitly configured.
 
 The UI is GET-only. Host CLI operations are not exposed publicly.
 
@@ -14,7 +16,7 @@ The UI is GET-only. Host CLI operations are not exposed publicly.
 
 - `/opt/lean-observatory-ns`: additive deployment; `/var/lib/lean-observatory-queue`: durable SQLite WAL queue, events, alerts, checkpoints and evidence.
 - Light services: API 0.10 CPU/96 MiB, Nginx 0.10 CPU/32 MiB, controller 0.05 CPU/128 MiB. RH verification/API are not restarted; the router is gracefully reloaded when routes change.
-- Future NS worker: separate image, 60 vCPU, CPUs 4–63, 250 GB decimal (232.83 GiB), no swap; no Docker socket or RH mounts. It only starts after fresh RH success, matching durable report/log hashes, no other active verification, and the configured startup policy. In notify_only mode, time/resource preflight only warns. Legacy hard mode requires a five-minute reserve.
+- NS worker: separate image, 60 vCPU, CPUs 4–63, no swap; no Docker socket or RH mounts. Default serial admission requires fresh RH success, matching durable report/log hashes, no other active verification, and the configured startup policy, with a 250 GB decimal (232.83 GiB) limit. The explicitly authorized RH replay overlap instead uses the recorded replay admission and a 220 GB limit until promotion. In notify_only mode, time/resource preflight only warns. Legacy hard mode requires a five-minute reserve.
 - The controller rechecks RH after evidence persistence and again after image build immediately before worker creation or resume. A deterministic container name, owner labels and exclusive controller lock prevent duplicate launches. Completed stages are skipped only if source, implementation, prior checkpoint and recorded output hashes still match.
 - Explicit RH failure or a stopped RH worker pauses NS and preserves logs. A stale heartbeat alone is not proof of RH failure. Temporary API loss keeps the queue blocked; API loss plus a stopped RH worker pauses it.
 - Notifications use a persistent deduplicated outbox. HTTP 200 means confirmed send; HTTP 202 means queued by the webhook and awaiting delivery, with no false delivery claim. Non-success responses retry with backoff.
@@ -35,11 +37,12 @@ The seven stages are source, dependencies, compile, audit, fresh kernel replay, 
 python3 -m unittest discover -s tests -q
 node --test tests/chart-math.test.ts
 node --test tests/ns-addon-browser.test.mjs
+node --test tests/ns-parallel-browser.test.mjs
 npm run build
 npm run test:e2e
 ```
 
-The NS browser test uses only a local queued fixture and tests 1440, 390 and 320 px layouts, theme persistence, log filtering, GET-only traffic and SSE reconnection after server restart. Browser plugin is unavailable; Playwright is used. Deployment requires `reports/ns-local-acceptance.json` with a matching add-on source fingerprint and successful unit, browser, Compose and compile checks. The immutable receipt proves local platform checks, not a completed NS proof verification.
+The original NS browser test uses only a local queued fixture and tests 1440, 390 and 320 px layouts, theme persistence, log filtering, GET-only traffic and SSE reconnection after server restart. A separate parallel-admission fixture checks pending RH replay, parallel NS status, the 220 GB allocation, the later recorded 250 GB promotion, the minimal entrance, and GET-only traffic at 1440 and 390 px. Browser plugin is unavailable; Playwright is used. Deployment requires `reports/ns-local-acceptance.json` with a matching add-on source fingerprint and successful unit, browser, Compose and compile checks. The immutable receipt proves local platform checks, not a completed NS proof verification.
 
 ## Install and operate
 
@@ -62,7 +65,7 @@ python3 -m ns_queue.control --root /var/lib/lean-observatory-queue set-budget --
 
 The rental origin locks once set. Repeating the same settings is idempotent and does not reset time. `resume` is only needed for a genuinely paused/failed NS job; the current QUEUED job follows RH automatically. Lost launch acknowledgement and service restart adopt the same deterministic NS container. Failed mandatory proof/tool checks still preserve logs and pause; no result is fabricated.
 
-Both RH and NS are configured for60vCPU and250000000000 bytes (250GB decimal), cpuset4-63, no swap. RH live resizing uses `deploy/ns/update_resources.py --expected-id ... --execute`; it checks identity and uses only `docker update`, preserving PID/start/image/command/mounts. It saves `/opt/lean-observatory/.data/ops/compose.resources.runtime.yaml` for future Compose recreations. The current RH compiler process keeps its original48-thread scheduler, while resource ceilings become60 and new tasks/NS use60 threads. Updating the ceilings does not rebuild/restart the running RH image.
+The default RH and NS profiles are60vCPU and250000000000 bytes (250GB decimal), cpuset4-63, no swap; the authorized pending-RH overlap temporarily gives NS220000000000 bytes as described above. RH live resizing uses `deploy/ns/update_resources.py --expected-id ... --execute`; it checks identity and uses only `docker update`, preserving PID/start/image/command/mounts. It saves `/opt/lean-observatory/.data/ops/compose.resources.runtime.yaml` for future Compose recreations. The current RH compiler process keeps its original48-thread scheduler, while resource ceilings become60 and new tasks/NS use60 threads. Updating the ceilings does not rebuild/restart the running RH image.
 
 Shared host metrics, per-NS Docker usage, elapsed rental hours and costs remain distinct. NS estimated cost is0 until its own start; total server cost includes the rental interval. Unavailable measurements display as unknown.
 

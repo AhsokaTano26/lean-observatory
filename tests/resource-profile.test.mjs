@@ -14,3 +14,11 @@ test('Both RH and NS profiles reserve four host vCPUs and use 250 decimal GB wit
  assert.ok(!web.services.nginx.ports?.length,'NS backend must not publish9443');
 
 });
+
+test('NS overlap allocation reserves memory and prefers RH under contention',()=>{
+ const env={...process.env,NS_MEMORY_BYTES:'220000000000',NS_CONTAINER_NAME:'lean-observatory-ns-ns-f9e8bc5b38b6',NS_RUN_ID:'ns-f9e8bc5b38b6',NS_SOURCE_COMMIT:'f9e8bc5b38b6e212696e8a30e3e91517af887bbd'};
+ const config=JSON.parse(execFileSync('docker',['compose','-f','compose.ns-worker.yaml','config','--format','json'],{cwd:resolve(import.meta.dirname,'..'),env,encoding:'utf8'}));
+ const worker=config.services['ns-worker'];
+ assert.equal(Number(worker.mem_limit),220000000000);assert.equal(Number(worker.memswap_limit),220000000000);
+ assert.equal(Number(worker.cpus),60);assert.equal(worker.cpu_shares,256);assert.equal(worker.oom_score_adj,1000);
+});

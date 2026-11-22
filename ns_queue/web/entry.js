@@ -85,8 +85,11 @@
     const rhPercent = percent(rhCompile);
     const budget = queue.budget || {};
     const nsStatus = String(queue.status || '').toLowerCase();
+    const parallelPending = queue.schedulingMode === 'parallel_replay' && queue.rhEvidence?.persisted !== true;
     badge('entry-rh-status', rh.status);
     badge('entry-ns-status', queue.status);
+    if (parallelPending && rh.phase === 'kernel' && ['running', 'starting', 'verifying'].includes(String(rh.status || '').toLowerCase())) $('entry-rh-status').textContent = '内核重放中';
+    if (parallelPending && ['running', 'starting'].includes(nsStatus)) $('entry-ns-status').textContent = nsStatus === 'running' ? '并行运行中' : '并行启动中';
     $('entry-rh-progress').textContent = rhPercent === null ? '—' : rhPercent.toFixed(1) + '%';
     $('entry-rh-bar').value = rhPercent ?? 0;
     $('entry-rh-count').textContent = count(rhCompile.succeeded) + ' / ' + count(rhCompile.total);

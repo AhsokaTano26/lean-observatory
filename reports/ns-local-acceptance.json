@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "createdAt": "2026-11-21T18:59:18.804Z",
-  "sourceSha256": "aee6954722e0ac13c014827ba52c62f8566e3e4e3ea101555d60b2127f9f7f6e",
+  "createdAt": "2026-11-22T04:27:47.095Z",
+  "sourceSha256": "5f06e933f928f0686adaa3d3f0d2c72ea49fb852a40e379aba87b2b408da0003",
   "scope": "Local platform tests only; no real proof execution; same command groups as deploy/ns/local_acceptance.py",
   "executionMode": "parallel independent groups",
   "checks": {
@@ -13,6 +13,15 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/compile.log"
+    },
+    "charts": {
+      "command": [
+        "node",
+        "--test",
+        "tests/chart-math.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/charts.log"
     },
     "compose": {
       "command": [
@@ -27,15 +36,6 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/compose.log"
-    },
-    "charts": {
-      "command": [
-        "node",
-        "--test",
-        "tests/chart-math.test.ts"
-      ],
-      "exitCode": 0,
-      "log": "reports/ns-local/charts.log"
     },
     "resources": {
       "command": [
@@ -63,6 +63,15 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/browser.log"
+    },
+    "parallelBrowser": {
+      "command": [
+        "node",
+        "--test",
+        "tests/ns-parallel-browser.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/parallelBrowser.log"
     },
     "sharedHTTPS": {
       "command": [

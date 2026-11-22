@@ -15,6 +15,7 @@ import urllib.error
 from pathlib import Path
 
 from .gates import rh_gate, start_gate, validate_result
+from .admission import dependency_gate, verify_parallel
 from .notify import DEFAULT_WEBHOOK, deliver
 from .store import QueueStore
 from .budget import normalize, runtime_usage
@@ -110,7 +111,60 @@ class Controller:
         summary={key:run.get(key) for key in ['id','status','phase','compile','startedAt','finishedAt','error','proofAccepted']}
         summary['workerOnline']=payload.get('workerOnline'); summary['metrics']=payload.get('metrics')
         self.store.mutate(lambda s:s.update(rh=summary,controllerHeartbeat=self.clock()),event=None)
-        return payload,ledger,rh_gate(payload,ledger,state['rhRunId'])
+        return payload,ledger,dependency_gate(payload,ledger,state)
+
+    def persist_admission(self, payload, ledger):
+        state=self.store.snapshot()
+        path=self.store.root/'rh-evidence'/state['rhRunId']/'replay-admission.json'
+        atomic_bytes(path,json.dumps({'payload':payload,'ledger':ledger},ensure_ascii=False).encode())
+        evidence=dict(kind='rh_replay',runId=state['rhRunId'],recordedAt=self.clock(),
+            snapshotPath=str(path.relative_to(self.store.root)),snapshotSha256=digest(path),
+            snapshotBytes=path.stat().st_size,finalSuccess=False)
+        candidate={**state,'parallelAdmission':evidence};verify_parallel(self.store.root,candidate)
+        self.store.mutate(lambda s:s.update(parallelAdmission=evidence,
+            resourceProfile={'cpus':60,'memoryBytes':220000000000,'mode':'rh_overlap'}),'parallel_admitted')
+        self.store.log('scheduler','管理员已授权 RH 内核重放期间并行 NS；编译与公理审计已通过，RH 重放和最终结果仍未完成。')
+
+    def monitor_parallel(self, state):
+        """Observe RH while NS runs; only the owned NS container can be stopped."""
+        if state.get('schedulingMode')!='parallel_replay' or (state.get('rhEvidence',{}).get('persisted') and
+                state.get('resourceProfile',{}).get('mode')!='rh_overlap'):
+            return True
+        try:
+            payload,ledger,gate=self.observe_rh(state)
+            if gate['decision']=='PAUSE':
+                if state['status'] in ('RUNNING','STARTING'):
+                    self.driver.stop(state)
+                    self.pause(gate['reason'],'RH 失败或异常停止；已暂停自己的 NS Worker，RH 进程及日志未修改。')
+                    return False
+                self.store.alert(state['id']+':'+gate['reason'],'RH 验证异常',
+                    'RH 失败或异常停止；NS 现有结果与暂停状态保留，RH 日志未修改。','error',{'RH':state['rhRunId']})
+                return True
+            if gate['decision']=='WAIT' and payload['run'].get('status')!='checks_completed' and state['status'] in ('RUNNING','STARTING'):
+                self.driver.stop(state)
+                self.pause('rh_overlap_unconfirmed','RH 已不满足内核重放并行条件；NS 暂停并保留检查点。')
+                return False
+            if rh_gate(payload,ledger,state['rhRunId'])['decision']=='READY':
+                self.persist_rh(payload)
+                self.driver.promote(self.store.snapshot())
+                self.store.mutate(lambda s:s.update(resourceProfile={
+                    'cpus':60,'memoryBytes':250000000000,'mode':'dedicated'}),'resources_promoted')
+                self.store.log('scheduler','RH 必要检查及最终证据归档完成；NS 内存上限已恢复为 250 GB，原进程继续运行。')
+            return True
+        except (urllib.error.URLError,TimeoutError,ConnectionError) as error:
+            if self.driver.rh_running() is False:
+                if state['status'] in ('RUNNING','STARTING'):
+                    self.driver.stop(state);self.pause('rh_interrupted','RH API 无法访问且 Worker 已停止；NS 已暂停。');return False
+                self.store.alert(state['id']+':rh_interrupted','RH 验证异常',
+                    'RH API 无法访问且 Worker 已停止；NS 现有结果与暂停状态保留。','error',{'RH':state['rhRunId']})
+                return True
+            self.store.log('scheduler','RH 状态暂不可确认，保持现有进程：'+str(error)[:250],'warning')
+            return True
+        except Exception as error:
+            # Retain the overlap limit if final evidence/promotion cannot be confirmed.
+            self.store.log('scheduler','RH 最终证据或资源提升待重试：'+str(error)[:400],'warning')
+            self.store.alert(state['id']+':rh_final_pending','RH 最终归档待重试',str(error)[:500],'warning',{'run':state['id']})
+            return True
 
     def persist_rh(self, payload):
         state=self.store.snapshot(); existing=state['rhEvidence']
@@ -158,7 +212,7 @@ class Controller:
             self.flush_notices();return True
         if budget['enforcement']=='notify_only':
             self.store.alert(key+':expired','20小时计时已到',
-                '服务器20小时计时已到。按管理员要求保持自动衔接与运行：RH成功归档后NS自动启动；由管理员判断何时停止，服务器计费继续。',
+                '服务器20小时计时已到。按管理员要求保持当前调度与运行；由管理员判断何时停止，服务器计费继续。',
                 'warning',{'deadlineUnix':budget['deadlineAt'],'mode':'notify_only'})
             self.flush_notices();return True
         job=self.driver.inspect(state)
@@ -202,10 +256,16 @@ class Controller:
         self.flush_notices(); state=self.store.snapshot()
         if not state: return
         try:
-            if not self.budget_tick():return
+            if not self.budget_tick():
+                latest=self.store.snapshot()
+                if latest.get('startedAt') and latest.get('schedulingMode')=='parallel_replay':self.monitor_parallel(latest)
+                return
         except (ValueError,TypeError,KeyError) as error:
             self.pause('budget','运行时限配置无效，NS不启动：'+str(error));return
         state=self.store.snapshot()
+        if state.get('startedAt') and state.get('schedulingMode')=='parallel_replay':
+            if not self.monitor_parallel(state):return
+            state=self.store.snapshot()
         if state['status'] in ('RUNNING','STARTING'):
             self._reconcile(state); return
         if state['status'] in ('PAUSED','FAILED') and state.get('execution')=='INCOMPLETE' and state.get('startedAt'):
@@ -219,7 +279,8 @@ class Controller:
                 self.pause(gate['reason'],'RH 失败或异常停止；NS 不启动，原 RH 日志与配置保持原样。'); return
             if gate['decision']!='READY':
                 self.store.mutate(lambda s:s.update(reason=gate['reason']),event=None); return
-            self.persist_rh(payload)
+            if gate['reason']=='rh_replay_overlap':self.persist_admission(payload,ledger)
+            else:self.persist_rh(payload)
             # Evidence download can take time: do not use an earlier READY decision.
             payload,ledger,gate=self.observe_rh(self.store.snapshot())
             if gate['decision']=='PAUSE':
@@ -231,7 +292,7 @@ class Controller:
             except OSError as error:
                 if state['budget']['enforcement']!='notify_only':raise
                 resources={'samplingError':str(error)[:300]}
-            resources['rhActive']=False
+            resources['rhActive']=gate['reason']=='rh_replay_overlap'
             start=start_gate(state,resources,now=self.clock())
             if start['allowed'] and state['budget']['enforcement']=='notify_only':
                 warnings=[name for name,key,minimum in [('CPU','cpuCount',64),('内存','memoryAvailableBytes',250000000000),('磁盘','diskFreeBytes',100*1024**3)] if not isinstance(resources.get(key),(int,float)) or resources[key]<minimum]
@@ -242,7 +303,10 @@ class Controller:
             job=self.driver.launch(self.store.snapshot())
             self.store.mutate(lambda s:s.update(status='RUNNING',reason='running',worker=job),'launched')
             self.store.log('scheduler','NS Worker 已在独立资源与工具链中启动。')
-            self.store.alert(state['id']+':started','NS 验证启动','RH 所有必要检查及结果持久化成功，NS 资源与预算门禁通过。','info',{'run':state['id']})
+            message=('NS 已与 RH 内核重放并行启动；RH 最终验证仍待完成，NS 暂用 220 GB 内存上限保护 RH。'
+                     if state.get('parallelAdmission') and not state['rhEvidence'].get('persisted') else
+                     'RH 所有必要检查及结果持久化成功，NS 资源与预算门禁通过。')
+            self.store.alert(state['id']+':started','NS 验证启动',message,'info',{'run':state['id']})
             self.flush_notices()
         except Exception as error:
             current=self.store.snapshot()
