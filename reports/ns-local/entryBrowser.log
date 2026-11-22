@@ -1,5 +1,5 @@
 {"scope":"Local fixture only; no build or real verification run","browser":"Playwright; Browser plugin not available","viewports":[1440,1280,768,390,320],"screenshots":"/tmp/lean-entry-qa","writes":[],"errors":[],"passed":true}
-✔ project entrance shows real RH progress, the queued successor and shared server clock (10194.799625ms)
+✔ project entrance shows real RH progress, the queued successor and shared server clock (10287.741125ms)
 ℹ tests 1
 ℹ suites 0
 ℹ pass 1
@@ -7,4 +7,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 10472.334125
+ℹ duration_ms 10553.31425

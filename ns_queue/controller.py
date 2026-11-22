@@ -326,7 +326,7 @@ class Controller:
                 self.store.mutate(lambda s:s.update(reason='rh_unreachable'),event=None)
                 self.store.log('scheduler','RH 状态暂不可确认：'+str(error)[:300],'warning')
             else:
-                self.pause('rh_evidence' if not self.store.snapshot()['rhEvidence'].get('persisted') else 'launch_error',str(error)[:700])
+                self.pause('launch_error' if current.get('status')=='STARTING' or current['rhEvidence'].get('persisted') else 'rh_evidence',str(error)[:700])
 
 
 def main():

@@ -1,5 +1,5 @@
 {"scope":"Local parallel admission fixture; no real verification","browser":"Playwright; Browser plugin not available","viewports":[1440,390],"screenshots":"/tmp/lean-ns-parallel-qa","writes":[],"errors":[],"passed":true}
-✔ parallel NS admission keeps RH replay pending and displays the current allocation (5311.915875ms)
+✔ parallel NS admission keeps RH replay pending and displays the current allocation (5354.463542ms)
 ℹ tests 1
 ℹ suites 0
 ℹ pass 1
@@ -7,4 +7,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 5594.496292
+ℹ duration_ms 5637.04575

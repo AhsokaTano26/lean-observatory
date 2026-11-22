@@ -11,16 +11,6 @@ frontend/dist/index.html                   0.79 kB │ gzip:  0.55 kB
 frontend/dist/assets/index-CrwsKo82.css   42.08 kB │ gzip:  9.08 kB
 frontend/dist/assets/index-_6mYtUBA.js   285.83 kB │ gzip: 88.66 kB
 
-[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../../../Users/tano/Documents/GitHub/Lean/node_modules/lucide-react/dist/esm/context.mjs" may not be preserved when bundling.
-   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../../../Users/tano/Documents/GitHub/Lean/node_modules/lucide-react/dist/esm/context.mjs:2:1 [38;5;246m][0m
-   [38;5;246m│[0m
- [38;5;246m2 │[0m "use client";
- [38;5;240m  │[0m ──────┬──────  
- [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
- [38;5;240m  │[0m 
- [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
-[38;5;246m───╯[0m
-
 [33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../../../Users/tano/Documents/GitHub/Lean/node_modules/lucide-react/dist/esm/Icon.mjs" may not be preserved when bundling.
    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../../../Users/tano/Documents/GitHub/Lean/node_modules/lucide-react/dist/esm/Icon.mjs:2:1 [38;5;246m][0m
    [38;5;246m│[0m
@@ -31,4 +21,14 @@ frontend/dist/assets/index-_6mYtUBA.js   285.83 kB │ gzip: 88.66 kB
  [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
 [38;5;246m───╯[0m
 
-✓ built in 253ms
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "../../../Users/tano/Documents/GitHub/Lean/node_modules/lucide-react/dist/esm/context.mjs" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../../../Users/tano/Documents/GitHub/Lean/node_modules/lucide-react/dist/esm/context.mjs:2:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m2 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+✓ built in 326ms

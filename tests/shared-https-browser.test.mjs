@@ -23,7 +23,7 @@ test('Shared HTTPS: root entrance, RH/NS isolation, SSE, assets, downloads and H
   compose(['up','-d','--build']);
   browser=await chromium.launch();const context=await browser.newContext({ignoreHTTPSErrors:true,viewport:{width:1440,height:1000}});const page=await context.newPage();const errors=[],writes=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(r.method()!=='GET')writes.push(r.method());});
-  let ready=false;for(let i=0;i<80;i++){try{const response=await page.request.get('https://127.0.0.1:9444/ns/healthz');if(response.ok()){ready=true;break;}}catch{}await new Promise(r=>setTimeout(r,200));}assert.ok(ready);
+  let ready=false;for(let i=0;i<80;i++){try{const response=await page.request.get('https://127.0.0.1:9444/ns/healthz');const rhResponse=await page.request.get('https://127.0.0.1:9444/rh/');if(response.ok()&&rhResponse.ok()&&(await rhResponse.text()).includes('RH ORIGINAL PAGE')){ready=true;break;}}catch{}await new Promise(r=>setTimeout(r,200));}assert.ok(ready);
   const redirect=execFileSync('curl',['-sS','-o','/dev/null','-w','%{redirect_url}','-H','Host: lean.tano.asia','http://127.0.0.1:9080/rh/'],{encoding:'utf8'});assert.equal(redirect,'https://lean.tano.asia/rh/');
   await page.goto('https://127.0.0.1:9444/');await page.waitForFunction(()=>document.querySelector('#entry-rh-count')?.textContent.includes('56,985'));
   const rhLink=page.locator('a[href="/rh/"]').first(),nsLink=page.locator('a[href="/ns/"]').first();assert.ok(await rhLink.count());assert.ok(await nsLink.count());

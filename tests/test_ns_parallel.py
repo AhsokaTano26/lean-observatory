@@ -175,3 +175,13 @@ class ParallelTerminalTests(ParallelControllerTests):
         self.assertTrue(self.store.snapshot()['rhEvidence']['persisted'])
         self.assertEqual(self.driver.stops,1)
         self.assertEqual(self.store.snapshot()['status'],'PAUSED')
+
+class ParallelLaunchFailureTests(ParallelControllerTests):
+    def test_image_build_failure_does_not_label_valid_rh_admission_failed(self):
+        def fail(state):raise RuntimeError('NS image build failed: plugin unavailable')
+        self.driver.launch=fail;self.controller.tick()
+        state=self.store.snapshot()
+        self.assertEqual(state['status'],'PAUSED')
+        self.assertEqual(state['reason'],'launch_error')
+        self.assertFalse(state['rhEvidence']['persisted'])
+        self.assertFalse(state['parallelAdmission']['finalSuccess'])
