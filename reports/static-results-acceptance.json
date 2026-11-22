@@ -1,0 +1,43 @@
+{
+  "createdAt": "2026-11-22T12:38:53.422609+00:00",
+  "staticSourceSha256": "a40785d1f31f6e2d936c60bb73e02bd37485011405229fe3a4a7867bfb077ef1",
+  "sources": {
+    "scripts/build_static_results.py": "18498ff2cd125025d255502f358e7bcbec1d307c1bf77545ff0164d915e15fc9",
+    "static_results/app.css": "889654f75150cc2171bbab86b853cd94bc62bde5b883e16ea0f2092937fa0211",
+    "static_results/app.js": "cf2bf1f003a4cb3970f03e00477a7555003c31be97562ae9e64a8a8af7f81bff",
+    "static_results/index.html": "18e68b31226780f3ebf50998cc46a995c1d8f6357ef135e4552501a94b711c4d",
+    "result_snapshots/2026-11-22/ns-api.json": "6d984076c3a76158364b47162c690ccc7ea5e439dc1ac413c9d0e9407224869a",
+    "result_snapshots/2026-11-22/results.json": "26395adfa16445f51fdb9bea1b8a19e13ff156f34f1ddf2efd744075d6357387",
+    "result_snapshots/2026-11-22/rh-api.json": "54f866feeff8b80b5c477ede6476667305d41990360a42a775e0b80de425c73a"
+  },
+  "pythonTests": 228,
+  "pythonExitCode": 0,
+  "browserExitCode": 0,
+  "scope": "Actual generated archive over HTTP and file://; portable fixture also verified",
+  "viewports": [
+    1440,
+    390,
+    320
+  ],
+  "checks": {
+    "identity": true,
+    "notBlank": true,
+    "noErrorOverlay": true,
+    "noConsoleErrors": true,
+    "screenshotsInspected": true,
+    "themeAndProjectSwitch": true,
+    "logFilters": true,
+    "downloadBytesAndSha256": true,
+    "noApiExternalRequestsOrWrites": true,
+    "allArchiveFilesSha256": true
+  },
+  "browserToolNote": "Browser plugin skill file unavailable; CUA browser host invocation failed: browser access host unavailable and native pipe startup failed. Existing Playwright used for authorized local functional tests.",
+  "screenshots": "/tmp/lean-static-qa",
+  "fullAcceptance": "reports/ns-local-acceptance.json",
+  "testClockFix": "Controller fixture and store outbox now share simulated time, removing two date-dependent tests; production code unchanged",
+  "limitations": [
+    "Chromium tested; other browsers not exercised",
+    "Archive omits original large compiled proofs/exports/toolchains",
+    "Machine checks do not substitute for mathematical semantic review"
+  ]
+}

@@ -84,3 +84,7 @@ docker compose exec mock-worker python3 -m backend.control --data /data create -
 - [Lean checker 官方说明](https://github.com/leanprover/lean4checker)。
 
 本仓库只提供平台实现，不复制或重新授权原作者证明源码。令牌、归档、数据库、编译产物不进入 Git。
+
+## 静态结果存档
+
+RH/NS 的精简结果快照与无需后端的展示页已提供，使用方法见 [静态存档说明](docs/STATIC_RESULTS.md)。RH 本机重放仍标为暂停未完成，NS 的机器检查完成状态与未进行的人工语义复核分开记录。

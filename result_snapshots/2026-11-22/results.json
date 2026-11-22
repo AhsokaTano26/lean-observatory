@@ -1,0 +1,4623 @@
+{
+  "schemaVersion": 1,
+  "static": true,
+  "capturedAt": 1795337426.9441664,
+  "title": "Lean Observatory · 验证结果存档",
+  "projects": [
+    {
+      "id": "rh",
+      "runId": "20565ace60c2",
+      "name": "黎曼猜想",
+      "englishName": "Riemann Hypothesis",
+      "status": "paused",
+      "outcome": "PARTIAL",
+      "headline": "本机重放已暂停",
+      "phase": "replay",
+      "passedStages": 5,
+      "totalStages": 6,
+      "stages": [
+        {
+          "id": "download",
+          "label": "下载源码",
+          "status": "passed",
+          "startedAt": 1795273445.5133905,
+          "finishedAt": 1795273451.4057121,
+          "exitCode": 0,
+          "commandSeconds": 5.5
+        },
+        {
+          "id": "integrity",
+          "label": "完整性校验",
+          "status": "passed",
+          "startedAt": 1795273451.4103472,
+          "finishedAt": 1795273580.946249,
+          "exitCode": 0,
+          "commandSeconds": null
+        },
+        {
+          "id": "dependencies",
+          "label": "依赖准备",
+          "status": "passed",
+          "startedAt": 1795273598.4794092,
+          "finishedAt": 1795273677.4473271,
+          "exitCode": 0,
+          "commandSeconds": 79.0
+        },
+        {
+          "id": "compile",
+          "label": "完整编译",
+          "status": "passed",
+          "startedAt": 1795273677.4520433,
+          "finishedAt": 1795313150.5309048,
+          "exitCode": 0,
+          "commandSeconds": 39375.1
+        },
+        {
+          "id": "audit",
+          "label": "定理与公理审计",
+          "status": "passed",
+          "startedAt": 1795313150.537383,
+          "finishedAt": 1795313312.557035,
+          "exitCode": 0,
+          "commandSeconds": 96.1
+        },
+        {
+          "id": "replay",
+          "label": "内核重放",
+          "status": "paused",
+          "startedAt": 1795313312.563421,
+          "finishedAt": null,
+          "exitCode": null,
+          "commandSeconds": null
+        }
+      ],
+      "compile": {
+        "expectedTotal": 175187,
+        "total": 175187,
+        "succeeded": 175187,
+        "failed": 0,
+        "rate": 0,
+        "currentModule": "Main",
+        "jobs": 48,
+        "startedFresh": true,
+        "remaining": 0,
+        "percent": 100,
+        "etaSeconds": null
+      },
+      "audits": [
+        {
+          "name": "riemannHypothesis",
+          "expectedType": "RiemannHypothesis",
+          "type": "passed",
+          "axioms": "passed",
+          "replay": "pending",
+          "dependencies": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "output": null,
+          "independent": "not_run"
+        },
+        {
+          "name": "riemannZeta_eq_zero_re",
+          "expectedType": "RiemannZetaZerosOnLine",
+          "type": "passed",
+          "axioms": "passed",
+          "replay": "pending",
+          "dependencies": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "output": null,
+          "independent": "not_run"
+        },
+        {
+          "name": "LFunction_ne_zero_of_half_lt_re",
+          "expectedType": "DirichletLNonvanishingRightOfHalf",
+          "type": "passed",
+          "axioms": "passed",
+          "replay": "pending",
+          "dependencies": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "output": null,
+          "independent": "not_run"
+        },
+        {
+          "name": "LFunction_eq_zero_re",
+          "expectedType": "DirichletLZerosOnLine",
+          "type": "passed",
+          "axioms": "passed",
+          "replay": "pending",
+          "dependencies": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "output": null,
+          "independent": "not_run"
+        },
+        {
+          "name": "LFunction_eq_zero_re_of_isPrimitive",
+          "expectedType": "PrimitiveDirichletLZerosOnLine",
+          "type": "passed",
+          "axioms": "passed",
+          "replay": "pending",
+          "dependencies": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "output": null,
+          "independent": "not_run"
+        }
+      ],
+      "startedAt": 1795273445.5077407,
+      "finishedAt": null,
+      "elapsedSeconds": 63981.3,
+      "proofAccepted": false,
+      "semanticReview": "NOT_RUN",
+      "localReplay": "PAUSED",
+      "capturedAt": 1795337426.9169185,
+      "logs": [
+        {
+          "id": 2401554,
+          "ts": 1795312900.0625997,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401555,
+          "ts": 1795312900.064165,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401556,
+          "ts": 1795312900.065783,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401557,
+          "ts": 1795312900.0673292,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:495:92: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401558,
+          "ts": 1795312900.068972,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401559,
+          "ts": 1795312900.0705447,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401560,
+          "ts": 1795312900.0720947,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401561,
+          "ts": 1795312900.0736237,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401562,
+          "ts": 1795312900.075166,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401563,
+          "ts": 1795312900.0767133,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:497:81: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401564,
+          "ts": 1795312900.0786965,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401565,
+          "ts": 1795312900.080291,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401566,
+          "ts": 1795312900.0819128,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401567,
+          "ts": 1795312900.0835085,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401568,
+          "ts": 1795312900.0850987,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401569,
+          "ts": 1795312900.086622,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:499:84: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401570,
+          "ts": 1795312900.0882409,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401571,
+          "ts": 1795312900.0898943,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401572,
+          "ts": 1795312900.0916045,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401573,
+          "ts": 1795312900.0933995,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401574,
+          "ts": 1795312900.0951407,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401575,
+          "ts": 1795312900.0967789,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:501:78: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401576,
+          "ts": 1795312900.0984874,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401577,
+          "ts": 1795312900.1000288,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401578,
+          "ts": 1795312900.1016026,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401579,
+          "ts": 1795312900.103178,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401580,
+          "ts": 1795312900.1047451,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401581,
+          "ts": 1795312900.1062663,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:503:81: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401582,
+          "ts": 1795312900.1078355,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401583,
+          "ts": 1795312900.1095197,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401584,
+          "ts": 1795312900.1111157,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401585,
+          "ts": 1795312900.1127465,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401586,
+          "ts": 1795312900.1142976,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401587,
+          "ts": 1795312900.115865,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:505:70: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401588,
+          "ts": 1795312900.117544,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401589,
+          "ts": 1795312900.119243,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401590,
+          "ts": 1795312900.1210225,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401591,
+          "ts": 1795312900.1228187,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401592,
+          "ts": 1795312900.124544,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401593,
+          "ts": 1795312900.1261945,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:507:73: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401594,
+          "ts": 1795312900.1280866,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401595,
+          "ts": 1795312900.1297364,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401596,
+          "ts": 1795312900.1312888,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401597,
+          "ts": 1795312900.1328528,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401598,
+          "ts": 1795312900.134824,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401599,
+          "ts": 1795312900.136471,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:509:79: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401600,
+          "ts": 1795312900.1381915,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401601,
+          "ts": 1795312900.139767,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401602,
+          "ts": 1795312900.1413457,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401603,
+          "ts": 1795312900.1429486,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401604,
+          "ts": 1795312900.14467,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401605,
+          "ts": 1795312900.1462822,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:511:86: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401606,
+          "ts": 1795312900.1479402,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401607,
+          "ts": 1795312900.149765,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401608,
+          "ts": 1795312900.151503,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401609,
+          "ts": 1795312900.1531591,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401610,
+          "ts": 1795312900.1548378,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401611,
+          "ts": 1795312900.1564288,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:515:72: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401612,
+          "ts": 1795312900.1580513,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401613,
+          "ts": 1795312900.1597033,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401614,
+          "ts": 1795312900.1613715,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401615,
+          "ts": 1795312900.1630774,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401616,
+          "ts": 1795312900.1646287,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401617,
+          "ts": 1795312900.1661763,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:517:71: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401618,
+          "ts": 1795312900.167896,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401619,
+          "ts": 1795312900.1697726,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401620,
+          "ts": 1795312900.1713843,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401621,
+          "ts": 1795312900.1730237,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401622,
+          "ts": 1795312900.1746116,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401623,
+          "ts": 1795312900.1761677,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:519:80: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401624,
+          "ts": 1795312900.1777415,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401625,
+          "ts": 1795312900.1794024,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401626,
+          "ts": 1795312900.181017,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401627,
+          "ts": 1795312900.1826046,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401628,
+          "ts": 1795312900.1842732,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401629,
+          "ts": 1795312900.1859455,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:521:80: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401630,
+          "ts": 1795312900.1875634,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401631,
+          "ts": 1795312900.1891809,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401632,
+          "ts": 1795312900.191162,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401633,
+          "ts": 1795312900.1928842,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401634,
+          "ts": 1795312900.194878,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401635,
+          "ts": 1795312900.196526,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:523:74: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401636,
+          "ts": 1795312900.1981685,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401637,
+          "ts": 1795312900.1997542,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401638,
+          "ts": 1795312900.2013907,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401639,
+          "ts": 1795312900.2031116,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401640,
+          "ts": 1795312900.204792,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401641,
+          "ts": 1795312900.206386,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:525:91: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401642,
+          "ts": 1795312900.208008,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401643,
+          "ts": 1795312900.2096334,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401644,
+          "ts": 1795312900.2111876,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401645,
+          "ts": 1795312900.2127607,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401646,
+          "ts": 1795312900.2142773,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401647,
+          "ts": 1795312900.2158682,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:529:77: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401648,
+          "ts": 1795312900.2174964,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401649,
+          "ts": 1795312900.2191403,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401650,
+          "ts": 1795312900.220773,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401651,
+          "ts": 1795312900.222351,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401652,
+          "ts": 1795312900.223927,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401653,
+          "ts": 1795312900.225526,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:535:73: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401654,
+          "ts": 1795312900.22711,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401655,
+          "ts": 1795312900.2288456,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401656,
+          "ts": 1795312900.2304695,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401657,
+          "ts": 1795312900.2321048,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401658,
+          "ts": 1795312900.2337797,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401659,
+          "ts": 1795312900.2353513,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:537:81: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401660,
+          "ts": 1795312900.2369568,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401661,
+          "ts": 1795312900.2386193,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401662,
+          "ts": 1795312900.240191,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401663,
+          "ts": 1795312900.2418046,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401664,
+          "ts": 1795312900.243364,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401665,
+          "ts": 1795312900.244941,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:539:87: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401666,
+          "ts": 1795312900.2468855,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401667,
+          "ts": 1795312900.248551,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401668,
+          "ts": 1795312900.2501676,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401669,
+          "ts": 1795312900.2517376,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401670,
+          "ts": 1795312900.2537744,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401671,
+          "ts": 1795312900.25542,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:541:82: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401672,
+          "ts": 1795312900.2570345,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401673,
+          "ts": 1795312900.2590466,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401674,
+          "ts": 1795312900.2606928,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401675,
+          "ts": 1795312900.2622423,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401676,
+          "ts": 1795312900.2638056,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401677,
+          "ts": 1795312900.2653613,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:543:69: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401678,
+          "ts": 1795312900.2671924,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401679,
+          "ts": 1795312900.2690737,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401680,
+          "ts": 1795312900.2706053,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401681,
+          "ts": 1795312900.2724009,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401682,
+          "ts": 1795312900.2741659,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401683,
+          "ts": 1795312900.2759552,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:545:74: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401684,
+          "ts": 1795312900.2780755,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401685,
+          "ts": 1795312900.279652,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401686,
+          "ts": 1795312900.28125,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401687,
+          "ts": 1795312900.2827795,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401688,
+          "ts": 1795312900.2843933,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401689,
+          "ts": 1795312900.2860346,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:549:68: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401690,
+          "ts": 1795312900.2876055,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401691,
+          "ts": 1795312900.289331,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401692,
+          "ts": 1795312900.2908995,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401693,
+          "ts": 1795312900.2924824,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401694,
+          "ts": 1795312900.2940383,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401695,
+          "ts": 1795312900.2956953,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:551:61: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401696,
+          "ts": 1795312900.2973309,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401697,
+          "ts": 1795312900.2989154,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401698,
+          "ts": 1795312900.30054,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401699,
+          "ts": 1795312900.3020873,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401700,
+          "ts": 1795312900.3039682,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401701,
+          "ts": 1795312900.3055654,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:553:74: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401702,
+          "ts": 1795312900.307096,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401703,
+          "ts": 1795312900.308738,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401704,
+          "ts": 1795312900.3103476,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401705,
+          "ts": 1795312900.3118954,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401706,
+          "ts": 1795312900.313479,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401707,
+          "ts": 1795312900.315023,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:555:81: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401708,
+          "ts": 1795312900.3165529,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401709,
+          "ts": 1795312900.3181715,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401710,
+          "ts": 1795312900.3196957,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401711,
+          "ts": 1795312900.3212519,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401712,
+          "ts": 1795312900.322807,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401713,
+          "ts": 1795312900.3244486,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:557:75: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401714,
+          "ts": 1795312900.3260639,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401715,
+          "ts": 1795312900.3276002,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401716,
+          "ts": 1795312900.3291886,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401717,
+          "ts": 1795312900.3307693,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401718,
+          "ts": 1795312900.3323512,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401719,
+          "ts": 1795312900.3338902,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:559:59: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401720,
+          "ts": 1795312900.3354604,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401721,
+          "ts": 1795312900.3370206,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401722,
+          "ts": 1795312900.3387141,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401723,
+          "ts": 1795312900.340348,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401724,
+          "ts": 1795312900.3418975,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401725,
+          "ts": 1795312900.3434577,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:561:61: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401726,
+          "ts": 1795312900.3449795,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401727,
+          "ts": 1795312900.3465545,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401728,
+          "ts": 1795312900.3481548,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401729,
+          "ts": 1795312900.3497257,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401730,
+          "ts": 1795312900.3512466,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401731,
+          "ts": 1795312900.3528078,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:563:70: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401732,
+          "ts": 1795312900.3543167,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401733,
+          "ts": 1795312900.3558097,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401734,
+          "ts": 1795312900.3576863,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401735,
+          "ts": 1795312900.3592925,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401736,
+          "ts": 1795312900.3608754,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401737,
+          "ts": 1795312900.3625355,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:567:72: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401738,
+          "ts": 1795312900.364078,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401739,
+          "ts": 1795312900.3655918,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401740,
+          "ts": 1795312900.367145,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401741,
+          "ts": 1795312900.3688016,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401742,
+          "ts": 1795312900.3703868,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401743,
+          "ts": 1795312900.3718984,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:569:72: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401744,
+          "ts": 1795312900.3735483,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401745,
+          "ts": 1795312900.3751023,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401746,
+          "ts": 1795312900.3766024,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401747,
+          "ts": 1795312900.3781838,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401748,
+          "ts": 1795312900.379789,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401749,
+          "ts": 1795312900.3813396,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:571:63: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401750,
+          "ts": 1795312900.3828652,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401751,
+          "ts": 1795312900.384444,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401752,
+          "ts": 1795312900.3867319,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401753,
+          "ts": 1795312900.3887165,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401754,
+          "ts": 1795312900.390292,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401755,
+          "ts": 1795312900.3918438,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:573:71: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401756,
+          "ts": 1795312900.3934243,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401757,
+          "ts": 1795312900.39501,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401758,
+          "ts": 1795312900.396937,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401759,
+          "ts": 1795312900.3990767,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401760,
+          "ts": 1795312900.4005878,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401761,
+          "ts": 1795312900.4021385,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:575:73: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401762,
+          "ts": 1795312900.4037173,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401763,
+          "ts": 1795312900.4052238,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401764,
+          "ts": 1795312900.4068117,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401765,
+          "ts": 1795312900.408406,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401766,
+          "ts": 1795312900.4099638,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401767,
+          "ts": 1795312900.4115305,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:579:79: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401768,
+          "ts": 1795312900.4133263,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401769,
+          "ts": 1795312900.4148827,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401770,
+          "ts": 1795312900.4164708,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401771,
+          "ts": 1795312900.4180396,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401772,
+          "ts": 1795312900.4197233,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401773,
+          "ts": 1795312900.421375,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:581:85: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401774,
+          "ts": 1795312900.4230814,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401775,
+          "ts": 1795312900.4247634,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401776,
+          "ts": 1795312900.426442,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401777,
+          "ts": 1795312900.4281223,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401778,
+          "ts": 1795312900.4300585,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401779,
+          "ts": 1795312900.4315917,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:583:73: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401780,
+          "ts": 1795312900.4331758,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401781,
+          "ts": 1795312900.4347854,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401782,
+          "ts": 1795312900.436438,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401783,
+          "ts": 1795312900.4379818,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401784,
+          "ts": 1795312900.4397097,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401785,
+          "ts": 1795312900.4412358,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:585:73: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401786,
+          "ts": 1795312900.4427645,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401787,
+          "ts": 1795312900.447178,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401788,
+          "ts": 1795312900.4487991,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401789,
+          "ts": 1795312900.4503136,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401790,
+          "ts": 1795312900.4519353,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401791,
+          "ts": 1795312900.4535189,
+          "stage": "compile",
+          "level": "info",
+          "message": "warning: src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean:587:75: Variable name `O` is not explicitly referenced."
+        },
+        {
+          "id": 2401792,
+          "ts": 1795312900.4550688,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401793,
+          "ts": 1795312900.4565976,
+          "stage": "compile",
+          "level": "info",
+          "message": "Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:"
+        },
+        {
+          "id": 2401794,
+          "ts": 1795312900.458255,
+          "stage": "compile",
+          "level": "info",
+          "message": "  [apply] _O"
+        },
+        {
+          "id": 2401795,
+          "ts": 1795312900.459886,
+          "stage": "compile",
+          "level": "info",
+          "message": ""
+        },
+        {
+          "id": 2401796,
+          "ts": 1795312900.4616158,
+          "stage": "compile",
+          "level": "info",
+          "message": "Note: This linter can be disabled with `set_option linter.unusedVariables false`"
+        },
+        {
+          "id": 2401797,
+          "ts": 1795312907.571868,
+          "stage": "compile",
+          "level": "info",
+          "message": "✔ [183894/183903] Built Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.RowSrc (13s)"
+        },
+        {
+          "id": 2401798,
+          "ts": 1795312935.0144308,
+          "stage": "compile",
+          "level": "info",
+          "message": "✔ [183895/183903] Built Development.AutomorphicArithmetic.AutomorphicVarieties.SmallClassNumbers.CorGKOf (27s)"
+        },
+        {
+          "id": 2401799,
+          "ts": 1795312936.714972,
+          "stage": "compile",
+          "level": "info",
+          "message": "✔ [183896/183903] Built Development.AutomorphicArithmetic.CharacterBoxes.MainConclusion (29s)"
+        },
+        {
+          "id": 2401800,
+          "ts": 1795312971.384771,
+          "stage": "compile",
+          "level": "info",
+          "message": "✔ [183898/183903] Built Supplements.Kernels.MainTheorems (34s)"
+        },
+        {
+          "id": 2401801,
+          "ts": 1795312998.7431448,
+          "stage": "compile",
+          "level": "info",
+          "message": "✔ [183899/183903] Built Supplements.Kernels.MainTheoremsCritical (27s)"
+        },
+        {
+          "id": 2401802,
+          "ts": 1795313024.9469717,
+          "stage": "compile",
+          "level": "info",
+          "message": "✔ [183900/183903] Built Supplements.Kernels.MainTheoremsAll (26s)"
+        },
+        {
+          "id": 2401803,
+          "ts": 1795313062.212046,
+          "stage": "compile",
+          "level": "info",
+          "message": "✔ [183902/183903] Built Main (32s)"
+        },
+        {
+          "id": 2401804,
+          "ts": 1795313063.1478035,
+          "stage": "compile",
+          "level": "info",
+          "message": "Build completed successfully (183903 jobs)."
+        },
+        {
+          "id": 2401805,
+          "ts": 1795313150.5392632,
+          "stage": "audit",
+          "level": "info",
+          "message": "阶段开始: audit"
+        },
+        {
+          "id": 2401806,
+          "ts": 1795313216.235463,
+          "stage": "audit",
+          "level": "info",
+          "message": "$ lake -f lakefile.toml env lean -j1 /work/20565ace60c2/audit/Audit.lean"
+        },
+        {
+          "id": 2401807,
+          "ts": 1795313260.6798038,
+          "stage": "audit",
+          "level": "info",
+          "message": "riemannHypothesis : RiemannHypothesis"
+        },
+        {
+          "id": 2401808,
+          "ts": 1795313260.6820047,
+          "stage": "audit",
+          "level": "info",
+          "message": "theorem riemannHypothesis : RiemannHypothesis :="
+        },
+        {
+          "id": 2401809,
+          "ts": 1795313260.6835227,
+          "stage": "audit",
+          "level": "info",
+          "message": "rhOfAll"
+        },
+        {
+          "id": 2401810,
+          "ts": 1795313260.6850066,
+          "stage": "audit",
+          "level": "info",
+          "message": "'riemannHypothesis' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]"
+        },
+        {
+          "id": 2401811,
+          "ts": 1795313260.686503,
+          "stage": "audit",
+          "level": "info",
+          "message": "riemannZeta_eq_zero_re : RiemannZetaZerosOnLine"
+        },
+        {
+          "id": 2401812,
+          "ts": 1795313260.6879635,
+          "stage": "audit",
+          "level": "info",
+          "message": "theorem riemannZeta_eq_zero_re : RiemannZetaZerosOnLine :="
+        },
+        {
+          "id": 2401813,
+          "ts": 1795313260.6894987,
+          "stage": "audit",
+          "level": "info",
+          "message": "rhOfAll"
+        },
+        {
+          "id": 2401814,
+          "ts": 1795313260.6908891,
+          "stage": "audit",
+          "level": "info",
+          "message": "'riemannZeta_eq_zero_re' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]"
+        },
+        {
+          "id": 2401815,
+          "ts": 1795313260.6923738,
+          "stage": "audit",
+          "level": "info",
+          "message": "LFunction_ne_zero_of_half_lt_re : DirichletLNonvanishingRightOfHalf"
+        },
+        {
+          "id": 2401816,
+          "ts": 1795313260.6939213,
+          "stage": "audit",
+          "level": "info",
+          "message": "theorem LFunction_ne_zero_of_half_lt_re : DirichletLNonvanishingRightOfHalf :="
+        },
+        {
+          "id": 2401817,
+          "ts": 1795313260.6954176,
+          "stage": "audit",
+          "level": "info",
+          "message": "allChi"
+        },
+        {
+          "id": 2401818,
+          "ts": 1795313260.6968448,
+          "stage": "audit",
+          "level": "info",
+          "message": "'LFunction_ne_zero_of_half_lt_re' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]"
+        },
+        {
+          "id": 2401819,
+          "ts": 1795313260.698359,
+          "stage": "audit",
+          "level": "info",
+          "message": "LFunction_eq_zero_re : DirichletLZerosOnLine"
+        },
+        {
+          "id": 2401820,
+          "ts": 1795313260.6997879,
+          "stage": "audit",
+          "level": "info",
+          "message": "theorem LFunction_eq_zero_re : DirichletLZerosOnLine :="
+        },
+        {
+          "id": 2401821,
+          "ts": 1795313260.7012033,
+          "stage": "audit",
+          "level": "info",
+          "message": "claimAll.right.left"
+        },
+        {
+          "id": 2401822,
+          "ts": 1795313260.7026675,
+          "stage": "audit",
+          "level": "info",
+          "message": "'LFunction_eq_zero_re' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]"
+        },
+        {
+          "id": 2401823,
+          "ts": 1795313260.7041247,
+          "stage": "audit",
+          "level": "info",
+          "message": "LFunction_eq_zero_re_of_isPrimitive : PrimitiveDirichletLZerosOnLine"
+        },
+        {
+          "id": 2401824,
+          "ts": 1795313260.7055552,
+          "stage": "audit",
+          "level": "info",
+          "message": "theorem LFunction_eq_zero_re_of_isPrimitive : PrimitiveDirichletLZerosOnLine :="
+        },
+        {
+          "id": 2401825,
+          "ts": 1795313260.7069614,
+          "stage": "audit",
+          "level": "info",
+          "message": "critAll"
+        },
+        {
+          "id": 2401826,
+          "ts": 1795313260.70846,
+          "stage": "audit",
+          "level": "info",
+          "message": "'LFunction_eq_zero_re_of_isPrimitive' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]"
+        },
+        {
+          "id": 2401827,
+          "ts": 1795313260.7098777,
+          "stage": "audit",
+          "level": "info",
+          "message": "def RiemannHypothesis : Prop :="
+        },
+        {
+          "id": 2401828,
+          "ts": 1795313260.711401,
+          "stage": "audit",
+          "level": "info",
+          "message": "∀ (s : ℂ),"
+        },
+        {
+          "id": 2401829,
+          "ts": 1795313260.7128563,
+          "stage": "audit",
+          "level": "info",
+          "message": "  Eq.{1} (riemannZeta s) 0 →"
+        },
+        {
+          "id": 2401830,
+          "ts": 1795313260.7143502,
+          "stage": "audit",
+          "level": "info",
+          "message": "    (¬∃ n, Eq.{1} s (HMul.hMul.{0, 0, 0} (-2) (HAdd.hAdd.{0, 0, 0} (↑n) 1))) → Ne.{1} s 1 → Eq.{1} s.re (1 / 2)"
+        },
+        {
+          "id": 2401831,
+          "ts": 1795313260.7157462,
+          "stage": "audit",
+          "level": "info",
+          "message": "def RiemannZetaZerosOnLine : Prop :="
+        },
+        {
+          "id": 2401832,
+          "ts": 1795313260.7171998,
+          "stage": "audit",
+          "level": "info",
+          "message": "∀ (s : ℂ),"
+        },
+        {
+          "id": 2401833,
+          "ts": 1795313260.7187185,
+          "stage": "audit",
+          "level": "info",
+          "message": "  Eq.{1} (riemannZeta s) 0 →"
+        },
+        {
+          "id": 2401834,
+          "ts": 1795313260.7202125,
+          "stage": "audit",
+          "level": "info",
+          "message": "    (¬∃ n, Eq.{1} s (HMul.hMul.{0, 0, 0} (-2) (HAdd.hAdd.{0, 0, 0} (↑n) 1))) → Ne.{1} s 1 → Eq.{1} s.re (1 / 2)"
+        },
+        {
+          "id": 2401835,
+          "ts": 1795313260.7216692,
+          "stage": "audit",
+          "level": "info",
+          "message": "def DirichletLNonvanishingRightOfHalf : Prop :="
+        },
+        {
+          "id": 2401836,
+          "ts": 1795313260.7232287,
+          "stage": "audit",
+          "level": "info",
+          "message": "∀ (N : ℕ) [inst : NeZero.{0} N] (χ : DirichletCharacter.{0} ℂ N) (s : ℂ),"
+        },
+        {
+          "id": 2401837,
+          "ts": 1795313260.7248185,
+          "stage": "audit",
+          "level": "info",
+          "message": "  LT.lt.{0} (1 / 2) s.re → Ne.{1} χ 1 ∨ Ne.{1} s 1 → Ne.{1} (DirichletCharacter.LFunction χ s) 0"
+        },
+        {
+          "id": 2401838,
+          "ts": 1795313260.7263455,
+          "stage": "audit",
+          "level": "info",
+          "message": "def DirichletLZerosOnLine : Prop :="
+        },
+        {
+          "id": 2401839,
+          "ts": 1795313260.7278295,
+          "stage": "audit",
+          "level": "info",
+          "message": "∀ (N : ℕ) [inst : NeZero.{0} N] (χ : DirichletCharacter.{0} ℂ N) (s : ℂ),"
+        },
+        {
+          "id": 2401840,
+          "ts": 1795313260.7294922,
+          "stage": "audit",
+          "level": "info",
+          "message": "  LT.lt.{0} 0 s.re → LT.lt.{0} s.re 1 → Eq.{1} (DirichletCharacter.LFunction χ s) 0 → Eq.{1} s.re (1 / 2)"
+        },
+        {
+          "id": 2401841,
+          "ts": 1795313260.7310812,
+          "stage": "audit",
+          "level": "info",
+          "message": "def PrimitiveDirichletLZerosOnLine : Prop :="
+        },
+        {
+          "id": 2401842,
+          "ts": 1795313260.7325134,
+          "stage": "audit",
+          "level": "info",
+          "message": "∀ (N : ℕ) [inst : NeZero.{0} N] (χ : DirichletCharacter.{0} ℂ N),"
+        },
+        {
+          "id": 2401843,
+          "ts": 1795313260.7339385,
+          "stage": "audit",
+          "level": "info",
+          "message": "  DirichletCharacter.IsPrimitive.{0} χ →"
+        },
+        {
+          "id": 2401844,
+          "ts": 1795313260.7355754,
+          "stage": "audit",
+          "level": "info",
+          "message": "    ∀ (s : ℂ), LT.lt.{0} 0 s.re → LT.lt.{0} s.re 1 → Eq.{1} (DirichletCharacter.LFunction χ s) 0 → Eq.{1} s.re (1 / 2)"
+        },
+        {
+          "id": 2401845,
+          "ts": 1795313263.8015342,
+          "stage": "audit",
+          "level": "info",
+          "message": "$ lake -f lakefile.toml env lean -j1 /work/20565ace60c2/audit/Axioms.lean"
+        },
+        {
+          "id": 2401846,
+          "ts": 1795313309.177545,
+          "stage": "audit",
+          "level": "info",
+          "message": "'riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        },
+        {
+          "id": 2401847,
+          "ts": 1795313309.1810448,
+          "stage": "audit",
+          "level": "info",
+          "message": "'riemannZeta_eq_zero_re' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        },
+        {
+          "id": 2401848,
+          "ts": 1795313309.183251,
+          "stage": "audit",
+          "level": "info",
+          "message": "'LFunction_ne_zero_of_half_lt_re' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        },
+        {
+          "id": 2401849,
+          "ts": 1795313309.186206,
+          "stage": "audit",
+          "level": "info",
+          "message": "'LFunction_eq_zero_re' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        },
+        {
+          "id": 2401850,
+          "ts": 1795313309.1899016,
+          "stage": "audit",
+          "level": "info",
+          "message": "'LFunction_eq_zero_re_of_isPrimitive' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        },
+        {
+          "id": 2401851,
+          "ts": 1795313312.5651734,
+          "stage": "replay",
+          "level": "info",
+          "message": "阶段开始: replay"
+        },
+        {
+          "id": 2401852,
+          "ts": 1795313312.5705826,
+          "stage": "replay",
+          "level": "info",
+          "message": "$ lake -f lakefile.toml env leanchecker --fresh Main"
+        },
+        {
+          "id": 2401853,
+          "ts": 1795336025.1535962,
+          "stage": "system",
+          "level": "info",
+          "message": "操作请求: pause"
+        }
+      ],
+      "logPreviewLimited": true,
+      "commandCount": 22,
+      "source": {
+        "url": "https://alpo.ge/",
+        "commit": null,
+        "archiveSha256": "9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc",
+        "lean": "v4.33.1",
+        "mathlib": "0df444a360eaa60ab8c11dca51a86af692955474"
+      },
+      "downloads": [
+        {
+          "title": "完整日志",
+          "path": "downloads/rh-complete-logs.tar.gz",
+          "bytes": 51027046,
+          "sha256": "23c6fd442f76fd572c02e5e83636bc96ab72e83a2f8697d983519239931c7867"
+        },
+        {
+          "title": "环境与版本",
+          "path": "rh/evidence/environment.json",
+          "bytes": 2416,
+          "sha256": "a572fac1b7ee6d508a394858e43ebe1d166c07fdb5c1b22dd9c223c3dc1f1a2a"
+        },
+        {
+          "title": "类型审计",
+          "path": "rh/evidence/audit-output.txt",
+          "bytes": 2279,
+          "sha256": "74da463f54e9bfe038f04765d563aa61d66c627bd44df2f2dc36e2c82778f499"
+        },
+        {
+          "title": "公理审计",
+          "path": "rh/evidence/axioms-output.txt",
+          "bytes": 434,
+          "sha256": "5f7e50fb22d2a9342916925212aaa548a6d4f0bfabcb314c29aa71378ea33ff6"
+        },
+        {
+          "title": "源文件校验清单",
+          "path": "rh/evidence/source-files.sha256",
+          "bytes": 29040882,
+          "sha256": "c8e6b6cb8b5f5bd95ec05c0931b5c712606781d34c63210868901d559b4970cf"
+        },
+        {
+          "title": "声明源码",
+          "path": "rh/configuration/src/Main.lean",
+          "bytes": 433,
+          "sha256": "017645ca448f2fd1f6fd5c4c2cb2c6e96e472725be13f6e180ca6e1574360939"
+        }
+      ],
+      "externalVerification": {
+        "status": "REFERENCED",
+        "name": "Andrew Sutherland（MIT）公开验证记录",
+        "url": "https://math.mit.edu/~drew/grh/",
+        "pageUpdatedAt": "2026-11-22T04:35:00Z",
+        "note": "用户采用外部验证依据；本机重放未完成，未改为通过。"
+      }
+    },
+    {
+      "id": "ns",
+      "runId": "ns-f9e8bc5b38b6",
+      "name": "Navier–Stokes",
+      "englishName": "Navier–Stokes Equations",
+      "status": "CHECKS_COMPLETED",
+      "outcome": "MACHINE_CHECKS_PASSED",
+      "headline": "机器检查通过",
+      "phase": "persist",
+      "passedStages": 7,
+      "totalStages": 7,
+      "stages": [
+        {
+          "id": "source",
+          "status": "PASSED",
+          "exitCode": 0,
+          "startedAt": 1795335099.4148414,
+          "finishedAt": 1795335099.7070746,
+          "error": null,
+          "restored": true,
+          "checkpointSha256": "00b3ce199fa0117f064bba53bee3b505f76dd38139cbaede9b74471b22525f52",
+          "label": "源码校验",
+          "commandSeconds": null
+        },
+        {
+          "id": "dependencies",
+          "status": "PASSED",
+          "exitCode": 0,
+          "startedAt": 1795335100.4728005,
+          "finishedAt": 1795335100.7302828,
+          "error": null,
+          "restored": true,
+          "checkpointSha256": "d5a09ac3a8dc8fd64653e00496f6cf88530f1100f93429ca5a94b07756b3b6fa",
+          "label": "依赖准备",
+          "commandSeconds": 242.3
+        },
+        {
+          "id": "compile",
+          "status": "PASSED",
+          "exitCode": 0,
+          "startedAt": 1795335101.4685261,
+          "finishedAt": 1795335103.158823,
+          "error": null,
+          "restored": true,
+          "checkpointSha256": "b46f61f254f8f5d37535f3cdb7a20b12d1981c91280c39386a3a74ab21b0e93c",
+          "label": "完整编译",
+          "commandSeconds": 760.9
+        },
+        {
+          "id": "audit",
+          "status": "PASSED",
+          "exitCode": 0,
+          "startedAt": 1795335103.8917658,
+          "finishedAt": 1795335103.8956108,
+          "error": null,
+          "restored": true,
+          "checkpointSha256": "7a7d03dccba1d6f661494d484b5f0dcb7a959f019f12c6f937e7db0892754b00",
+          "label": "定理与公理审计",
+          "commandSeconds": 10.1
+        },
+        {
+          "id": "kernel",
+          "status": "PASSED",
+          "exitCode": 0,
+          "startedAt": 1795335104.6218903,
+          "finishedAt": 1795335105.3080895,
+          "error": null,
+          "restored": true,
+          "checkpointSha256": "1f9400f5e2987ac0678f7a6005b267c61cb244ceda89f06b00dbfe1ba4c8718e",
+          "label": "内核重放",
+          "commandSeconds": 679.4
+        },
+        {
+          "id": "independent",
+          "status": "PASSED",
+          "exitCode": 0,
+          "startedAt": 1795335106.036008,
+          "finishedAt": 1795336255.3314261,
+          "error": null,
+          "restored": false,
+          "checkpointSha256": "c2341db642423736cb65b0b4b8711c0795c7586758e5d1699a8bc6a395c1a946",
+          "label": "独立检查",
+          "commandSeconds": 1229.6
+        },
+        {
+          "id": "persist",
+          "status": "PASSED",
+          "exitCode": 0,
+          "startedAt": 1795336256.1520193,
+          "finishedAt": 1795336256.8952763,
+          "error": null,
+          "restored": false,
+          "checkpointSha256": "e2e569c8f3f17834691b7462a8f8acceaf34e132cf092dc79bb236267ed108c0",
+          "label": "结果归档",
+          "commandSeconds": null
+        }
+      ],
+      "compile": {
+        "expectedTotal": 2659,
+        "total": 2659,
+        "succeeded": 2659,
+        "failed": 0,
+        "rate": 0,
+        "etaSeconds": null,
+        "currentModule": "Euler.Solution",
+        "jobs": 60
+      },
+      "audits": [
+        {
+          "name": "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+          "type": "PASSED",
+          "axioms": "PASSED",
+          "dependencies": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "kernel": "PASSED",
+          "independent": "PASSED"
+        },
+        {
+          "name": "NavierStokes.Comparator.navier_stokes_breakdown_periodic",
+          "type": "PASSED",
+          "axioms": "PASSED",
+          "dependencies": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "kernel": "PASSED",
+          "independent": "PASSED"
+        }
+      ],
+      "startedAt": 1795321957.4857204,
+      "finishedAt": 1795336257.629439,
+      "elapsedSeconds": 14300.1,
+      "proofAccepted": false,
+      "semanticReview": "NOT_RUN",
+      "localReplay": "PASSED",
+      "capturedAt": 1795337426.9441664,
+      "logs": [
+        {
+          "id": 4669,
+          "ts": 1795335304.3344922,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9085/9371] Built NavierStokes.SlowRecursion (6.0s)"
+        },
+        {
+          "id": 4670,
+          "ts": 1795335305.4328525,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9086/9371] Built NavierStokes.HeatTailHistoryLimits (4.1s)"
+        },
+        {
+          "id": 4671,
+          "ts": 1795335307.2326012,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9087/9371] Built NavierStokes.ModulatedStockBounds (3.5s)"
+        },
+        {
+          "id": 4672,
+          "ts": 1795335307.4332957,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9088/9371] Built NavierStokes.ActivationHolomorphic (6.0s)"
+        },
+        {
+          "id": 4673,
+          "ts": 1795335308.3338919,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9089/9371] Built NavierStokes.MeanRankUpdate (7.5s)"
+        },
+        {
+          "id": 4674,
+          "ts": 1795335309.8353395,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9090/9371] Built NavierStokes.SlowResidualMatching (5.5s)"
+        },
+        {
+          "id": 4675,
+          "ts": 1795335310.8362296,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9091/9371] Built NavierStokes.ReferenceBounds (9.5s)"
+        },
+        {
+          "id": 4676,
+          "ts": 1795335311.7368555,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9092/9371] Built NavierStokes.CorrectionState (3.4s)"
+        },
+        {
+          "id": 4677,
+          "ts": 1795335312.0514734,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9093/9371] Built NavierStokes.ModulatedHistories (8.3s)"
+        },
+        {
+          "id": 4678,
+          "ts": 1795335312.651644,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9094/9371] Built NavierStokes.AxisTailRegularity (2.8s)"
+        },
+        {
+          "id": 4679,
+          "ts": 1795335312.8521621,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9095/9371] Built NavierStokes.TransitionRamp (9.1s)"
+        },
+        {
+          "id": 4680,
+          "ts": 1795335315.4543202,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9096/9371] Built NavierStokes.ParticularWaveBounds (16s)"
+        },
+        {
+          "id": 4681,
+          "ts": 1795335315.9544954,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9097/9371] Built NavierStokes.ErrorHarmonics (4.2s)"
+        },
+        {
+          "id": 4682,
+          "ts": 1795335316.354593,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9098/9371] Built NavierStokes.ActualSlowAxis (3.5s)"
+        },
+        {
+          "id": 4683,
+          "ts": 1795335316.454894,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9099/9371] Built NavierStokes.ActivationCone (12s)"
+        },
+        {
+          "id": 4684,
+          "ts": 1795335316.5542078,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9100/9371] Built NavierStokes.PhysicalMeanDomain (8.3s)"
+        },
+        {
+          "id": 4685,
+          "ts": 1795335316.5568538,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9101/9371] Built NavierStokes.DefectIncrementBounds (4.8s)"
+        },
+        {
+          "id": 4686,
+          "ts": 1795335316.7547314,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9102/9371] Built NavierStokes.ShapedWaitBounds (14s)"
+        },
+        {
+          "id": 4687,
+          "ts": 1795335317.4552648,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9103/9371] Built NavierStokes.GlobalSlowProfiles (7.6s)"
+        },
+        {
+          "id": 4688,
+          "ts": 1795335318.055326,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9104/9371] Built NavierStokes.SubcoverPeriodicity (2.6s)"
+        },
+        {
+          "id": 4689,
+          "ts": 1795335318.4553502,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9105/9371] Built NavierStokes.ModulatedCone (6.4s)"
+        },
+        {
+          "id": 4690,
+          "ts": 1795335318.4577851,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9106/9371] Built NavierStokes.MeanChartCompatibility (6.7s)"
+        },
+        {
+          "id": 4691,
+          "ts": 1795335318.756024,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9107/9371] Built NavierStokes.LiftedMeanResidual (7.0s)"
+        },
+        {
+          "id": 4692,
+          "ts": 1795335319.2571394,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9108/9371] Built NavierStokes.ScaledTangentTransport (3.8s)"
+        },
+        {
+          "id": 4693,
+          "ts": 1795335319.457809,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9109/9371] Built NavierStokes.HarmonicResidual (7.7s)"
+        },
+        {
+          "id": 4694,
+          "ts": 1795335320.057187,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9110/9371] Built NavierStokes.NaturalCoefficientBridge (3.7s)"
+        },
+        {
+          "id": 4695,
+          "ts": 1795335320.3570492,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9111/9371] Built NavierStokes.BasePhaseGeometry (15s)"
+        },
+        {
+          "id": 4696,
+          "ts": 1795335322.258862,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9112/9371] Built NavierStokes.AxisymmetricResidualGrouping (2.8s)"
+        },
+        {
+          "id": 4697,
+          "ts": 1795335322.5587444,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9113/9371] Built NavierStokes.HarmonicCovariance (3.0s)"
+        },
+        {
+          "id": 4698,
+          "ts": 1795335322.5610588,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9114/9371] Built NavierStokes.StateMomentBalances (5.0s)"
+        },
+        {
+          "id": 4699,
+          "ts": 1795335322.6590436,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9115/9371] Built NavierStokes.SignedWaveUpdate (6.7s)"
+        },
+        {
+          "id": 4700,
+          "ts": 1795335323.360116,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9116/9371] Built NavierStokes.IntervalCopyTransport (4.1s)"
+        },
+        {
+          "id": 4701,
+          "ts": 1795335324.160269,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9117/9371] Built NavierStokes.PrimaryMaterialDefect (3.8s)"
+        },
+        {
+          "id": 4702,
+          "ts": 1795335324.7605028,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9118/9371] Built NavierStokes.StateReindex (5.3s)"
+        },
+        {
+          "id": 4703,
+          "ts": 1795335325.061422,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9119/9371] Built NavierStokes.LocalResidualGrouping (2.8s)"
+        },
+        {
+          "id": 4704,
+          "ts": 1795335325.2617936,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9120/9371] Built NavierStokes.HarmonicMeanInteraction (5.8s)"
+        },
+        {
+          "id": 4705,
+          "ts": 1795335326.5621998,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9121/9371] Built NavierStokes.PhysicalResidualBridge (7.8s)"
+        },
+        {
+          "id": 4706,
+          "ts": 1795335327.5620883,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9122/9371] Built NavierStokes.LabelSumBounds (5.0s)"
+        },
+        {
+          "id": 4707,
+          "ts": 1795335327.9632206,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9123/9371] Built NavierStokes.ActivationContinuation (11s)"
+        },
+        {
+          "id": 4708,
+          "ts": 1795335328.762974,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9124/9371] Built NavierStokes.PulseCone (11s)"
+        },
+        {
+          "id": 4709,
+          "ts": 1795335330.0657837,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9125/9371] Built NavierStokes.HarmonicWaveInteraction (4.8s)"
+        },
+        {
+          "id": 4710,
+          "ts": 1795335330.7713234,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9126/9371] Built NavierStokes.PhysicalResidualTZ (4.2s)"
+        },
+        {
+          "id": 4711,
+          "ts": 1795335331.3741646,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9127/9371] Built NavierStokes.ParticularWaveAssembly (8.7s)"
+        },
+        {
+          "id": 4712,
+          "ts": 1795335331.6747618,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9128/9371] Built NavierStokes.UniformPrimaryWeights (4.1s)"
+        },
+        {
+          "id": 4713,
+          "ts": 1795335332.1750693,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9129/9371] Built NavierStokes.PhysicalCurlCovariance (5.7s)"
+        },
+        {
+          "id": 4714,
+          "ts": 1795335332.676133,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9130/9371] Built NavierStokes.ModeSolenoidalReindex (2.6s)"
+        },
+        {
+          "id": 4715,
+          "ts": 1795335332.8766153,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9131/9371] Built NavierStokes.HarmonicStructurePreservation (2.8s)"
+        },
+        {
+          "id": 4716,
+          "ts": 1795335334.3783464,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9132/9371] Built NavierStokes.PrimaryResidualClass (4.3s)"
+        },
+        {
+          "id": 4717,
+          "ts": 1795335334.7791367,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9133/9371] Built NavierStokes.NominalProfile (6.7s)"
+        },
+        {
+          "id": 4718,
+          "ts": 1795335334.8825836,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9134/9371] Built NavierStokes.LocalSignedRequest (4.7s)"
+        },
+        {
+          "id": 4719,
+          "ts": 1795335334.8848684,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9135/9371] Built NavierStokes.SignedPhysicalSumCalculus (2.6s)"
+        },
+        {
+          "id": 4720,
+          "ts": 1795335338.3837004,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9136/9371] Built NavierStokes.PeriodizedWaveBounds (7.1s)"
+        },
+        {
+          "id": 4721,
+          "ts": 1795335339.493907,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9137/9371] Built NavierStokes.MatchingDebtBounds (4.7s)"
+        },
+        {
+          "id": 4722,
+          "ts": 1795335339.5933065,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9138/9371] Built NavierStokes.PhysicalParticularWave (7.4s)"
+        },
+        {
+          "id": 4723,
+          "ts": 1795335340.0946205,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9139/9371] Built NavierStokes.AssembledSlowBase (5.4s)"
+        },
+        {
+          "id": 4724,
+          "ts": 1795335340.295276,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9140/9371] Built NavierStokes.PhysicalClassBounds (5.5s)"
+        },
+        {
+          "id": 4725,
+          "ts": 1795335340.3984287,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9141/9371] Built NavierStokes.TailCone (11s)"
+        },
+        {
+          "id": 4726,
+          "ts": 1795335341.49809,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9142/9371] Built NavierStokes.UniformBlockBounds (3.1s)"
+        },
+        {
+          "id": 4727,
+          "ts": 1795335342.7065578,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9143/9371] Built NavierStokes.HarmonicSourceSupport (4.2s)"
+        },
+        {
+          "id": 4728,
+          "ts": 1795335343.1051073,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9144/9371] Built NavierStokes.GlobalStressSupport (2.0s)"
+        },
+        {
+          "id": 4729,
+          "ts": 1795335343.5059164,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9145/9371] Built NavierStokes.ZerothStressIdentity (3.4s)"
+        },
+        {
+          "id": 4730,
+          "ts": 1795335343.6050937,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9146/9371] Built NavierStokes.PeriodicPhaseAssembly (3.0s)"
+        },
+        {
+          "id": 4731,
+          "ts": 1795335343.9056475,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9147/9371] Built NavierStokes.SignedCopyBounds (5.5s)"
+        },
+        {
+          "id": 4732,
+          "ts": 1795335345.608625,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9148/9371] Built NavierStokes.LocalizedWaveBounds (7.1s)"
+        },
+        {
+          "id": 4733,
+          "ts": 1795335345.7079122,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9149/9371] Built NavierStokes.PhysicalCopyBounds (5.3s)"
+        },
+        {
+          "id": 4734,
+          "ts": 1795335346.307457,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9150/9371] Built NavierStokes.MatchingConeBounds (6.9s)"
+        },
+        {
+          "id": 4735,
+          "ts": 1795335346.608318,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9151/9371] Built NavierStokes.OutgoingCone (6.3s)"
+        },
+        {
+          "id": 4736,
+          "ts": 1795335346.9087276,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9152/9371] Built NavierStokes.TerminalPressure (6.6s)"
+        },
+        {
+          "id": 4737,
+          "ts": 1795335348.6103623,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9153/9371] Built NavierStokes.LocalizedMeanInteraction (3.0s)"
+        },
+        {
+          "id": 4738,
+          "ts": 1795335349.612099,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9154/9371] Built NavierStokes.PhysicalResidualNaturality (6.9s)"
+        },
+        {
+          "id": 4739,
+          "ts": 1795335350.313569,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9155/9371] Built NavierStokes.LocalizedGaussianBounds (4.8s)"
+        },
+        {
+          "id": 4740,
+          "ts": 1795335351.0148587,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9156/9371] Built NavierStokes.ParticularCopyBounds (7.1s)"
+        },
+        {
+          "id": 4741,
+          "ts": 1795335351.115277,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9157/9371] Built NavierStokes.VariableGaugeMean (16s)"
+        },
+        {
+          "id": 4742,
+          "ts": 1795335351.316785,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9158/9371] Built NavierStokes.LocalPhysicalCopyBounds (5.6s)"
+        },
+        {
+          "id": 4743,
+          "ts": 1795335351.6236584,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9159/9371] Built NavierStokes.UniformHarmonicInteraction (2.0s)"
+        },
+        {
+          "id": 4744,
+          "ts": 1795335352.0233073,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9160/9371] Built NavierStokes.TerminalEdgeFactor (5.1s)"
+        },
+        {
+          "id": 4745,
+          "ts": 1795335353.542195,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9161/9371] Built NavierStokes.HeatSwitchCone (6.0s)"
+        },
+        {
+          "id": 4746,
+          "ts": 1795335353.8497593,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9162/9371] Built NavierStokes.NativePrincipalEquations (2.8s)"
+        },
+        {
+          "id": 4747,
+          "ts": 1795335354.0504982,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9163/9371] Built NavierStokes.LocalizedCurlRealization (3.0s)"
+        },
+        {
+          "id": 4748,
+          "ts": 1795335354.0530455,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9164/9371] Built NavierStokes.PositiveTimeCopyFamily (2.7s)"
+        },
+        {
+          "id": 4749,
+          "ts": 1795335354.7508662,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9165/9371] Built NavierStokes.MeanBoundsReindex (3.2s)"
+        },
+        {
+          "id": 4750,
+          "ts": 1795335355.7516935,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9166/9371] Built NavierStokes.GaugeMomentBalances (4.6s)"
+        },
+        {
+          "id": 4751,
+          "ts": 1795335355.7544675,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9167/9371] Built NavierStokes.GaugeStateCoherence (4.5s)"
+        },
+        {
+          "id": 4752,
+          "ts": 1795335356.2517242,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9168/9371] Built NavierStokes.SlowFirstOrderEdge (4.2s)"
+        },
+        {
+          "id": 4753,
+          "ts": 1795335356.3517497,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9169/9371] Built NavierStokes.HeatSwitchHistoryDerivatives (2.7s)"
+        },
+        {
+          "id": 4754,
+          "ts": 1795335356.6577973,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9170/9371] Built NavierStokes.TerminalCone (4.6s)"
+        },
+        {
+          "id": 4755,
+          "ts": 1795335356.6611462,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9171/9371] Built NavierStokes.LocalRankDefect (5.5s)"
+        },
+        {
+          "id": 4756,
+          "ts": 1795335357.0659647,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9172/9371] Built NavierStokes.PhysicalSignedWave (7.5s)"
+        },
+        {
+          "id": 4757,
+          "ts": 1795335357.6668773,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9173/9371] Built NavierStokes.ActiveAnnulusWeight (5.7s)"
+        },
+        {
+          "id": 4758,
+          "ts": 1795335357.7672324,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9174/9371] Built NavierStokes.CartesianCopySource (6.5s)"
+        },
+        {
+          "id": 4759,
+          "ts": 1795335357.8694384,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9175/9371] Built NavierStokes.PhysicalMeanJetBounds (6.5s)"
+        },
+        {
+          "id": 4760,
+          "ts": 1795335359.0688183,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9176/9371] Built NavierStokes.ActualParticularControl (8.1s)"
+        },
+        {
+          "id": 4761,
+          "ts": 1795335359.071709,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9177/9371] Built NavierStokes.ScheduledProfileChoice (2.5s)"
+        },
+        {
+          "id": 4762,
+          "ts": 1795335359.0735104,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9178/9371] Built NavierStokes.ClosedNativeWaveIdentities (5.0s)"
+        },
+        {
+          "id": 4763,
+          "ts": 1795335360.1697521,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9179/9371] Built NavierStokes.GaugeAliasDecay (4.4s)"
+        },
+        {
+          "id": 4764,
+          "ts": 1795335360.1728797,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9180/9371] Built NavierStokes.RankStateBounds (3.6s)"
+        },
+        {
+          "id": 4765,
+          "ts": 1795335360.2699506,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9181/9371] Built NavierStokes.ResidualPolarGraph (2.5s)"
+        },
+        {
+          "id": 4766,
+          "ts": 1795335360.5693684,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9182/9371] Built NavierStokes.MovingMomentBounds (3.9s)"
+        },
+        {
+          "id": 4767,
+          "ts": 1795335360.669717,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9183/9371] Built NavierStokes.RepairConeBounds (7.1s)"
+        },
+        {
+          "id": 4768,
+          "ts": 1795335361.4700966,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9184/9371] Built NavierStokes.PreparedOutgoing (2.4s)"
+        },
+        {
+          "id": 4769,
+          "ts": 1795335362.1717556,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9185/9371] Built NavierStokes.TerminalHistoryBridge (5.6s)"
+        },
+        {
+          "id": 4770,
+          "ts": 1795335362.6346545,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9186/9371] Built NavierStokes.ActualPeriodizedSignedRealization (5.5s)"
+        },
+        {
+          "id": 4771,
+          "ts": 1795335362.7718341,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9187/9371] Built NavierStokes.GaugeMassPreservation (2.6s)"
+        },
+        {
+          "id": 4772,
+          "ts": 1795335364.1738179,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9188/9371] Built NavierStokes.SignedMeanGain (7.5s)"
+        },
+        {
+          "id": 4773,
+          "ts": 1795335366.4765189,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9189/9371] Built NavierStokes.NominalConeAssembly (4.3s)"
+        },
+        {
+          "id": 4774,
+          "ts": 1795335366.479034,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9190/9371] Built NavierStokes.BandReindexedSignedMeanGain (2.3s)"
+        },
+        {
+          "id": 4775,
+          "ts": 1795335367.5771203,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9191/9371] Built NavierStokes.GaugeDebtIncrement (3.4s)"
+        },
+        {
+          "id": 4776,
+          "ts": 1795335369.679504,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9192/9371] Built NavierStokes.BaseResidual (11s)"
+        },
+        {
+          "id": 4777,
+          "ts": 1795335370.1811128,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9193/9371] Built NavierStokes.WaveStateRegularity (2.6s)"
+        },
+        {
+          "id": 4778,
+          "ts": 1795335370.3813522,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9194/9371] Built NavierStokes.MeanStateRegularity (2.8s)"
+        },
+        {
+          "id": 4779,
+          "ts": 1795335370.595393,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9195/9371] Built NavierStokes.ModulatedProfileAssembly (4.1s)"
+        },
+        {
+          "id": 4780,
+          "ts": 1795335372.8987422,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9196/9371] Built NavierStokes.BasePrefixIdentity (3.3s)"
+        },
+        {
+          "id": 4781,
+          "ts": 1795335373.0981054,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9197/9371] Built NavierStokes.SignedCrossDefectClass (2.7s)"
+        },
+        {
+          "id": 4782,
+          "ts": 1795335373.2984557,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9198/9371] Built NavierStokes.MeanStageRegularity (2.9s)"
+        },
+        {
+          "id": 4783,
+          "ts": 1795335373.3987212,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9199/9371] Built NavierStokes.TorusMeanRequestRebase (3.0s)"
+        },
+        {
+          "id": 4784,
+          "ts": 1795335373.6982553,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9200/9371] Built NavierStokes.GaugeExcludedBounds (3.3s)"
+        },
+        {
+          "id": 4785,
+          "ts": 1795335373.7987118,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9201/9371] Built NavierStokes.BaseExterior (4.1s)"
+        },
+        {
+          "id": 4786,
+          "ts": 1795335373.9992335,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9202/9371] Built NavierStokes.FirstOrderBaseEdge (3.5s)"
+        },
+        {
+          "id": 4787,
+          "ts": 1795335374.0995553,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9203/9371] Built NavierStokes.LeadingStressWeights (3.5s)"
+        },
+        {
+          "id": 4788,
+          "ts": 1795335374.2989218,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9204/9371] Built NavierStokes.GaugeRadialResidualBounds (3.9s)"
+        },
+        {
+          "id": 4789,
+          "ts": 1795335377.7040477,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9205/9371] Built NavierStokes.ConstructedSlowBase (3.7s)"
+        },
+        {
+          "id": 4790,
+          "ts": 1795335380.809861,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9206/9371] Built NavierStokes.ModulatedExterior (3.1s)"
+        },
+        {
+          "id": 4791,
+          "ts": 1795335380.9089756,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9207/9371] Built NavierStokes.EntranceAlignedBase (3.2s)"
+        },
+        {
+          "id": 4792,
+          "ts": 1795335382.2112942,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9208/9371] Built NavierStokes.BaseChartJets (4.5s)"
+        },
+        {
+          "id": 4793,
+          "ts": 1795335386.8277612,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9209/9371] Built NavierStokes.ProfileSpectralCone (4.6s)"
+        },
+        {
+          "id": 4794,
+          "ts": 1795335390.2322876,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9210/9371] Built NavierStokes.AlignedProfileSpectralCone (3.4s)"
+        },
+        {
+          "id": 4795,
+          "ts": 1795335393.6387508,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9211/9371] Built NavierStokes.FinalSlowBase (3.4s)"
+        },
+        {
+          "id": 4796,
+          "ts": 1795335396.1485534,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9212/9371] Built NavierStokes.GlobalBaseError (2.5s)"
+        },
+        {
+          "id": 4797,
+          "ts": 1795335396.4493833,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9213/9371] Built NavierStokes.BaseRankPatch (2.8s)"
+        },
+        {
+          "id": 4798,
+          "ts": 1795335396.9496353,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9214/9371] Built NavierStokes.PrimaryGeometryAssembly (3.3s)"
+        },
+        {
+          "id": 4799,
+          "ts": 1795335397.1490173,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9215/9371] Built NavierStokes.SlowBaseEndpoint (3.5s)"
+        },
+        {
+          "id": 4800,
+          "ts": 1795335398.5518746,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9216/9371] Built NavierStokes.BaseRadialJets (4.9s)"
+        },
+        {
+          "id": 4801,
+          "ts": 1795335400.2537131,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9217/9371] Built NavierStokes.TailGaugePotential (3.2s)"
+        },
+        {
+          "id": 4802,
+          "ts": 1795335401.3542852,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9218/9371] Built NavierStokes.AllBandBaseJets (2.8s)"
+        },
+        {
+          "id": 4803,
+          "ts": 1795335403.5317123,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9219/9371] Built NavierStokes.AnnularEndpoint (3.2s)"
+        },
+        {
+          "id": 4804,
+          "ts": 1795335403.663304,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9220/9371] Built NavierStokes.PrimaryTargetBounds (6.6s)"
+        },
+        {
+          "id": 4805,
+          "ts": 1795335404.3639247,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9221/9371] Built NavierStokes.PhysicalStageBounds (4.1s)"
+        },
+        {
+          "id": 4806,
+          "ts": 1795335407.3674924,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9222/9371] Built NavierStokes.ActualBaseVelocityBounds (3.9s)"
+        },
+        {
+          "id": 4807,
+          "ts": 1795335407.4681304,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9223/9371] Built NavierStokes.ActualIterationLedger (3.1s)"
+        },
+        {
+          "id": 4808,
+          "ts": 1795335407.868668,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9224/9371] Built NavierStokes.BaseContextAssembly (4.2s)"
+        },
+        {
+          "id": 4809,
+          "ts": 1795335408.4791229,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9225/9371] Built NavierStokes.OffplaneCorrectionExtensions (4.0s)"
+        },
+        {
+          "id": 4810,
+          "ts": 1795335409.5801415,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9226/9371] Built NavierStokes.PrimaryCopyBounds (5.0s)"
+        },
+        {
+          "id": 4811,
+          "ts": 1795335410.4818578,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9227/9371] Built NavierStokes.PhysicalResidualJetBounds (7.0s)"
+        },
+        {
+          "id": 4812,
+          "ts": 1795335410.8832948,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9228/9371] Built NavierStokes.MixedDiagonalExtensions (2.4s)"
+        },
+        {
+          "id": 4813,
+          "ts": 1795335411.0838885,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9229/9371] Built NavierStokes.BaseStressClasses (3.2s)"
+        },
+        {
+          "id": 4814,
+          "ts": 1795335412.783918,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9230/9371] Built NavierStokes.DirectAngularDiagonal (4.3s)"
+        },
+        {
+          "id": 4815,
+          "ts": 1795335413.3826957,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9231/9371] Built NavierStokes.ValidDyadicBandCover (2.5s)"
+        },
+        {
+          "id": 4816,
+          "ts": 1795335414.0842018,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9232/9371] Built NavierStokes.WaveEdgeExtension (4.4s)"
+        },
+        {
+          "id": 4817,
+          "ts": 1795335414.3836803,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9233/9371] Built NavierStokes.CommonBaseContext (3.4s)"
+        },
+        {
+          "id": 4818,
+          "ts": 1795335415.2849221,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9234/9371] Built NavierStokes.ActualSignedControl (5.7s)"
+        },
+        {
+          "id": 4819,
+          "ts": 1795335415.9929657,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9235/9371] Built NavierStokes.MixedPeriodicAssembly (3.2s)"
+        },
+        {
+          "id": 4820,
+          "ts": 1795335415.995497,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9236/9371] Built NavierStokes.MixedAxisPreservation (3.2s)"
+        },
+        {
+          "id": 4821,
+          "ts": 1795335418.495346,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9237/9371] Built NavierStokes.LocalAngularDiagonal (2.5s)"
+        },
+        {
+          "id": 4822,
+          "ts": 1795335418.9960446,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9238/9371] Built NavierStokes.MixedDiagonalResidual (3.0s)"
+        },
+        {
+          "id": 4823,
+          "ts": 1795335419.196412,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9239/9371] Built NavierStokes.CandidateConsequences (3.2s)"
+        },
+        {
+          "id": 4824,
+          "ts": 1795335420.8978937,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9240/9371] Built NavierStokes.ActualSignedGeometry (5.7s)"
+        },
+        {
+          "id": 4825,
+          "ts": 1795335421.611509,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9241/9371] Built NavierStokes.MixedCandidateAssembly (2.7s)"
+        },
+        {
+          "id": 4826,
+          "ts": 1795335422.312345,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9242/9371] Built NavierStokes.ActualBaseResidual (7.9s)"
+        },
+        {
+          "id": 4827,
+          "ts": 1795335424.3156264,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9243/9371] Built NavierStokes.MixedFiniteBackground (2.7s)"
+        },
+        {
+          "id": 4828,
+          "ts": 1795335424.3179348,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9244/9371] Built NavierStokes.MixedCandidateWitness (2.6s)"
+        },
+        {
+          "id": 4829,
+          "ts": 1795335425.8203309,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9245/9371] Built NavierStokes.NativeBandExtension (4.8s)"
+        },
+        {
+          "id": 4830,
+          "ts": 1795335427.0218747,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9246/9371] Built NavierStokes.InitializedPhysicalBackground (2.7s)"
+        },
+        {
+          "id": 4831,
+          "ts": 1795335427.0241587,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9247/9371] Built NavierStokes.GermCandidateAssembly (2.7s)"
+        },
+        {
+          "id": 4832,
+          "ts": 1795335427.6230338,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9248/9371] Built NavierStokes.ScaledActualParticularControl (6.7s)"
+        },
+        {
+          "id": 4833,
+          "ts": 1795335428.9310718,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9249/9371] Built NavierStokes.FlatDyadicExtension (3.1s)"
+        },
+        {
+          "id": 4834,
+          "ts": 1795335429.3320565,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9250/9371] Built NavierStokes.ActualSignedPhysicalData (8.4s)"
+        },
+        {
+          "id": 4835,
+          "ts": 1795335431.0355995,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9251/9371] Built NavierStokes.ScaledParticularFrameJets (3.3s)"
+        },
+        {
+          "id": 4836,
+          "ts": 1795335432.5377927,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9252/9371] Built NavierStokes.ActualGaussianCoverage (4.9s)"
+        },
+        {
+          "id": 4837,
+          "ts": 1795335432.637464,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9253/9371] Built NavierStokes.CurrentPhysicalChartJets (3.3s)"
+        },
+        {
+          "id": 4838,
+          "ts": 1795335432.7380831,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9254/9371] Built NavierStokes.DependentSignedPhysicalFamily (3.5s)"
+        },
+        {
+          "id": 4839,
+          "ts": 1795335434.8405657,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9255/9371] Built NavierStokes.NativeCutoffJets (2.3s)"
+        },
+        {
+          "id": 4840,
+          "ts": 1795335435.9430478,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9256/9371] Built NavierStokes.LabelSupportPreservation (3.4s)"
+        },
+        {
+          "id": 4841,
+          "ts": 1795335437.7455013,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9257/9371] Built NavierStokes.TemporalStateCoherence (23s)"
+        },
+        {
+          "id": 4842,
+          "ts": 1795335438.54529,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9258/9371] Built NavierStokes.ScalarParticularSupport (2.6s)"
+        },
+        {
+          "id": 4843,
+          "ts": 1795335442.7525334,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9259/9371] Built NavierStokes.RankStateCoherence (4.0s)"
+        },
+        {
+          "id": 4844,
+          "ts": 1795335469.6861596,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9260/9371] Built NavierStokes.CorrectionStep (33s)"
+        },
+        {
+          "id": 4845,
+          "ts": 1795335472.396128,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9261/9371] Built NavierStokes.ActualCycleExcluded (2.7s)"
+        },
+        {
+          "id": 4846,
+          "ts": 1795335472.6967702,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9262/9371] Built NavierStokes.CyclePhysicalPrefixes (3.1s)"
+        },
+        {
+          "id": 4847,
+          "ts": 1795335473.297325,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9263/9371] Built NavierStokes.GaussianErrorNaturality (3.6s)"
+        },
+        {
+          "id": 4848,
+          "ts": 1795335473.5980868,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9264/9371] Built NavierStokes.CycleStateCoherence (3.9s)"
+        },
+        {
+          "id": 4849,
+          "ts": 1795335475.0995245,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9265/9371] Built NavierStokes.ActualWaveRegularity (5.5s)"
+        },
+        {
+          "id": 4850,
+          "ts": 1795335477.2034247,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9266/9371] Built NavierStokes.CrossBasedMeanComposition (7.6s)"
+        },
+        {
+          "id": 4851,
+          "ts": 1795335477.9043975,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9267/9371] Built NavierStokes.ActualParticularRealization (5.2s)"
+        },
+        {
+          "id": 4852,
+          "ts": 1795335497.0335777,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9268/9371] Built NavierStokes.CorrectionInitialization (27s)"
+        },
+        {
+          "id": 4853,
+          "ts": 1795335500.9380617,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9269/9371] Built NavierStokes.ActualMeanPotentialRealization (3.9s)"
+        },
+        {
+          "id": 4854,
+          "ts": 1795335504.7414625,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9270/9371] Built NavierStokes.ActualPrimaryCoherence (7.8s)"
+        },
+        {
+          "id": 4855,
+          "ts": 1795335506.2433975,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9271/9371] Built NavierStokes.ActualPrimaryCovariance (9.2s)"
+        },
+        {
+          "id": 4856,
+          "ts": 1795335508.0445125,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9272/9371] Built NavierStokes.ActualPhaseDefect (11s)"
+        },
+        {
+          "id": 4857,
+          "ts": 1795335509.7511694,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9273/9371] Built NavierStokes.ActualInitialCoherence (3.5s)"
+        },
+        {
+          "id": 4858,
+          "ts": 1795335513.255506,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9274/9371] Built NavierStokes.ActualInitialMeanEquation (3.4s)"
+        },
+        {
+          "id": 4859,
+          "ts": 1795335514.1561232,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9275/9371] Built NavierStokes.ActualPrimaryDynamics (6.1s)"
+        },
+        {
+          "id": 4860,
+          "ts": 1795335515.558336,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9276/9371] Built NavierStokes.ActualPrimaryBounds (7.5s)"
+        },
+        {
+          "id": 4861,
+          "ts": 1795335517.8722858,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9277/9371] Built NavierStokes.ActualSignedDynamics (3.7s)"
+        },
+        {
+          "id": 4862,
+          "ts": 1795335518.2354605,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9278/9371] Built NavierStokes.InitialNativeRegularity (2.6s)"
+        },
+        {
+          "id": 4863,
+          "ts": 1795335518.5738845,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9279/9371] Built NavierStokes.ActualParticularBackground (2.0s)"
+        },
+        {
+          "id": 4864,
+          "ts": 1795335518.974712,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9280/9371] Built NavierStokes.ActualInitialMean (3.4s)"
+        },
+        {
+          "id": 4865,
+          "ts": 1795335520.076721,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9281/9371] Built NavierStokes.ActualPhaseJetBounds (4.5s)"
+        },
+        {
+          "id": 4866,
+          "ts": 1795335520.9788234,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9282/9371] Built NavierStokes.CycleMeanEquation (7.8s)"
+        },
+        {
+          "id": 4867,
+          "ts": 1795335525.3853223,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9283/9371] Built NavierStokes.ActualInitialExcluded (5.3s)"
+        },
+        {
+          "id": 4868,
+          "ts": 1795335527.4899158,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9284/9371] Built NavierStokes.CorrectionAnalyticStep (6.4s)"
+        },
+        {
+          "id": 4869,
+          "ts": 1795335528.1910942,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9285/9371] Built NavierStokes.ActualCarrierGeometry (2.8s)"
+        },
+        {
+          "id": 4870,
+          "ts": 1795335530.1935575,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9286/9371] Built NavierStokes.ActualInitialization (4.8s)"
+        },
+        {
+          "id": 4871,
+          "ts": 1795335533.2946634,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9287/9371] Built NavierStokes.ParticularPaddedBackground (5.1s)"
+        },
+        {
+          "id": 4872,
+          "ts": 1795335533.3945482,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9288/9371] Built NavierStokes.ActualPolarCoverage (3.3s)"
+        },
+        {
+          "id": 4873,
+          "ts": 1795335533.4948025,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9289/9371] Built NavierStokes.PhysicalStageSupport (3.3s)"
+        },
+        {
+          "id": 4874,
+          "ts": 1795335533.5942926,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9290/9371] Built NavierStokes.ActualCarrierTransportBase (5.4s)"
+        },
+        {
+          "id": 4875,
+          "ts": 1795335533.8948488,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9291/9371] Built NavierStokes.ActualCycleGeometry (3.8s)"
+        },
+        {
+          "id": 4876,
+          "ts": 1795335534.094462,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9292/9371] Built NavierStokes.ActualSignedStageControls (16s)"
+        },
+        {
+          "id": 4877,
+          "ts": 1795335535.5955226,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9293/9371] Built NavierStokes.ActualCoreSupport (5.4s)"
+        },
+        {
+          "id": 4878,
+          "ts": 1795335536.7955804,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9294/9371] Built NavierStokes.LocalMeanPhysicalBounds (3.3s)"
+        },
+        {
+          "id": 4879,
+          "ts": 1795335537.9975643,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9295/9371] Built NavierStokes.ActualCycleResidualBounds (4.6s)"
+        },
+        {
+          "id": 4880,
+          "ts": 1795335538.8977711,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9296/9371] Built NavierStokes.ActualParticularStageControls (5.4s)"
+        },
+        {
+          "id": 4881,
+          "ts": 1795335539.6088104,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9297/9371] Built NavierStokes.ActualSignedCoherence (5.5s)"
+        },
+        {
+          "id": 4882,
+          "ts": 1795335540.3169136,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9298/9371] Built NavierStokes.ActualExteriorPrefix (2.3s)"
+        },
+        {
+          "id": 4883,
+          "ts": 1795335540.4172835,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9299/9371] Built NavierStokes.InitialPhysicalData (12s)"
+        },
+        {
+          "id": 4884,
+          "ts": 1795335541.8192694,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9300/9371] Built NavierStokes.ActualCurrentCarrierJets (2.9s)"
+        },
+        {
+          "id": 4885,
+          "ts": 1795335542.7205412,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9301/9371] Built NavierStokes.ActualSignedGaussianCoherence (3.1s)"
+        },
+        {
+          "id": 4886,
+          "ts": 1795335543.021041,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9302/9371] Built NavierStokes.ActualSignedPotentialCoherence (3.4s)"
+        },
+        {
+          "id": 4887,
+          "ts": 1795335543.1212142,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9303/9371] Built NavierStokes.ActualCopySliceRegularity (4.2s)"
+        },
+        {
+          "id": 4888,
+          "ts": 1795335543.5218477,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9304/9371] Built NavierStokes.ActualCycleParameters (4.6s)"
+        },
+        {
+          "id": 4889,
+          "ts": 1795335544.3221247,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9305/9371] Built NavierStokes.ActualPhysicalPrefixFields (4.0s)"
+        },
+        {
+          "id": 4890,
+          "ts": 1795335545.823576,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9306/9371] Built NavierStokes.ActualCarrierTransport (2.3s)"
+        },
+        {
+          "id": 4891,
+          "ts": 1795335545.9238026,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9307/9371] Built NavierStokes.ActualSignedPhysicalGeometry (2.9s)"
+        },
+        {
+          "id": 4892,
+          "ts": 1795335546.3234499,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9308/9371] Built NavierStokes.ActualParticularMeanGain (2.8s)"
+        },
+        {
+          "id": 4893,
+          "ts": 1795335549.5271037,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9309/9371] Built NavierStokes.ActualWaveRegularityData (10s)"
+        },
+        {
+          "id": 4894,
+          "ts": 1795335550.930764,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9310/9371] Built NavierStokes.ActualParticularGaussian (12s)"
+        },
+        {
+          "id": 4895,
+          "ts": 1795335551.5316682,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9311/9371] Built NavierStokes.ActualSignedMeanBinding (8.0s)"
+        },
+        {
+          "id": 4896,
+          "ts": 1795335551.6318247,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9312/9371] Built NavierStokes.ActualMeanPhysicalData (14s)"
+        },
+        {
+          "id": 4897,
+          "ts": 1795335552.0323195,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9313/9371] Built NavierStokes.ActualSeedPeriodicity (2.5s)"
+        },
+        {
+          "id": 4898,
+          "ts": 1795335552.1324959,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9314/9371] Built NavierStokes.ActualIntermediateDebtBounds (5.8s)"
+        },
+        {
+          "id": 4899,
+          "ts": 1795335552.3327107,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9315/9371] Built NavierStokes.ActualSignedGaussian (2.8s)"
+        },
+        {
+          "id": 4900,
+          "ts": 1795335552.732478,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9316/9371] Built NavierStokes.ActualWaveCoefficientPeriodicity (3.2s)"
+        },
+        {
+          "id": 4901,
+          "ts": 1795335552.8328588,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9317/9371] Built NavierStokes.ActualSignedOutputBounds (3.2s)"
+        },
+        {
+          "id": 4902,
+          "ts": 1795335555.437282,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9318/9371] Built NavierStokes.ActualReferenceRebase (16s)"
+        },
+        {
+          "id": 4903,
+          "ts": 1795335555.9368083,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9319/9371] Built NavierStokes.ActualCyclePeriodicity (3.2s)"
+        },
+        {
+          "id": 4904,
+          "ts": 1795335556.4367297,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9320/9371] Built NavierStokes.ActualPhysicalStageBounds (4.8s)"
+        },
+        {
+          "id": 4905,
+          "ts": 1795335556.9376621,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9321/9371] Built NavierStokes.ActualSignedCommonDynamics (4.2s)"
+        },
+        {
+          "id": 4906,
+          "ts": 1795335557.134955,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9322/9371] Built NavierStokes.ActualParticularDynamics (18s)"
+        },
+        {
+          "id": 4907,
+          "ts": 1795335557.236892,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9323/9371] Built NavierStokes.ActualCycleAssembly (7.7s)"
+        },
+        {
+          "id": 4908,
+          "ts": 1795335557.8395348,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9324/9371] Built NavierStokes.ActualMeanStageData (6.2s)"
+        },
+        {
+          "id": 4909,
+          "ts": 1795335559.741836,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9325/9371] Built NavierStokes.OffplaneJetExtensions (3.3s)"
+        },
+        {
+          "id": 4910,
+          "ts": 1795335560.1424305,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9326/9371] Built NavierStokes.CurrentSignedCurl (3.2s)"
+        },
+        {
+          "id": 4911,
+          "ts": 1795335561.0436888,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9327/9371] Built NavierStokes.ActualMeanExterior (3.3s)"
+        },
+        {
+          "id": 4912,
+          "ts": 1795335567.3515108,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9328/9371] Built NavierStokes.ActualParticularCoherence (11s)"
+        },
+        {
+          "id": 4913,
+          "ts": 1795335570.4567258,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9329/9371] Built NavierStokes.ActualSignedPhysicalBinding (15s)"
+        },
+        {
+          "id": 4914,
+          "ts": 1795335571.7568543,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9330/9371] Built NavierStokes.ActualParticularPotentialCoherence (4.4s)"
+        },
+        {
+          "id": 4915,
+          "ts": 1795335572.758374,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9331/9371] Built NavierStokes.PositiveTimeSignedLocalization (2.3s)"
+        },
+        {
+          "id": 4916,
+          "ts": 1795335573.2629366,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9332/9371] Built NavierStokes.ActualSignedExterior (2.7s)"
+        },
+        {
+          "id": 4917,
+          "ts": 1795335573.7366533,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9333/9371] Built NavierStokes.ActualCandidateConstruction (15s)"
+        },
+        {
+          "id": 4918,
+          "ts": 1795335573.7389226,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9334/9371] Built NavierStokes.ActualSignedUnmaskedBounds (3.1s)"
+        },
+        {
+          "id": 4919,
+          "ts": 1795335574.7731218,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9335/9371] Built NavierStokes.ActualCycleCoherence (7.5s)"
+        },
+        {
+          "id": 4920,
+          "ts": 1795335575.5733242,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9336/9371] Built NavierStokes.ActualSignedReferenceGeometry (2.3s)"
+        },
+        {
+          "id": 4921,
+          "ts": 1795335575.6733088,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9337/9371] Built NavierStokes.ActualSignedNativeProfiles (2.5s)"
+        },
+        {
+          "id": 4922,
+          "ts": 1795335579.1793375,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9338/9371] Built NavierStokes.PositiveTimeSignedData (3.5s)"
+        },
+        {
+          "id": 4923,
+          "ts": 1795335581.1835406,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9339/9371] Built NavierStokes.ActualSignedUnmaskedBinding (7.5s)"
+        },
+        {
+          "id": 4924,
+          "ts": 1795335581.3838382,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9340/9371] Built NavierStokes.ActualSignedFamilySupport (2.2s)"
+        },
+        {
+          "id": 4925,
+          "ts": 1795335582.084117,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9341/9371] Built NavierStokes.ActualSignedNativeBounds (8.4s)"
+        },
+        {
+          "id": 4926,
+          "ts": 1795335586.1908302,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9342/9371] Built NavierStokes.ActualSignedNativeRegularity (4.0s)"
+        },
+        {
+          "id": 4927,
+          "ts": 1795335586.2910972,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9343/9371] Built NavierStokes.ActualParticularCycleData (11s)"
+        },
+        {
+          "id": 4928,
+          "ts": 1795335589.9974568,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9344/9371] Built NavierStokes.ActualCurrentParticularPhysical (3.7s)"
+        },
+        {
+          "id": 4929,
+          "ts": 1795335590.498024,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9345/9371] Built NavierStokes.ActualSignedPhysicalZeros (4.3s)"
+        },
+        {
+          "id": 4930,
+          "ts": 1795335592.3005424,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9346/9371] Built NavierStokes.CurrentParticularPhysicalCoherence (2.3s)"
+        },
+        {
+          "id": 4931,
+          "ts": 1795335592.500916,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9347/9371] Built NavierStokes.CurrentPhysicalModeGerms (2.5s)"
+        },
+        {
+          "id": 4932,
+          "ts": 1795335592.601156,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9348/9371] Built NavierStokes.ActualCurrentParticularAssembly (2.6s)"
+        },
+        {
+          "id": 4933,
+          "ts": 1795335593.2021718,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9349/9371] Built NavierStokes.ActualCyclePreservation (6.9s)"
+        },
+        {
+          "id": 4934,
+          "ts": 1795335593.602835,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9350/9371] Built NavierStokes.ActualCurrentWaveSupport (3.6s)"
+        },
+        {
+          "id": 4935,
+          "ts": 1795335595.6058826,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9351/9371] Built NavierStokes.ActualSignedCurrentSupport (2.4s)"
+        },
+        {
+          "id": 4936,
+          "ts": 1795335596.2072644,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9352/9371] Built NavierStokes.CurrentModeGeometry (2.6s)"
+        },
+        {
+          "id": 4937,
+          "ts": 1795335596.307455,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9353/9371] Built NavierStokes.ActualValidBandWaves (2.7s)"
+        },
+        {
+          "id": 4938,
+          "ts": 1795335596.3095572,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9354/9371] Built NavierStokes.ActualStageEstimates (3.1s)"
+        },
+        {
+          "id": 4939,
+          "ts": 1795335596.6080146,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9355/9371] Built NavierStokes.CurrentParticularLabelBounds (3.0s)"
+        },
+        {
+          "id": 4940,
+          "ts": 1795335598.811698,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9356/9371] Built NavierStokes.ActualEndpointInputs (2.4s)"
+        },
+        {
+          "id": 4941,
+          "ts": 1795335601.220303,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9357/9371] Built NavierStokes.ActualCurrentParticularBounds (4.6s)"
+        },
+        {
+          "id": 4942,
+          "ts": 1795335601.7216835,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9358/9371] Built NavierStokes.GermEndpointInputs (2.9s)"
+        },
+        {
+          "id": 4943,
+          "ts": 1795335601.9221423,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9359/9371] Built NavierStokes.ActualSignedPhysicalCoherence (6.3s)"
+        },
+        {
+          "id": 4944,
+          "ts": 1795335605.126103,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9360/9371] Built NavierStokes.GluedStageEstimates (3.0s)"
+        },
+        {
+          "id": 4945,
+          "ts": 1795335608.7303445,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9361/9371] Built NavierStokes.ActualSignedWaveData (3.6s)"
+        },
+        {
+          "id": 4946,
+          "ts": 1795335614.6372893,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9362/9371] Built NavierStokes.ActualCandidateAssembly (5.9s)"
+        },
+        {
+          "id": 4947,
+          "ts": 1795335618.6431267,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9363/9371] Built NavierStokes.R3ActualCandidate (3.0s)"
+        },
+        {
+          "id": 4948,
+          "ts": 1795335622.7494543,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9364/9371] Built NavierStokes.R3.ActualCandidate (4.2s)"
+        },
+        {
+          "id": 4949,
+          "ts": 1795335626.7544897,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9365/9371] Built NavierStokes.R3.Theorem (3.0s)"
+        },
+        {
+          "id": 4950,
+          "ts": 1795335630.7598636,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9366/9371] Built NavierStokes.ComparatorR3Theorem (4.0s)"
+        },
+        {
+          "id": 4951,
+          "ts": 1795335631.1606975,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9367/9371] Built NavierStokes.PeriodicPaperTheorem (4.4s)"
+        },
+        {
+          "id": 4952,
+          "ts": 1795335634.865669,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9368/9371] Built NavierStokes.PeriodicComparatorSolution (3.7s)"
+        },
+        {
+          "id": 4953,
+          "ts": 1795335638.9719641,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9369/9371] Built NavierStokes.PeriodicPaperComparator (4.0s)"
+        },
+        {
+          "id": 4954,
+          "ts": 1795335642.8777728,
+          "stage": "independent",
+          "level": "info",
+          "message": "✔ [9370/9371] Built NavierStokes.ComparatorTheorem (3.9s)"
+        },
+        {
+          "id": 4955,
+          "ts": 1795335647.083984,
+          "stage": "independent",
+          "level": "info",
+          "message": "ℹ [9371/9371] Built NavierStokes.ComparatorSolution (3.0s)"
+        },
+        {
+          "id": 4956,
+          "ts": 1795335647.086921,
+          "stage": "independent",
+          "level": "info",
+          "message": "info: NavierStokes/ComparatorSolution.lean:31:0: 'NavierStokes.Comparator.navier_stokes_breakdown_R3' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        },
+        {
+          "id": 4957,
+          "ts": 1795335647.088655,
+          "stage": "independent",
+          "level": "info",
+          "message": "info: NavierStokes/ComparatorSolution.lean:32:0: 'NavierStokes.Comparator.navier_stokes_breakdown_periodic' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        },
+        {
+          "id": 4958,
+          "ts": 1795335647.0954015,
+          "stage": "independent",
+          "level": "info",
+          "message": "Build completed successfully (9371 jobs)."
+        },
+        {
+          "id": 4959,
+          "ts": 1795335721.563121,
+          "stage": "independent",
+          "level": "info",
+          "message": "[landrun:warn] 2026/11/22 08:20:47 kernel supports Landlock ABI v4, so these default restrictions are not enforced: device ioctl (ABI v5), pathname UNIX socket connections (ABI v9), UDP bind/connect/send (ABI v10), abstract UNIX socket and signal scoping (ABI v6)"
+        },
+        {
+          "id": 4960,
+          "ts": 1795335769.1115043,
+          "stage": "independent",
+          "level": "info",
+          "message": "Exporting #[Nat, String, String.mk, Char, Quot, Quot.mk, Quot.lift, Quot.ind, NavierStokes.Comparator.navier_stokes_breakdown_R3, NavierStokes.Comparator.navier_stokes_breakdown_periodic, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce] from NavierStokes.ComparatorSolution"
+        },
+        {
+          "id": 4961,
+          "ts": 1795335769.1139548,
+          "stage": "independent",
+          "level": "info",
+          "message": "Running nanoda kernel on solution"
+        },
+        {
+          "id": 4962,
+          "ts": 1795335769.1454775,
+          "stage": "independent",
+          "level": "info",
+          "message": "[landrun:warn] 2026/11/22 08:22:49 kernel supports Landlock ABI v4, so these default restrictions are not enforced: device ioctl (ABI v5), pathname UNIX socket connections (ABI v9), UDP bind/connect/send (ABI v10), abstract UNIX socket and signal scoping (ABI v6)"
+        },
+        {
+          "id": 4963,
+          "ts": 1795336237.9310822,
+          "stage": "scheduler",
+          "level": "info",
+          "message": "管理员授权暂停 RH 重放并继续当前 NS；采纳外部验证记录，本机 RH 重放仍未完成，未改为通过。"
+        },
+        {
+          "id": 4964,
+          "ts": 1795336240.9418967,
+          "stage": "scheduler",
+          "level": "info",
+          "message": "RH 重放由管理员主动暂停；按明确授权继续现有 NS 进程，RH 重放未完成且未计为通过。"
+        },
+        {
+          "id": 4965,
+          "ts": 1795336255.2205482,
+          "stage": "independent",
+          "level": "info",
+          "message": "nanoda kernel accepts the solution"
+        },
+        {
+          "id": 4966,
+          "ts": 1795336255.223391,
+          "stage": "independent",
+          "level": "info",
+          "message": "Running Lean default kernel on solution."
+        },
+        {
+          "id": 4967,
+          "ts": 1795336255.225355,
+          "stage": "independent",
+          "level": "info",
+          "message": "Lean default kernel accepts the solution"
+        },
+        {
+          "id": 4968,
+          "ts": 1795336255.2271926,
+          "stage": "independent",
+          "level": "info",
+          "message": "Your solution is okay!"
+        }
+      ],
+      "logPreviewLimited": true,
+      "commandCount": 72,
+      "source": {
+        "url": "https://github.com/openai/NavierStokesAndEuler",
+        "commit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+        "archiveSha256": "8ac9b0b2db70385f1e466b6ad600476dcad62d687d78a38f24fd1e8662bd04a0",
+        "lean": "v4.34.0-rc2",
+        "mathlib": "85e3a25e006c35636f0e53b0e9296caca2685bc0"
+      },
+      "downloads": [
+        {
+          "title": "最终验证报告",
+          "path": "ns/verification-result.json",
+          "bytes": 119111,
+          "sha256": "469b4c2dadd82d8e5748265ef67b21fbb22a3d4c3a914a090b32ecfd8d24c9e0"
+        },
+        {
+          "title": "独立检查报告",
+          "path": "ns/evidence/independent-report.json",
+          "bytes": 4541,
+          "sha256": "260cb1ca8d38a448426ebbb8c95d3783b3483b73a7dc8651427d07910672f38f"
+        },
+        {
+          "title": "完整 Comparator 日志",
+          "path": "ns/evidence/logs/0071-independent.log",
+          "bytes": 40997,
+          "sha256": "f5e06a5e820d653b009471c25dccea916dae16ba5a8fd0e087e2b22815fc785e"
+        },
+        {
+          "title": "内核重放报告",
+          "path": "ns/evidence/kernel-report.json",
+          "bytes": 152,
+          "sha256": "af97841acdc73a96458df7a227a89e202a341ecdeb0a6e13aaeef596a8cbd7d3"
+        },
+        {
+          "title": "全部日志事件",
+          "path": "downloads/ns-complete-events.ndjson.gz",
+          "bytes": 125827,
+          "sha256": "35e5e7e66db808b07b9b8bbab7c7e37bbdd8db6e2eca6e76912ae1ba3d6597df"
+        },
+        {
+          "title": "类型与公理审计",
+          "path": "ns/evidence/audit-report.json",
+          "bytes": 541,
+          "sha256": "bdf25a028326d1208f9f9ac88fa52dcb702d036259db30e1517e9810d2c39f0b"
+        }
+      ]
+    }
+  ],
+  "cost": {
+    "currency": "USD",
+    "serverEstimatedUsd": 60.919547888660425,
+    "hourlyUsd": 3.36,
+    "capturedAt": 1795337426.9441664,
+    "actualInvoiceAvailable": false,
+    "scope": "Shared server estimate at capture, not a final invoice"
+  },
+  "disclosure": "RH 本机重放未完成；NS 已完成列明目标的机器检查。人工数学语义复核未进行。"
+}

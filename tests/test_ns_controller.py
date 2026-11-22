@@ -7,6 +7,8 @@ import tarfile
 import tempfile
 import unittest
 import urllib.error
+from types import SimpleNamespace
+from unittest.mock import patch
 from pathlib import Path
 
 from ns_queue.store import QueueStore
@@ -50,6 +52,11 @@ class DriverFixture:
 
 class ControllerTests(unittest.TestCase):
     def setUp(self):
+        # Controller and durable outbox must share the same simulated time.
+        # Otherwise fixed rental dates stop delivering notices after that date.
+        self.now = 1800000000.
+        clock = patch('ns_queue.store.time', SimpleNamespace(time=lambda: self.now))
+        clock.start(); self.addCleanup(clock.stop)
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
         self.store = QueueStore(self.temp.name); self.store.initialize(NS_SPEC, RH_ID, {'capUsd': 0})
         self.rh = RHClientFixture(); self.driver = DriverFixture(); self.notices = []

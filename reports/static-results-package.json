@@ -1,0 +1,14 @@
+{
+  "createdAt": "2026-11-22T12:38:53.422609+00:00",
+  "archive": "/Users/tano/Documents/GitHub/Lean/artifacts/lean-observatory-static-results-2026-11-22.tar.gz",
+  "bytes": 68507078,
+  "sha256": "4d8e352e890bb44c028adb655a60859e1671e8530d43b1bbbfd8db8a8aa3be37",
+  "files": 182,
+  "displayFilesVerified": 181,
+  "sourceEvidenceFilesVerified": 169,
+  "rhStatus": "PARTIAL",
+  "nsStatus": "MACHINE_CHECKS_PASSED",
+  "proofAccepted": false,
+  "preview": "http://127.0.0.1:8890/",
+  "serverRequired": false
+}
