@@ -1,0 +1,88 @@
+{
+  "sampledAt": 1795336241.1034145,
+  "controllerSourceSha256": "5aea8445d48dd7382ad33614b80ed149e9b4a223758630a384a8ce49d646c4ba",
+  "controllerSha256": "8e1fe0305bf59fb2eea69934a87e423846350ceb30bfbe0ac18e50d8fe6120c5",
+  "previousControllerSha256": "e2016f927e276b8bc0225f48a9d49e1e578e940d22109468c8428903a3eeb98a",
+  "existingContainersUnchanged": true,
+  "before": {
+    "lean-observatory-ns-ns-f9e8bc5b38b6": {
+      "id": "c592b82a770edf0483aa361129770b5a280a5a7508c9b741f3245f5d1ef3367c",
+      "pid": 1327528,
+      "startedAt": "2026-11-22T08:11:38.939573434Z",
+      "running": true
+    },
+    "lean-observatory-worker-1": {
+      "id": "f214289894a9e3925cf95cdbde108b65d8075660da5821aa42e0e67ad001f651",
+      "pid": 15538,
+      "startedAt": "2026-11-21T15:04:04.120575095Z",
+      "running": true
+    },
+    "lean-observatory-api-1": {
+      "id": "65b9a04186cb7689790a80460817569755180d667bb87ff4f775e01e3798fb9f",
+      "pid": 9385,
+      "startedAt": "2026-11-21T14:51:27.113102006Z",
+      "running": true
+    },
+    "lean-observatory-nginx-1": {
+      "id": "697f9c760d3ef0fd37811232529c899a242553fccd78872c507352196d209b2d",
+      "pid": 29826,
+      "startedAt": "2026-11-21T15:09:20.263571297Z",
+      "running": true
+    },
+    "lean-observatory-ns-api-1": {
+      "id": "8403448ed89164f7479c580e59418f4de3285230e68f4210f9012d3065a6c26b",
+      "pid": 1326943,
+      "startedAt": "2026-11-22T08:11:08.585041366Z",
+      "running": true
+    }
+  },
+  "after": {
+    "lean-observatory-ns-ns-f9e8bc5b38b6": {
+      "id": "c592b82a770edf0483aa361129770b5a280a5a7508c9b741f3245f5d1ef3367c",
+      "pid": 1327528,
+      "startedAt": "2026-11-22T08:11:38.939573434Z",
+      "running": true
+    },
+    "lean-observatory-worker-1": {
+      "id": "f214289894a9e3925cf95cdbde108b65d8075660da5821aa42e0e67ad001f651",
+      "pid": 15538,
+      "startedAt": "2026-11-21T15:04:04.120575095Z",
+      "running": true
+    },
+    "lean-observatory-api-1": {
+      "id": "65b9a04186cb7689790a80460817569755180d667bb87ff4f775e01e3798fb9f",
+      "pid": 9385,
+      "startedAt": "2026-11-21T14:51:27.113102006Z",
+      "running": true
+    },
+    "lean-observatory-nginx-1": {
+      "id": "697f9c760d3ef0fd37811232529c899a242553fccd78872c507352196d209b2d",
+      "pid": 29826,
+      "startedAt": "2026-11-21T15:09:20.263571297Z",
+      "running": true
+    },
+    "lean-observatory-ns-api-1": {
+      "id": "8403448ed89164f7479c580e59418f4de3285230e68f4210f9012d3065a6c26b",
+      "pid": 1326943,
+      "startedAt": "2026-11-22T08:11:08.585041366Z",
+      "running": true
+    }
+  },
+  "activeWorkerImplementationUnchanged": true,
+  "existingEnvironmentUnchanged": true,
+  "authorization": {
+    "runId": "20565ace60c2",
+    "nsRunId": "ns-f9e8bc5b38b6",
+    "action": "pause_replay",
+    "continueNs": true,
+    "requestedAt": 1795336026.795371,
+    "finalSuccess": false,
+    "basis": "Explicit user instruction to pause RH and adopt external verification",
+    "externalSource": "https://math.mit.edu/~drew/grh/",
+    "observedAt": 1795336240.8442767
+  },
+  "rhStatus": "paused",
+  "nsStatus": "RUNNING",
+  "rhEvidencePersisted": false,
+  "proofAccepted": false
+}

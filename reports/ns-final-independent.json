@@ -1,0 +1,105 @@
+{
+  "status": "PASSED",
+  "toolPins": {
+    "Comparator": {
+      "repo": "https://github.com/leanprover/comparator.git",
+      "commit": "19e111e2141cf333c7daff0f64c5f24acc91dd2e",
+      "lockedBySource": true
+    },
+    "lean4export": {
+      "repo": "https://github.com/leanprover/lean4export.git",
+      "commit": "cacf989bd75f608700820f6afc595f32e7a99a4d",
+      "lockedBySource": true
+    },
+    "landrun": {
+      "repo": "https://github.com/Zouuup/landrun.git",
+      "commit": "573aa723afb16bb1da2dbe24fc00df46cd0ad13b",
+      "lockedBySource": false,
+      "compatibility": "PENDING",
+      "goMinimum": "1.26.0"
+    },
+    "nanoda": {
+      "repo": "https://github.com/ammkrn/nanoda_lib.git",
+      "commit": "0da9f98feadd3a0a2ef4b3dbcf52a298a6fef929",
+      "lockedBySource": false,
+      "compatibility": "PENDING",
+      "exportFormat": ">=3.1.0,<3.2.0"
+    }
+  },
+  "challenge": {
+    "challenge_module": "ComparatorChallenges.NavierStokes",
+    "solution_module": "NavierStokes.ComparatorSolution",
+    "enable_nanoda": true,
+    "theorem_names": [
+      "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+      "NavierStokes.Comparator.navier_stokes_breakdown_periodic"
+    ],
+    "permitted_axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  "freshChecker": true,
+  "AF_UNIX": "DENIED",
+  "landlock": "ENFORCED",
+  "LeanKernel": "PASSED",
+  "nanoda": "PASSED",
+  "sandbox": {
+    "profile": "landlock+namespaces+seccomp",
+    "nativeLandlockAbi": 4,
+    "guards": {
+      "capEff": 0,
+      "devices": {
+        "null": [
+          1,
+          3
+        ],
+        "urandom": [
+          1,
+          9
+        ]
+      },
+      "filesystemWriteDenied": true,
+      "gid": 10002,
+      "ipv4TcpDenied": true,
+      "ipv4UdpDenied": true,
+      "ipv6TcpDenied": true,
+      "ipv6UdpDenied": true,
+      "landlockAbi": 4,
+      "noIpv4Routes": true,
+      "noNewPrivs": 1,
+      "noSys": true,
+      "pid1SameRoot": true,
+      "pid1Uid": 10002,
+      "safeFds": true,
+      "seccomp": 2,
+      "uid": 10002,
+      "unixSocketDenied": true,
+      "unixSocketpairDenied": true,
+      "userNamespaceDenied": true
+    },
+    "devicePolicy": "null-and-urandom-only; no-sensitive-inherited-fds",
+    "nativeFeatureLimitations": [
+      "ioctl restriction unavailable before ABI 5",
+      "UNIX socket and signal scoping unavailable before ABI 6/9",
+      "UDP restriction unavailable before ABI 10"
+    ],
+    "limitations": [
+      "ioctl syscall is not disabled; only null/urandom devices and pipe/null inherited fds are exposed",
+      "signal isolation is provided by the private PID namespace, not a per-Landlock-domain signal scope"
+    ],
+    "nativeWarnings": [
+      "[landrun:warn] 2026/11/22 08:13:15 kernel supports Landlock ABI v4, so these default restrictions are not enforced: device ioctl (ABI v5), pathname UNIX socket connections (ABI v9), UDP bind/connect/send (ABI v10), abstract UNIX socket and signal scoping (ABI v6)"
+    ],
+    "logSha256": "8f09741e56f3b33e34fb1f0b11fc5b465ca305238ba5bcf9ece507dd669f641d",
+    "logFile": "worker/logs/0070-independent.log",
+    "checkerNativeWarnings": [
+      "[landrun:warn] 2026/11/22 08:13:16 kernel supports Landlock ABI v4, so these default restrictions are not enforced: device ioctl (ABI v5), pathname UNIX socket connections (ABI v9), UDP bind/connect/send (ABI v10), abstract UNIX socket and signal scoping (ABI v6)",
+      "[landrun:warn] 2026/11/22 08:13:26 kernel supports Landlock ABI v4, so these default restrictions are not enforced: device ioctl (ABI v5), pathname UNIX socket connections (ABI v9), UDP bind/connect/send (ABI v10), abstract UNIX socket and signal scoping (ABI v6)",
+      "[landrun:warn] 2026/11/22 08:13:39 kernel supports Landlock ABI v4, so these default restrictions are not enforced: device ioctl (ABI v5), pathname UNIX socket connections (ABI v9), UDP bind/connect/send (ABI v10), abstract UNIX socket and signal scoping (ABI v6)",
+      "[landrun:warn] 2026/11/22 08:20:47 kernel supports Landlock ABI v4, so these default restrictions are not enforced: device ioctl (ABI v5), pathname UNIX socket connections (ABI v9), UDP bind/connect/send (ABI v10), abstract UNIX socket and signal scoping (ABI v6)",
+      "[landrun:warn] 2026/11/22 08:22:49 kernel supports Landlock ABI v4, so these default restrictions are not enforced: device ioctl (ABI v5), pathname UNIX socket connections (ABI v9), UDP bind/connect/send (ABI v10), abstract UNIX socket and signal scoping (ABI v6)"
+    ]
+  }
+}
