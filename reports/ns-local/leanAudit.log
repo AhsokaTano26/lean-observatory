@@ -1,6 +1,6 @@
- Container lean-ns-audit-native-test-lean-audit-run-cfd72c2d9e60 Creating 
- Container lean-ns-audit-native-test-lean-audit-run-cfd72c2d9e60 Created 
-✔ Generated standalone audit diagnostic compiles and reports actual axioms in real Lean (3130.816625ms)
+ Container lean-ns-audit-native-test-lean-audit-run-7822ef3a70da Creating 
+ Container lean-ns-audit-native-test-lean-audit-run-7822ef3a70da Created 
+✔ Generated standalone audit diagnostic compiles and reports actual axioms in real Lean (2802.790375ms)
 ℹ tests 1
 ℹ suites 0
 ℹ pass 1
@@ -8,4 +8,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 3282.256041
+ℹ duration_ms 2954.4615

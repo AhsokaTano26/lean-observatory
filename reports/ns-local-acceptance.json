@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "createdAt": "2026-11-22T07:02:40.953Z",
-  "sourceSha256": "bb61ae4b6db6e8ce2f9fe490e762f3a47deb25897b8b097af5a1f8738abab583",
-  "scope": "Local platform tests only; no real proof execution; same command groups as deploy/ns/local_acceptance.py",
+  "createdAt": "2026-11-22T07:32:09.879Z",
+  "sourceSha256": "47d3350cc2e4c5a0a20fb25e26aa323ef93f649e1583d434d50a7f328dc1fc61",
+  "scope": "Local platform and real Lean fixture tests only; no RH/NS proof execution; same command groups as deploy/ns/local_acceptance.py",
   "executionMode": "parallel independent groups",
   "checks": {
     "compile": {
@@ -108,6 +108,15 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/entryBrowser.log"
+    },
+    "leanReplay": {
+      "command": [
+        "node",
+        "--test",
+        "tests/ns-replay-lean.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/leanReplay.log"
     },
     "unit": {
       "command": [

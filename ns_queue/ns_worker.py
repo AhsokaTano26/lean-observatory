@@ -658,11 +658,11 @@ run_cmd do
 
 
 REPLAY = '''import Lean
-import Export.Parse
+import Comparator.Compare
 def main (args : List String) : IO Unit := do
-  let some path := args[0]? | throw <| IO.userError "missing export"
-  let ref ← IO.mkRef { data := (← IO.FS.readFile path).toUTF8 }
-  let stream ← IO.FS.Stream.ofBuffer ref
+  let some path := args.head? | throw <| IO.userError "missing export"
+  let ref ← IO.mkRef { data := (← IO.FS.readFile (System.FilePath.mk path)).toUTF8 }
+  let stream := IO.FS.Stream.ofBuffer ref
   let solution ← Export.parseStream stream
   let env ← Lean.mkEmptyEnvironment
   let quotTargets := [`Quot.mk, `Quot.lift, `Quot.ind]

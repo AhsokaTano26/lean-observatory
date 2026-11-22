@@ -36,6 +36,7 @@ def main():
         'parallelBrowser':['node','--test','tests/ns-parallel-browser.test.mjs'],
         'sandboxPermissions':['node','--test','tests/ns-supervisor-permissions.test.mjs'],
         'leanAudit':['node','--test','tests/ns-audit-lean.test.mjs'],
+        'leanReplay':['node','--test','tests/ns-replay-lean.test.mjs'],
         'entryBrowser':['node','--test','tests/entry-browser.test.mjs'],
         'sharedHTTPS':['node','--test','tests/shared-https-browser.test.mjs'],
         'rhBrowser':['node','node_modules/@playwright/test/cli.js','test'],
