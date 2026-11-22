@@ -20,6 +20,7 @@ import urllib.request
 
 from .process import run_process
 from . import sandbox
+from . import sandbox_policy
 from .store import QueueStore
 from .budget import normalize, can_start, runtime_usage
 from .gates import validate_result
@@ -216,13 +217,12 @@ def parse_audit(output, names):
     return rows
 
 
-def validate_independent_output(output):
+def validate_independent_output(output, sandbox_evidence=None):
     required = ['Running nanoda kernel on solution', 'nanoda kernel accepts the solution',
                 'Running Lean default kernel on solution.', 'Lean default kernel accepts the solution',
                 'Your solution is okay!']
     if any(marker not in output for marker in required): raise ValueError('missing real Comparator/kernel acceptance')
-    if re.search(r'fake[-_]landrun|unsandboxed|\[landrun:warn\]|best.effort|kernel rejects', output, re.I):
-        raise ValueError('independent sandbox/checker did not meet strict requirements')
+    return sandbox_policy.validate_warnings(output, sandbox_evidence)
 
 
 class Checkpoints:
@@ -505,25 +505,29 @@ class NSWorker:
         if 'NS_AF_UNIX_DENIED' not in af or not re.search(r'NS_LANDLOCK_ABI\|(?:[4-9]|[1-9]\d+)\b', abi):
             raise Blocked('independent_sandbox_unavailable')
         probe = '/work/ns/evidence/landlock-write-probe'
-        self._command(['python3', '-c', 'open(' + repr(probe) + ',"w").write("baseline")'], checker)
+        self._command(['python3', '-I', '-c', 'open(' + repr(probe) + ',"w").write("baseline")'], checker)
         (self.sandbox_root / probe.lstrip('/')).unlink()
-        test = ('import sys\ntry: open(' + repr(probe) + ',"w").write("escaped")\n'
-                'except PermissionError: print("NS_LANDLOCK_DENIED"); sys.exit(0)\nsys.exit(11)')
         denial = self._command(['/usr/local/bin/comparator-landrun', '--ro', '/', '--rox', '/usr',
-                                '-ldd', '-add-exec', '--', 'python3', '-c', test], checker)
-        if 'NS_LANDLOCK_DENIED' not in denial or '[landrun:warn]' in denial:
-            raise Blocked('landlock_not_enforced')
+                                '-ldd', '-add-exec', '--', 'python3', '-I', '-c', sandbox_policy.SCOPE_PROBE], checker)
+        try:
+            native_abi = int(re.search(r'NS_LANDLOCK_ABI\|(\d+)\b', abi).group(1))
+            scope = sandbox_policy.validate_probe(denial, native_abi)
+        except (ValueError, AttributeError) as error:
+            raise Blocked('independent_sandbox_guard_failed: ' + str(error)) from error
+        scope_log = self.root / self.store.snapshot()['commands'][-1]['logFile']
+        scope.update(logSha256=file_hash(scope_log), logFile=str(scope_log.relative_to(self.root)))
         output = self._command(['lake', 'env', '/work/ns/tools/comparator/.lake/build/bin/comparator',
                                 'ComparatorChallenges/NavierStokes.json'], checker,
                                environment=self._tool_environment())
         # Acceptance can appear beyond the runner's bounded diagnostic capture.
         # Scan the complete durable log, including any early sandbox warnings.
         complete_log = self.root / self.store.snapshot()['commands'][-1]['logFile']
-        validate_independent_output(complete_log.read_text(errors='replace')); self._config(checker)
+        scope['checkerNativeWarnings'] = validate_independent_output(complete_log.read_text(errors='replace'), scope)
+        self._config(checker)
         report = self.work / 'independent-report.json'
         atomic_json(report, {'status': 'PASSED', 'toolPins': self.spec['tools'], 'challenge': self.spec['independent'],
                              'freshChecker': True, 'AF_UNIX': 'DENIED', 'landlock': 'ENFORCED',
-                             'LeanKernel': 'PASSED', 'nanoda': 'PASSED'})
+                             'LeanKernel': 'PASSED', 'nanoda': 'PASSED', 'sandbox': scope})
         self.store.mutate(lambda s: [row.update(independent='PASSED') for row in s['audits']], 'independent_verified')
         return [report, checker / 'ComparatorChallenges/NavierStokes.json']
 
@@ -563,7 +567,7 @@ class NSWorker:
         self.run_start = time.monotonic(); self.initial_estimate = budget['usedHours']
         checkpoint = Checkpoints(self.work / 'checkpoints')
         implementation = {name: file_hash(Path(__file__).with_name(name)) for name in
-                          ['ns_worker.py', 'process.py', 'sandbox.py', 'child.py', 'build-tools.sh', 'manifest.json', 'budget.py', 'admission.py', 'gates.py']}
+                          ['ns_worker.py', 'process.py', 'sandbox.py', 'child.py', 'build-tools.sh', 'manifest.json', 'budget.py', 'admission.py', 'gates.py', 'sandbox_policy.py']}
         previous = json_hash({'spec': self.spec, 'implementation': implementation})
         try:
             def recover(s):

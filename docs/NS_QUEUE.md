@@ -73,3 +73,30 @@ The default RH and NS profiles are60vCPU and250000000000 bytes (250GB decimal), 
 Shared host metrics, per-NS Docker usage, elapsed rental hours and costs remain distinct. NS estimated cost is0 until its own start; total server cost includes the rental interval. Unavailable measurements display as unknown.
 
 Shared routing is activated with `deploy/ns/activate_proxy.py --execute`: validate candidate using the existing trusted Nginx image and certificates, keep a backup, write the mounted config in place, graceful reload then attach the NS network. Full container hostnames avoid conflicting Docker `api` aliases; failed activation restores the previous config/network. `/api` and `/assets` remain RH compatibility paths, while NS uses only `/ns/api` and `/ns/assets`. Root entrance assets are served from the NS namespace. The network override is saved at `/opt/lean-observatory/.data/ops/compose.ns-route.runtime.yaml` for future router recreations.
+
+### Landlock ABI 4 compatibility repair (2026-11-22)
+
+The `landlock_not_enforced` interruption occurred after the actual write-denial
+probe exited zero: the worker incorrectly rejected every native Landrun warning.
+The repaired worker accepts only the exact pinned tool's ABI 4 feature warning,
+and only after an isolated Python probe verifies the actual filesystem denial,
+unprivileged UID/GID, zero capabilities, no-new-privileges, seccomp, private PID
+root and network, both AF_UNIX denials, no routes, denied IPv4/IPv6 TCP/UDP,
+no user namespace creation, and a limited device/inherited descriptor set.
+Unknown warnings, failed guards, missing acceptance markers and nonzero command
+exits still block acceptance. Raw warnings remain in logs and the final report.
+
+The profile is `landlock+namespaces+seccomp`. It does not claim native ABI 5+
+features: ioctl is not disabled (only null/urandom devices and pipe/null inherited
+fds are available), and signal isolation is supplied by a private PID namespace,
+not Landlock domain scoping. See the [kernel Landlock ABI documentation](https://docs.kernel.org/userspace-api/landlock.html).
+
+For this reviewed repair, `python3 -m ns_queue.audit_migration --repair independent-policy`
+validates the paused queue without modifying it; `--execute` commits only after
+all original output bytes, the two previous migration ledgers, and the exact
+approved policy hash verify. The five successful stages are retained, with
+original/proposed receipt bytes and the third migration ledger durably saved.
+Do not delete successful checkpoints or restart RH to apply this repair.
+`tests/ns-sandbox-policy.test.mjs` uses real Linux Landlock/namespace/seccomp
+controls and rejects removed filesystem or socket restrictions. The deployment
+also runs the pinned server Landrun probe before committing the migration.

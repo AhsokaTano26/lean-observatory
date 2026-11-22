@@ -1,4 +1,5 @@
 """Small real receipts verify an audit-only migration never reruns completed work."""
+import ast
 import hashlib
 import importlib
 import json
@@ -17,6 +18,22 @@ KERNEL_FIXES = (('import Export.Parse\n', 'import Comparator.Compare\n'),
                 ('let stream ← IO.FS.Stream.ofBuffer ref', 'let stream := IO.FS.Stream.ofBuffer ref'))
 
 
+def policy_fixture_functions(code, approved=False):
+    tree = ast.parse(code); replacements = []
+    for node in tree.body:
+        if isinstance(node, ast.FunctionDef) and node.name == 'validate_independent_output':
+            body = "    return sandbox_policy.check(output)\n" if approved else "    return output\n"
+            replacements.append((node.lineno, node.end_lineno, 'def validate_independent_output(output):\n' + body))
+        if isinstance(node, ast.ClassDef) and node.name == 'NSWorker':
+            for method in node.body:
+                if isinstance(method, ast.FunctionDef) and method.name == '_independent':
+                    body = "        return sandbox_policy.check([])\n" if approved else "        return []\n"
+                    replacements.append((method.lineno, method.end_lineno, '    def _independent(self):\n' + body))
+    lines = code.splitlines(keepends=True)
+    for start, end, text in sorted(replacements, reverse=True): lines[start - 1:end] = [text]
+    return ''.join(lines)
+
+
 class AuditMigrationTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
@@ -26,6 +43,9 @@ class AuditMigrationTests(unittest.TestCase):
                       'manifest.json', 'budget.py', 'admission.py', 'gates.py')
         for name in self.names: shutil.copyfile(Path(worker.__file__).with_name(name), self.impl / name)
         code = (self.impl / 'ns_worker.py').read_text()
+        code = code.replace('from . import sandbox_policy\n', '')
+        code = code.replace("'gates.py', 'sandbox_policy.py']}", "'gates.py']}")
+        code = policy_fixture_functions(code)
         for before, after in KERNEL_FIXES: code = code.replace(after, before)
         self.old = self.base / 'old.py'
         self.old.write_text(code.replace('\n    Lean.logInfo m!"NS_', '\n    logInfo m!"NS_'))
@@ -230,6 +250,101 @@ class AuditMigrationTests(unittest.TestCase):
         self.assertEqual(len(migrated['checkpointMigrations']), 2)
         self.assertEqual(migrated['commands'], self.kernel_state['commands'])
         self.kernel_migrate(True); self.assertEqual(self.store.snapshot(), migrated)
+
+
+    def independent_fixture(self):
+        self.kernel_fixture(); self.kernel_migrate(True)
+        self.independent_old = self.base / 'before-independent.py'
+        self.independent_old.write_bytes((self.impl / 'ns_worker.py').read_bytes())
+        code = self.independent_old.read_text().replace('from . import sandbox\n',
+                                                       'from . import sandbox\nfrom . import sandbox_policy\n')
+        code = code.replace("'gates.py']}", "'gates.py', 'sandbox_policy.py']}")
+        (self.impl / 'ns_worker.py').write_text(policy_fixture_functions(code, approved=True))
+        self.approved_policy = b'def check(output):\n    return output\n'
+        (self.impl / 'sandbox_policy.py').write_bytes(self.approved_policy)
+        output = self.allowed[1] / 'kernel.bin'; output.write_bytes(b'actual fresh kernel replay accepted')
+        self.outputs[output] = output.read_bytes()
+        worker.atomic_json(self.cp / 'kernel.json', {'stage': 'kernel', 'status': 'PASSED', 'exitCode': 0,
+            'completedAt': 104, 'inputSha256': worker.file_hash(self.cp / 'audit.json'),
+            'outputs': [{'path': str(output), 'bytes': output.stat().st_size, 'sha256': worker.file_hash(output)}]})
+        def independent_failed(state):
+            state.update(phase='independent')
+            state['commands'].extend([{'stage': 'kernel', 'argv': ['lean', '--run', 'replay.lean'],
+                                       'status': 'PASSED', 'exitCode': 0, 'startedAt': 40, 'finishedAt': 41},
+                                      {'stage': 'independent', 'argv': ['landrun', 'probe'],
+                                       'status': 'FAILED', 'exitCode': 1}])
+            state['stages'][4].update(status='PASSED', exitCode=0, startedAt=40, finishedAt=41,
+                                     checkpointSha256=worker.file_hash(self.cp / 'kernel.json'))
+        self.store.mutate(independent_failed)
+        self.independent_original = {stage: (self.cp / (stage + '.json')).read_bytes()
+                                    for stage in ('source', 'dependencies', 'compile', 'audit', 'kernel')}
+        self.independent_state = self.store.snapshot()
+
+    def independent_migrate(self, execute=False):
+        module = importlib.import_module('ns_queue.audit_migration')
+        with patch.object(module, 'APPROVED_POLICY_SHA256', hashlib.sha256(self.approved_policy).hexdigest()):
+            return module.migrate(self.root, self.independent_old, implementation_dir=self.impl,
+                                  allowed_roots=self.allowed, execute=execute, repair='independent-policy')
+
+    def test_independent_profile_preserves_five_stages_and_full_prior_lineage(self):
+        self.independent_fixture(); self.independent_migrate()
+        self.assertEqual(self.store.snapshot(), self.independent_state)
+        directory = self.cp / 'migrations/independent-policy-v1'
+        self.assertFalse(directory.exists())
+        self.independent_migrate(True); migrated = self.store.snapshot()
+        self.assertEqual(migrated['commands'], self.independent_state['commands'])
+        self.assertEqual(migrated['phase'], 'independent')
+        for stage, content in self.independent_original.items():
+            original = json.loads(content); receipt_path = self.cp / (stage + '.json')
+            receipt = json.loads(receipt_path.read_bytes())
+            for key in ('stage', 'status', 'exitCode', 'completedAt', 'outputs'): self.assertEqual(receipt[key], original[key])
+            self.assertEqual(receipt_path.stat().st_mode & 0o777, 0o644)
+            if stage != 'kernel': self.assertEqual(receipt['checkpointMigration']['previous'], original['checkpointMigration'])
+            self.assertEqual(receipt['checkpointMigration']['id'], 'independent-policy-v1')
+            backup = directory / ('independent-policy-v1.' + stage + '.original.json')
+            self.assertEqual(backup.read_bytes(), content)
+        self.assertEqual(len(migrated['checkpointMigrations']), 3)
+        old_names = {path.name for other in (self.cp / 'migrations').iterdir() if other != directory for path in other.iterdir()}
+        self.assertFalse(old_names & {path.name for path in directory.iterdir()})
+        self.assertEqual({path: path.read_bytes() for path in self.outputs}, self.outputs)
+        self.independent_migrate(True); self.assertEqual(self.store.snapshot(), migrated)
+
+    def test_independent_profile_rejects_components_and_ancestor_tampering_without_writes(self):
+        self.independent_fixture()
+        prior = self.cp / 'migrations/kernel-lean-api-v1/kernel-lean-api-v1.manifest.json'
+        ancestor = self.cp / 'migrations/audit-lean-loginfo-v1/source.original.json'
+        for target in (self.impl / 'child.py', self.impl / 'sandbox.py', self.impl / 'sandbox_policy.py',
+                       self.impl / 'ns_worker.py', self.independent_old, prior, ancestor):
+            original = target.read_bytes(); target.chmod(0o644); target.write_bytes(original + b' ')
+            with self.subTest(target=target), self.assertRaises(ValueError): self.independent_migrate(True)
+            target.write_bytes(original)
+            self.assertEqual(self.store.snapshot(), self.independent_state)
+            self.assertEqual({s: (self.cp / (s + '.json')).read_bytes() for s in self.independent_original}, self.independent_original)
+            self.assertFalse((self.cp / 'migrations/independent-policy-v1').exists())
+        original = (self.impl / 'ns_worker.py').read_text()
+        for changed in (original.replace('def _compile(self):', 'def _compile(self, changed=True):'),
+                        original.replace('import Comparator.Compare', 'import Export.Parse'),
+                        original.replace('from . import sandbox_policy\n', '').replace(
+                            '    return sandbox_policy.check(output)',
+                            '    from . import sandbox_policy\n    return sandbox_policy.check(output)'),
+                        original.replace("'gates.py', 'sandbox_policy.py']}", "'gates.py']}").replace(
+                            '    return sandbox_policy.check(output)',
+                            "    marker = \"'gates.py', 'sandbox_policy.py']}\"\n    return sandbox_policy.check(output)")):
+            (self.impl / 'ns_worker.py').write_text(changed)
+            with self.assertRaises(ValueError): self.independent_migrate(True)
+        (self.impl / 'ns_worker.py').write_text(original)
+
+    def test_independent_profile_recovers_after_three_committed_receipts(self):
+        self.independent_fixture(); module = importlib.import_module('ns_queue.audit_migration')
+        original_write = module._replace_receipt; calls = []
+        def interrupted(path, content):
+            original_write(path, content); calls.append(path)
+            if len(calls) == 3: raise InterruptedError('simulated independent migration crash')
+        with patch.object(module, '_replace_receipt', interrupted), self.assertRaises(InterruptedError): self.independent_migrate(True)
+        self.assertEqual(self.store.snapshot(), self.independent_state)
+        self.independent_migrate(True); migrated = self.store.snapshot()
+        self.assertEqual(len(migrated['checkpointMigrations']), 3)
+        self.independent_migrate(True); self.assertEqual(self.store.snapshot(), migrated)
 
 
 if __name__ == '__main__': unittest.main()

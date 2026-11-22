@@ -1,9 +1,10 @@
-"""Rebind verified receipts for explicit reviewed audit/kernel Lean API repairs.
+"""Rebind verified receipts for explicit reviewed Lean API and sandbox policy repairs.
 
 No build command is run. The immutable write-ahead directory retains exact old
 and proposed bytes, so interrupted replacements can only resume that transaction.
 """
 import argparse
+import ast
 import contextlib
 import copy
 import fcntl
@@ -30,7 +31,14 @@ KERNEL_FIXES = (('import Export.Parse\n', 'import Comparator.Compare\n'),
 REPAIRS = {'audit-namespace': (MIGRATION_ID, SCOPE, 'audit'),
            'kernel-api': ('kernel-lean-api-v1',
                           'REPLAY: four Lean API compatibility changes; preserve source/dependencies/compile/audit execution',
-                          'kernel')}
+                          'kernel'),
+           'independent-policy': ('independent-policy-v1',
+                                  'independent policy only: measured layered guard and exact ABI4 warning; preserve five passed stages',
+                                  'independent')}
+APPROVED_POLICY_SHA256 = '88a28f32381b31e83a1ecbd553a446c0c59e8539eb5f3ede46e6d97c3ee3f878'
+POLICY_IMPORT = 'from . import sandbox_policy\n'
+POLICY_APPEND_OLD = "'gates.py']}"
+POLICY_APPEND_NEW = "'gates.py', 'sandbox_policy.py']}"
 
 
 def _sha(content):
@@ -42,7 +50,7 @@ def _json(value):
 
 
 def _transaction_file(directory, migration_id, name):
-    prefix = migration_id + '.' if migration_id == REPAIRS['kernel-api'][0] else ''
+    prefix = migration_id + '.' if migration_id != MIGRATION_ID else ''
     return directory / (prefix + name)
 
 
@@ -98,7 +106,7 @@ def _verify_change(old, current_bytes, repair):
         generator = old.split('\ndef audit_script(', 1)
         if len(generator) != 2 or generator[1].split('\n\nREPLAY =', 1)[0].count(OLD) != 2:
             raise ValueError('namespace fix is outside audit_script')
-    else:
+    elif repair == 'kernel-api':
         region = old.split("\n\nREPLAY = '''", 1)
         if len(region) != 2: raise ValueError('missing fixed REPLAY template')
         region = region[1].split("\n'''", 1)[0]
@@ -109,49 +117,83 @@ def _verify_change(old, current_bytes, repair):
             transformed = transformed.replace(before, after)
         if transformed.encode() != current_bytes:
             raise ValueError('worker change exceeds the reviewed kernel API repair')
+    else:
+        current = current_bytes.decode()
+        imports = [node for node in ast.parse(current).body if isinstance(node, ast.ImportFrom) and
+                   node.level == 1 and node.module is None and len(node.names) == 1 and
+                   node.names[0].name == 'sandbox_policy' and node.names[0].asname is None]
+        if (old.count(POLICY_IMPORT) != 0 or current.count('\n' + POLICY_IMPORT) != 1 or len(imports) != 1 or
+                old.count(POLICY_APPEND_OLD) != 1 or current.count(POLICY_APPEND_NEW) != 1 or
+                current.count(POLICY_APPEND_OLD) != 0 or old.count(POLICY_APPEND_NEW) != 0):
+            raise ValueError('independent repair requires exactly the policy import and implementation append')
+        normalized = current.replace(POLICY_IMPORT, '').replace(POLICY_APPEND_NEW, POLICY_APPEND_OLD)
+        if _without_policy_functions(old) != _without_policy_functions(normalized):
+            raise ValueError('worker change exceeds the two independent policy functions')
 
 
-def _verify_namespace_lineage(root, state, originals, implementation, seed, allowed_roots):
-    """Anchor all inherited migration metadata to the previous committed ledger."""
-    directory = root / 'worker/checkpoints/migrations' / MIGRATION_ID
-    ledger = [entry for entry in state.get('checkpointMigrations', []) if entry.get('id') == MIGRATION_ID]
-    if len(ledger) != 1: raise ValueError('kernel repair requires the committed namespace migration')
-    ledger = ledger[0]; expected_path = str((directory / 'manifest.json').relative_to(root))
-    if ledger.get('manifestPath') != expected_path: raise ValueError('prior namespace manifest path differs')
+
+def _without_policy_functions(source):
+    tree = ast.parse(source); spans = []
+    for node in tree.body:
+        if isinstance(node, ast.FunctionDef) and node.name == 'validate_independent_output':
+            spans.append(node)
+        if isinstance(node, ast.ClassDef) and node.name == 'NSWorker':
+            spans.extend(method for method in node.body if isinstance(method, ast.FunctionDef) and method.name == '_independent')
+    if (len(spans) != 2 or {node.name for node in spans} != {'validate_independent_output', '_independent'} or
+            any(node.decorator_list for node in spans)):
+        raise ValueError('independent policy function boundaries differ')
+    lines = source.splitlines(keepends=True)
+    for node in sorted(spans, key=lambda node: node.lineno, reverse=True):
+        lines[node.lineno - 1:node.end_lineno] = ['# APPROVED_POLICY_FUNCTION:' + node.name + '\n']
+    return ''.join(lines)
+
+
+def _verify_prior_migration(root, state, originals, implementation, seed, allowed_roots, profile):
+    """Verify every ancestor manifest and original/proposed receipt against its ledger."""
+    migration_id, scope, phase = REPAIRS[profile]; preserved = STAGES[:STAGES.index(phase)]
+    directory = root / 'worker/checkpoints/migrations' / migration_id
+    ledgers = [entry for entry in state.get('checkpointMigrations', []) if entry.get('id') == migration_id]
+    if len(ledgers) != 1: raise ValueError('missing committed prior migration: ' + migration_id)
+    ledger = ledgers[0]
+    expected_path = str(_transaction_file(directory, migration_id, 'manifest.json').relative_to(root))
+    if ledger.get('manifestPath') != expected_path: raise ValueError('prior migration manifest path differs')
     content = _read(root / ledger['manifestPath']); manifest = json.loads(content)
-    if (ledger.get('scope') != SCOPE or ledger.get('manifestPath') != expected_path or
-            ledger.get('manifestSha256') != _sha(content) or manifest.get('id') != MIGRATION_ID or
-            manifest.get('scope') != SCOPE or manifest.get('allowedRoots') != list(map(str, allowed_roots)) or
+    if (ledger.get('scope') != scope or ledger.get('manifestSha256') != _sha(content) or
+            manifest.get('id') != migration_id or manifest.get('scope') != scope or
+            manifest.get('allowedRoots') != list(map(str, allowed_roots)) or
             manifest.get('newImplementation') != implementation or manifest.get('newSeedSha256') != seed or
-            ledger.get('receipts') != manifest.get('receipts') or set(manifest.get('receipts', {})) != set(PRESERVED)):
-        raise ValueError('prior namespace manifest/ledger differs')
+            ledger.get('receipts') != manifest.get('receipts') or set(manifest.get('receipts', {})) != set(preserved)):
+        raise ValueError('prior migration manifest/ledger differs: ' + migration_id)
     old_implementation = manifest.get('oldImplementation', {})
-    if (set(old_implementation) != set(NAMES) or
+    if (set(old_implementation) != set(NAMES) or set(implementation) != set(NAMES) or
             any(old_implementation[name] != implementation[name] for name in NAMES if name != 'ns_worker.py')):
-        raise ValueError('prior namespace implementation differs')
+        raise ValueError('prior migration implementation differs')
     previous = json_hash({'spec': state['spec'], 'implementation': old_implementation})
-    if previous != manifest.get('oldSeedSha256'): raise ValueError('prior namespace seed differs')
+    if previous != manifest.get('oldSeedSha256'): raise ValueError('prior migration seed differs')
+    saved = {stage: _read(_transaction_file(directory, migration_id, stage + '.original.json')) for stage in preserved}
+    if profile == 'kernel-api':
+        ancestor = _verify_prior_migration(root, state, saved, old_implementation, previous, allowed_roots, 'audit-namespace')
+        if manifest.get('priorMigrationManifestSha256') != ancestor: raise ValueError('ancestor manifest hash differs')
     last_proposed = seed
-    for stage in PRESERVED:
-        original = _read(directory / (stage + '.original.json'))
-        proposed = _read(directory / (stage + '.proposed.json'))
+    for stage in preserved:
+        original = saved[stage]
+        proposed = _read(_transaction_file(directory, migration_id, stage + '.proposed.json'))
         entry = manifest['receipts'][stage]; receipt = json.loads(original)
         if (entry != {'originalSha256': _sha(original), 'proposedSha256': _sha(proposed)} or
-                originals[stage] != proposed or receipt.get('stage') != stage or
-                receipt.get('status') != 'PASSED' or type(receipt.get('exitCode')) is not int or
-                receipt['exitCode'] != 0 or receipt.get('inputSha256') != previous or
-                not receipt.get('outputs') or 'checkpointMigration' in receipt):
-            raise ValueError('prior namespace receipt lineage differs: ' + stage)
-        updated = copy.deepcopy(receipt)
-        updated['inputSha256'] = last_proposed
-        updated['checkpointMigration'] = {'id': MIGRATION_ID, 'scope': SCOPE,
+                originals[stage] != proposed or receipt.get('stage') != stage or receipt.get('status') != 'PASSED' or
+                type(receipt.get('exitCode')) is not int or receipt['exitCode'] != 0 or
+                receipt.get('inputSha256') != previous or not receipt.get('outputs') or
+                (profile == 'audit-namespace' and 'checkpointMigration' in receipt)):
+            raise ValueError('prior receipt lineage differs: ' + stage)
+        updated = copy.deepcopy(receipt); updated['inputSha256'] = last_proposed
+        updated['checkpointMigration'] = {'id': migration_id, 'scope': scope,
             'originalSha256': _sha(original), 'originalInputSha256': previous,
-            'oldWorkerSha256': old_implementation['ns_worker.py'],
-            'newWorkerSha256': implementation['ns_worker.py']}
-        if _json(updated) != proposed: raise ValueError('prior namespace proposed receipt differs: ' + stage)
+            'oldWorkerSha256': old_implementation['ns_worker.py'], 'newWorkerSha256': implementation['ns_worker.py']}
+        if 'checkpointMigration' in receipt:
+            updated['checkpointMigration']['previous'] = copy.deepcopy(receipt['checkpointMigration'])
+        if _json(updated) != proposed: raise ValueError('prior proposed receipt differs: ' + stage)
         previous = _sha(original); last_proposed = _sha(proposed)
-    if 'checkpointMigration' in json.loads(originals['audit']):
-        raise ValueError('unexpected earlier audit receipt migration')
+    if 'checkpointMigration' in json.loads(originals[phase]): raise ValueError('unexpected earlier phase receipt migration')
     return _sha(content)
 
 
@@ -167,16 +209,21 @@ def _migrate(root, old_code, implementation_dir, allowed_roots, execute, repair)
     old_bytes = _read(old_code); old = old_bytes.decode()
     current_bytes = _read(implementation_dir / 'ns_worker.py')
     _verify_change(old, current_bytes, repair)
-    implementation = {name: _sha(_read(implementation_dir / name)) for name in NAMES}
-    old_implementation = {**implementation, 'ns_worker.py': _sha(old_bytes)}
+    names = (*NAMES, 'sandbox_policy.py') if repair == 'independent-policy' else NAMES
+    implementation = {name: _sha(_read(implementation_dir / name)) for name in names}
+    if repair == 'independent-policy' and implementation['sandbox_policy.py'] != APPROVED_POLICY_SHA256:
+        raise ValueError('sandbox policy module differs from the reviewed SHA256')
+    old_implementation = {name: implementation[name] for name in NAMES}
+    old_implementation['ns_worker.py'] = _sha(old_bytes)
     store = QueueStore.readonly(root); state = store.snapshot()
     validate_spec(state['spec'])
     old_seed = json_hash({'spec': state['spec'], 'implementation': old_implementation})
     new_seed = json_hash({'spec': state['spec'], 'implementation': implementation})
     originals = {stage: _read(_transaction_file(transaction, migration_id, stage + '.original.json') if transaction.exists()
                               else checkpoints / (stage + '.json')) for stage in preserved}
-    prior_manifest = (_verify_namespace_lineage(root, state, originals, old_implementation, old_seed, allowed_roots)
-                      if repair == 'kernel-api' else None)
+    prior_profile = {'kernel-api': 'audit-namespace', 'independent-policy': 'kernel-api'}.get(repair)
+    prior_manifest = (_verify_prior_migration(root, state, originals, old_implementation, old_seed, allowed_roots, prior_profile)
+                      if prior_profile else None)
     proposed = {}; entries = {}; previous_old = old_seed; previous_new = new_seed
     for stage in preserved:
         content = originals[stage]; receipt = json.loads(content)

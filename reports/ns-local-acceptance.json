@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "createdAt": "2026-11-22T07:32:09.879Z",
-  "sourceSha256": "47d3350cc2e4c5a0a20fb25e26aa323ef93f649e1583d434d50a7f328dc1fc61",
+  "createdAt": "2026-11-22T08:09:21.698Z",
+  "sourceSha256": "fb3ba6f729a1907d154a15bde7afb39f329ca21a65d37b6691fdbe8939a86973",
   "scope": "Local platform and real Lean fixture tests only; no RH/NS proof execution; same command groups as deploy/ns/local_acceptance.py",
   "executionMode": "parallel independent groups",
   "checks": {
@@ -46,6 +46,15 @@
       "exitCode": 0,
       "log": "reports/ns-local/resources.log"
     },
+    "sandboxPolicy": {
+      "command": [
+        "node",
+        "--test",
+        "tests/ns-sandbox-policy.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/sandboxPolicy.log"
+    },
     "uiBuild": {
       "command": [
         "npm",
@@ -55,15 +64,6 @@
       "exitCode": 0,
       "log": "reports/ns-local/uiBuild.log"
     },
-    "sandboxPermissions": {
-      "command": [
-        "node",
-        "--test",
-        "tests/ns-supervisor-permissions.test.mjs"
-      ],
-      "exitCode": 0,
-      "log": "reports/ns-local/sandboxPermissions.log"
-    },
     "leanAudit": {
       "command": [
         "node",
@@ -72,6 +72,15 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/leanAudit.log"
+    },
+    "sandboxPermissions": {
+      "command": [
+        "node",
+        "--test",
+        "tests/ns-supervisor-permissions.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/sandboxPermissions.log"
     },
     "browser": {
       "command": [
@@ -91,15 +100,6 @@
       "exitCode": 0,
       "log": "reports/ns-local/parallelBrowser.log"
     },
-    "sharedHTTPS": {
-      "command": [
-        "node",
-        "--test",
-        "tests/shared-https-browser.test.mjs"
-      ],
-      "exitCode": 0,
-      "log": "reports/ns-local/sharedHTTPS.log"
-    },
     "entryBrowser": {
       "command": [
         "node",
@@ -108,6 +108,15 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/entryBrowser.log"
+    },
+    "sharedHTTPS": {
+      "command": [
+        "node",
+        "--test",
+        "tests/shared-https-browser.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/sharedHTTPS.log"
     },
     "leanReplay": {
       "command": [

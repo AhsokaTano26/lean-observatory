@@ -1,6 +1,6 @@
- Container lean-ns-replay-test-lean-replay-run-3539eeb948fb Creating 
- Container lean-ns-replay-test-lean-replay-run-3539eeb948fb Created 
-✔ REPLAY with cached v4.33 API adaptation checks real Lean proofs and quotient primitives (11992.43775ms)
+ Container lean-ns-replay-test-lean-replay-run-f0b98df916a0 Creating 
+ Container lean-ns-replay-test-lean-replay-run-f0b98df916a0 Created 
+✔ REPLAY with cached v4.33 API adaptation checks real Lean proofs and quotient primitives (15650.208084ms)
 ℹ tests 1
 ℹ suites 0
 ℹ pass 1
@@ -8,4 +8,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 12124.559875
+ℹ duration_ms 15976.218833

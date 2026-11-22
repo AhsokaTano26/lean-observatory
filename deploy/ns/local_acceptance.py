@@ -37,6 +37,7 @@ def main():
         'sandboxPermissions':['node','--test','tests/ns-supervisor-permissions.test.mjs'],
         'leanAudit':['node','--test','tests/ns-audit-lean.test.mjs'],
         'leanReplay':['node','--test','tests/ns-replay-lean.test.mjs'],
+        'sandboxPolicy':['node','--test','tests/ns-sandbox-policy.test.mjs'],
         'entryBrowser':['node','--test','tests/entry-browser.test.mjs'],
         'sharedHTTPS':['node','--test','tests/shared-https-browser.test.mjs'],
         'rhBrowser':['node','node_modules/@playwright/test/cli.js','test'],

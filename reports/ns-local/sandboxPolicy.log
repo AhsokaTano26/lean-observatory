@@ -1,0 +1,11 @@
+ Container lean-ns-policy-test-scope-run-af82bb5a6cf9 Creating 
+ Container lean-ns-policy-test-scope-run-af82bb5a6cf9 Created 
+✔ Real Linux layered sandbox accepts measured guards and rejects missing Landlock or AF_UNIX seccomp (2165.654083ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2510.986833
