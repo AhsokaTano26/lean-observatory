@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "createdAt": "2026-11-22T04:50:59.376Z",
-  "sourceSha256": "499eec2f1bd5df2c97559a467537647660132bf560b1d31a94d4a477af32bb80",
+  "createdAt": "2026-11-22T04:57:06.879Z",
+  "sourceSha256": "b948fbe0c0754453d6d30f1df86116c71a40a38232080c1a7f132ae1311b3edf",
   "scope": "Local platform tests only; no real proof execution; same command groups as deploy/ns/local_acceptance.py",
   "executionMode": "parallel independent groups",
   "checks": {

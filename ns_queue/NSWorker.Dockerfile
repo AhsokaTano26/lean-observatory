@@ -29,6 +29,7 @@ COPY ns_queue ./ns_queue
 COPY ns_queue/child.py ns_queue/build-tools.sh ns_queue/manifest.json /sandbox/opt/ns-queue/
 RUN chmod 755 /sandbox/opt/ns-queue/child.py /sandbox/opt/ns-queue/build-tools.sh \
  && ln -s /opt/ns-queue/child.py /sandbox/usr/local/bin/comparator-landrun \
+ && ln -s /work/ns/tools/nanoda/target/release/nanoda_bin /sandbox/usr/local/bin/nanoda_bin \
  && printf '[safe]\n\tdirectory = /work/ns/tools/comparator\n\tdirectory = /work/ns/tools/comparator/.lake/packages/lean4export\n\tdirectory = /work/ns/tools/landrun\n\tdirectory = /work/ns/tools/nanoda\n' > /sandbox/etc/gitconfig
 # The trusted supervisor needs chroot/unshare; each source argv drops to 10002.
 # Host driver must supply private NS-only volumes, required namespace capability,
