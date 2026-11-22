@@ -16,6 +16,7 @@ EnvironmentFile=/opt/lean-observatory-ns/.env
 ExecStart=/usr/bin/python3 -m ns_queue.controller --root /var/lib/lean-observatory-queue --deployment /opt/lean-observatory-ns --interval 10
 Restart=on-failure
 RestartSec=10
+KillMode=mixed
 CPUQuota=5%
 MemoryMax=128M
 TasksMax=32

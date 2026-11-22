@@ -1,5 +1,5 @@
-✔ Both RH and NS profiles reserve four host vCPUs and use 250 decimal GB without swap (368.894542ms)
-✔ NS overlap allocation reserves memory and prefers RH under contention (82.8955ms)
+✔ Both RH and NS profiles reserve four host vCPUs and use 250 decimal GB without swap (267.557667ms)
+✔ NS overlap allocation reserves memory and prefers RH under contention (54.238542ms)
 ℹ tests 2
 ℹ suites 0
 ℹ pass 2
@@ -7,4 +7,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 594.188166
+ℹ duration_ms 443.213
