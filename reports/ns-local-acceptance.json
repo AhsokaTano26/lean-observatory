@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "createdAt": "2026-11-22T04:57:06.879Z",
-  "sourceSha256": "b948fbe0c0754453d6d30f1df86116c71a40a38232080c1a7f132ae1311b3edf",
+  "createdAt": "2026-11-22T05:02:49.582Z",
+  "sourceSha256": "1c053d36c33c05529bf66e2a1d2bb259bd06a5aa64e90d0eff7f3cec63f444ae",
   "scope": "Local platform tests only; no real proof execution; same command groups as deploy/ns/local_acceptance.py",
   "executionMode": "parallel independent groups",
   "checks": {
@@ -13,6 +13,15 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/compile.log"
+    },
+    "charts": {
+      "command": [
+        "node",
+        "--test",
+        "tests/chart-math.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/charts.log"
     },
     "compose": {
       "command": [
@@ -27,15 +36,6 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/compose.log"
-    },
-    "charts": {
-      "command": [
-        "node",
-        "--test",
-        "tests/chart-math.test.ts"
-      ],
-      "exitCode": 0,
-      "log": "reports/ns-local/charts.log"
     },
     "resources": {
       "command": [

@@ -371,6 +371,27 @@ class NSWorkerTests(unittest.TestCase):
                     self.assertEqual(evaluate(syscall, 1), 0x00050001)
                     self.assertEqual(evaluate(syscall, 2), 0x7fff0000)
 
+    def test_restored_source_checkpoint_refreshes_per_container_runtime(self):
+        worker=self.module();store=importlib.import_module('ns_queue.store').QueueStore(self.root)
+        store.initialize(worker.load_manifest(),'20565ace60c2',{'capUsd':10})
+        instance=worker.NSWorker(self.root,sandbox_root=self.root/'sandbox');calls=[];source_calls=[]
+        resolver=instance.sandbox_root/'etc/resolv.conf';resolver.parent.mkdir(parents=True)
+        def prepare(root,original):calls.append(True);resolver.write_text('current-runtime-dns');return instance.project
+        def source():
+            source_calls.append(True);instance.original.mkdir(parents=True);instance.project.mkdir(parents=True)
+            worker.sandbox.prepare(instance.sandbox_root,instance.original)
+            p=instance.original/'Main.lean';p.write_text('def fixture := 1');return [p]
+        instance._source=source
+        for stage in ('dependencies','compile','audit','kernel','independent','persist'):
+            def action(stage=stage):
+                p=instance.work/(stage+'-fixture.txt');p.write_text(stage);return [p]
+            setattr(instance,'_'+stage,action)
+        with patch.object(worker,'durable_rh',return_value=True),patch.object(worker.os,'geteuid',return_value=0),patch.object(worker.os.sys,'platform','linux'),patch.object(worker.sandbox,'prepare',side_effect=prepare):
+            instance.run();resolver.write_text('stale-image-dns');instance.run()
+        self.assertEqual(source_calls,[True],'verified source action must not repeat')
+        self.assertEqual(resolver.read_text(),'current-runtime-dns')
+        self.assertEqual(len(calls),2)
+
 
 if __name__ == '__main__':
     unittest.main()

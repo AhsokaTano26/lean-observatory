@@ -1,13 +1,13 @@
-✔ normalize preserves missing measurements, sorts times and deduplicates snapshots (1.2565ms)
-✔ time spacing reflects elapsed time rather than sample order (0.092833ms)
-✔ domains use calm readable bounds and preserve percent scale (0.390083ms)
-✔ axis labels are compact, no fractional large-rate noise (41.099709ms)
-✔ missing data and outages break paths instead of spanning the gap (0.594709ms)
-✔ pointer inspection picks nearest timestamp including null (0.112625ms)
-✔ a sparse outage cannot become the inferred sampling cadence (0.114833ms)
-✔ one-second history retains the full thirty-minute selectable window (1.808416ms)
-✔ live and polled history merge without duplicate points or losing newer samples (0.348209ms)
-✔ stale history breaks every resource trace without discarding real compile progress (0.334542ms)
+✔ normalize preserves missing measurements, sorts times and deduplicates snapshots (3.004375ms)
+✔ time spacing reflects elapsed time rather than sample order (0.117709ms)
+✔ domains use calm readable bounds and preserve percent scale (0.481ms)
+✔ axis labels are compact, no fractional large-rate noise (66.099667ms)
+✔ missing data and outages break paths instead of spanning the gap (0.164209ms)
+✔ pointer inspection picks nearest timestamp including null (0.14175ms)
+✔ a sparse outage cannot become the inferred sampling cadence (0.097125ms)
+✔ one-second history retains the full thirty-minute selectable window (2.240959ms)
+✔ live and polled history merge without duplicate points or losing newer samples (0.265542ms)
+✔ stale history breaks every resource trace without discarding real compile progress (0.157459ms)
 ℹ tests 10
 ℹ suites 0
 ℹ pass 10
@@ -15,4 +15,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 271.621709
+ℹ duration_ms 316.629625

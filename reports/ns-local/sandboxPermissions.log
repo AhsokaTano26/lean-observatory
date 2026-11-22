@@ -1,9 +1,9 @@
- Container lean-ns-supervisor-test-permissions-run-e62389fa5248 Creating 
- Container lean-ns-supervisor-test-permissions-run-e62389fa5248 Created 
- Container lean-ns-socket-test-sockets-run-2c2526632861 Creating 
- Container lean-ns-socket-test-sockets-run-2c2526632861 Created 
-✔ Real restricted Linux supervisor prepares and reopens UID10002 directories without FOWNER (1026.887958ms)
-✔ Real seccomp keeps checker AF_UNIX denial while permitting dependency resolver sockets (1666.44725ms)
+ Container lean-ns-supervisor-test-permissions-run-1f7a9b5c3af1 Creating 
+ Container lean-ns-supervisor-test-permissions-run-1f7a9b5c3af1 Created 
+ Container lean-ns-socket-test-sockets-run-daa5bd282eea Creating 
+ Container lean-ns-socket-test-sockets-run-daa5bd282eea Created 
+✔ Real restricted Linux supervisor prepares and reopens UID10002 directories without FOWNER (2070.521833ms)
+✔ Real seccomp keeps checker AF_UNIX denial while permitting dependency resolver sockets (1499.996208ms)
 ℹ tests 2
 ℹ suites 0
 ℹ pass 2
@@ -11,4 +11,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 2827.318292
+ℹ duration_ms 3714.570708

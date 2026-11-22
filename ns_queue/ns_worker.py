@@ -588,6 +588,10 @@ class NSWorker:
                     commands = self.store.snapshot().get('commands', [])[before:]
                     return [*outputs, *[self.root / command['logFile'] for command in commands]]
                 skipped = checkpoint.run(stage, previous, action)
+                if stage == 'source' and skipped:
+                    # A replacement container has fresh /etc even when its
+                    # persistent source checkpoint and build volume are valid.
+                    sandbox.prepare(self.sandbox_root, self.original)
                 def finish(s):
                     row = next(row for row in s['stages'] if row['id'] == stage)
                     row.update(status='PASSED', finishedAt=time.time(), exitCode=0, restored=skipped,
