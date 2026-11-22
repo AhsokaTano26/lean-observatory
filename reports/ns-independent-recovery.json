@@ -1,0 +1,199 @@
+{
+  "sampledAt": 1795335229.3432426,
+  "queue": {
+    "id": "ns-f9e8bc5b38b6",
+    "status": "RUNNING",
+    "phase": "independent",
+    "reason": "running",
+    "execution": "RUNNING",
+    "compile": {
+      "expectedTotal": 2659,
+      "total": 2659,
+      "succeeded": 2659,
+      "failed": 0,
+      "rate": 0,
+      "etaSeconds": null,
+      "currentModule": "Euler.Solution",
+      "jobs": 60
+    },
+    "proofAccepted": false,
+    "workerHeartbeat": 1795335228.933846
+  },
+  "stages": [
+    {
+      "id": "source",
+      "status": "PASSED",
+      "exitCode": 0,
+      "startedAt": 1795335099.4148414,
+      "finishedAt": 1795335099.7070746,
+      "error": null,
+      "restored": true,
+      "checkpointSha256": "00b3ce199fa0117f064bba53bee3b505f76dd38139cbaede9b74471b22525f52"
+    },
+    {
+      "id": "dependencies",
+      "status": "PASSED",
+      "exitCode": 0,
+      "startedAt": 1795335100.4728005,
+      "finishedAt": 1795335100.7302828,
+      "error": null,
+      "restored": true,
+      "checkpointSha256": "d5a09ac3a8dc8fd64653e00496f6cf88530f1100f93429ca5a94b07756b3b6fa"
+    },
+    {
+      "id": "compile",
+      "status": "PASSED",
+      "exitCode": 0,
+      "startedAt": 1795335101.4685261,
+      "finishedAt": 1795335103.158823,
+      "error": null,
+      "restored": true,
+      "checkpointSha256": "b46f61f254f8f5d37535f3cdb7a20b12d1981c91280c39386a3a74ab21b0e93c"
+    },
+    {
+      "id": "audit",
+      "status": "PASSED",
+      "exitCode": 0,
+      "startedAt": 1795335103.8917658,
+      "finishedAt": 1795335103.8956108,
+      "error": null,
+      "restored": true,
+      "checkpointSha256": "7a7d03dccba1d6f661494d484b5f0dcb7a959f019f12c6f937e7db0892754b00"
+    },
+    {
+      "id": "kernel",
+      "status": "PASSED",
+      "exitCode": 0,
+      "startedAt": 1795335104.6218903,
+      "finishedAt": 1795335105.3080895,
+      "error": null,
+      "restored": true,
+      "checkpointSha256": "1f9400f5e2987ac0678f7a6005b267c61cb244ceda89f06b00dbfe1ba4c8718e"
+    },
+    {
+      "id": "independent",
+      "status": "RUNNING",
+      "exitCode": null,
+      "startedAt": 1795335106.036008,
+      "finishedAt": null,
+      "error": null
+    },
+    {
+      "id": "persist",
+      "status": "PENDING",
+      "exitCode": null,
+      "startedAt": null,
+      "finishedAt": null
+    }
+  ],
+  "audits": [
+    {
+      "name": "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+      "type": "PASSED",
+      "axioms": "PASSED",
+      "dependencies": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "kernel": "PASSED",
+      "independent": "PENDING"
+    },
+    {
+      "name": "NavierStokes.Comparator.navier_stokes_breakdown_periodic",
+      "type": "PASSED",
+      "axioms": "PASSED",
+      "dependencies": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "kernel": "PASSED",
+      "independent": "PENDING"
+    }
+  ],
+  "commandCount": 72,
+  "nsContainer": {
+    "id": "c592b82a770edf0483aa361129770b5a280a5a7508c9b741f3245f5d1ef3367c",
+    "pid": 1327528,
+    "running": true,
+    "exitCode": 0,
+    "NanoCpus": 60000000000,
+    "Memory": 220000000000
+  },
+  "recentCommands": [
+    {
+      "id": null,
+      "stage": "independent",
+      "status": "PASSED",
+      "exitCode": 0,
+      "logFile": "worker/logs/0069-independent.log",
+      "startedAt": 1795335195.062106,
+      "finishedAt": 1795335195.2337687,
+      "argvPrefix": [
+        "python3",
+        "-I",
+        "-c",
+        "open('/work/ns/evidence/landlock-write-probe',\"w\").write(\"baseline\")"
+      ],
+      "logTail": []
+    },
+    {
+      "id": null,
+      "stage": "independent",
+      "status": "PASSED",
+      "exitCode": 0,
+      "logFile": "worker/logs/0070-independent.log",
+      "startedAt": 1795335195.2431571,
+      "finishedAt": 1795335195.454387,
+      "argvPrefix": [
+        "/usr/local/bin/comparator-landrun",
+        "--ro",
+        "/",
+        "--rox",
+        "/usr"
+      ],
+      "logTail": [
+        "[landrun:warn] 2026/11/22 08:13:15 kernel supports Landlock ABI v4, so these default restrictions are not enforced: device ioctl (ABI v5), pathname UNIX socket connections (ABI v9), UDP bind/connect/send (ABI v10), abstract UNIX socket and signal scoping (ABI v6)",
+        "NS_SANDBOX_SCOPE|{\"capEff\": 0, \"devices\": {\"null\": [1, 3], \"urandom\": [1, 9]}, \"filesystemWriteDenied\": true, \"gid\": 10002, \"ipv4TcpDenied\": true, \"ipv4UdpDenied\": true, \"ipv6TcpDenied\": true, \"ipv6UdpDenied\": true, \"landlockAbi\": 4, \"noIpv4Routes\": true, \"noNewPrivs\": 1, \"noSys\": true, \"pid1SameRoot\": true, \"pid1Uid\": 10002, \"safeFds\": true, \"seccomp\": 2, \"uid\": 10002, \"unixSocketDenied\": true, \"unixSocketpairDenied\": true, \"userNamespaceDenied\": true}"
+      ]
+    },
+    {
+      "id": null,
+      "stage": "independent",
+      "status": "RUNNING",
+      "exitCode": null,
+      "logFile": "worker/logs/0071-independent.log",
+      "startedAt": 1795335195.4641438,
+      "finishedAt": null,
+      "argvPrefix": [
+        "lake",
+        "env",
+        "/work/ns/tools/comparator/.lake/build/bin/comparator",
+        "ComparatorChallenges/NavierStokes.json"
+      ],
+      "logTail": [
+        "✔ [8763/8927] Built NavierStokes.R3.ComparisonGronwall (2.5s)",
+        "✔ [8764/8968] Built NavierStokes.R3.TemporalTestUniqueness (2.7s)",
+        "✔ [8765/8981] Built NavierStokes.R3.HilbertFunctionalExtension (2.7s)",
+        "✔ [8766/9042] Built NavierStokes.R3.ComparisonYoung (3.2s)",
+        "✔ [8769/9371] Built NavierStokes.Flatness (4.8s)",
+        "✔ [8770/9371] Built NavierStokes.DiagonalScale (4.0s)",
+        "✔ [8771/9371] Built NavierStokes.R3.CompactForceBound (5.7s)",
+        "✔ [8772/9371] Built NavierStokes.PulseGrowth (5.5s)"
+      ]
+    }
+  ],
+  "rhWorker": {
+    "id": "f214289894a9e3925cf95cdbde108b65d8075660da5821aa42e0e67ad001f651",
+    "pid": 15538,
+    "startedAt": "2026-11-21T15:04:04.120575095Z",
+    "running": true
+  },
+  "rhLeanchecker": {
+    "pid": 1117379,
+    "startTicks": "4110760",
+    "cpuTicks": 2187300,
+    "command": "leanchecker --fresh Main "
+  }
+}

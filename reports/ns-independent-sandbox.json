@@ -1,0 +1,52 @@
+{
+  "profile": "landlock+namespaces+seccomp",
+  "nativeLandlockAbi": 4,
+  "guards": {
+    "capEff": 0,
+    "devices": {
+      "null": [
+        1,
+        3
+      ],
+      "urandom": [
+        1,
+        9
+      ]
+    },
+    "filesystemWriteDenied": true,
+    "gid": 10002,
+    "ipv4TcpDenied": true,
+    "ipv4UdpDenied": true,
+    "ipv6TcpDenied": true,
+    "ipv6UdpDenied": true,
+    "landlockAbi": 4,
+    "noIpv4Routes": true,
+    "noNewPrivs": 1,
+    "noSys": true,
+    "pid1SameRoot": true,
+    "pid1Uid": 10002,
+    "safeFds": true,
+    "seccomp": 2,
+    "uid": 10002,
+    "unixSocketDenied": true,
+    "unixSocketpairDenied": true,
+    "userNamespaceDenied": true
+  },
+  "devicePolicy": "null-and-urandom-only; no-sensitive-inherited-fds",
+  "nativeFeatureLimitations": [
+    "ioctl restriction unavailable before ABI 5",
+    "UNIX socket and signal scoping unavailable before ABI 6/9",
+    "UDP restriction unavailable before ABI 10"
+  ],
+  "limitations": [
+    "ioctl syscall is not disabled; only null/urandom devices and pipe/null inherited fds are exposed",
+    "signal isolation is provided by the private PID namespace, not a per-Landlock-domain signal scope"
+  ],
+  "nativeWarnings": [
+    "[landrun:warn] 2026/11/22 08:10:51 kernel supports Landlock ABI v4, so these default restrictions are not enforced: device ioctl (ABI v5), pathname UNIX socket connections (ABI v9), UDP bind/connect/send (ABI v10), abstract UNIX socket and signal scoping (ABI v6)"
+  ],
+  "kind": "ACTUAL_PINNED_LANDRUN_SCOPE_PROBE",
+  "exitCode": 0,
+  "logSha256": "ad26694e99fa9abd8ba61c4785df0a804977ec70a6e88561a7ec4047d8c3b156",
+  "proofAccepted": false
+}

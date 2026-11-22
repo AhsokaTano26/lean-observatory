@@ -1,0 +1,1306 @@
+{
+  "sampledAt": 1795335082.1758556,
+  "sourceSha256": "fb3ba6f729a1907d154a15bde7afb39f329ca21a65d37b6691fdbe8939a86973",
+  "before": {
+    "lean-observatory-api-1": {
+      "id": "65b9a04186cb7689790a80460817569755180d667bb87ff4f775e01e3798fb9f",
+      "pid": 9385,
+      "startedAt": "2026-11-21T14:51:27.113102006Z",
+      "image": "sha256:36fcd238725356a09654ffccc7348df3c570363f1841652f9cfcf5e3b8382cf9",
+      "ConfigSha256": "b45e690b72a0fe867ed01d879c98157a2010533a1509137480673a2709185f79",
+      "HostConfigSha256": "28a014974ed76301d0752bc8a884c544eace928b42934ff37bd53b785c380d1f",
+      "MountsSha256": "8199c1c130dfec74a03147af2c354603e4575609f8105d89be916f37209155fa"
+    },
+    "lean-observatory-nginx-1": {
+      "id": "697f9c760d3ef0fd37811232529c899a242553fccd78872c507352196d209b2d",
+      "pid": 29826,
+      "startedAt": "2026-11-21T15:09:20.263571297Z",
+      "image": "sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236",
+      "ConfigSha256": "e4643f0814040d79362c6feff6ea842d57b7959be8882dc356714389c5c50d06",
+      "HostConfigSha256": "cd8f02be3c252a02ffe162b1f3a27322c60e98d2d0b64bf94699c7e9c57bc86a",
+      "MountsSha256": "cc285a348ddd3232c0570be741b0eaa0c82a494606fcdcb701a3eff09f9c95d5"
+    },
+    "lean-observatory-worker-1": {
+      "id": "f214289894a9e3925cf95cdbde108b65d8075660da5821aa42e0e67ad001f651",
+      "pid": 15538,
+      "startedAt": "2026-11-21T15:04:04.120575095Z",
+      "image": "sha256:97c552eb0c7263ca5ce065a7eff02359ebcb2f4f051fc8bb5a46b5cf1b96f50c",
+      "ConfigSha256": "204901d8434f43144d6cb256f83929e02558a06b1a75ed6d90b050edb9603c0d",
+      "HostConfigSha256": "a35492490d39a2fe72b1ecdd902373ce6097dabb11b9db38280b4287974f56a3",
+      "MountsSha256": "c04736ce851c4605007644eff3a457bc7fff967e90956e6806584cde56b0d34b"
+    },
+    "RHFiles": {
+      "/opt/lean-observatory/.env": "b1d0978a8d6c1d095f71b0ca6a0bfa8389801e76682f6e9ffa2fc78582c19639",
+      "/opt/lean-observatory/compose.amd64.yaml": "2adf703e9a8fd500f2955600c0df6b4a5abee0833833211c803aa467b854f999",
+      "/opt/lean-observatory/compose.yaml": "4dbf841480421bac52f0121dd193c50951b4d24b99c591daad0c604d75aeb83e",
+      "/opt/lean-observatory/compose.tls.yaml": "f2b9daa4377e746e2e74ff9fc3ef4403966362d0e39315d57221c286311a945d",
+      "/opt/lean-observatory/compose.acme.yaml": "cd641aaf96a300e2dfd1750d111fff4eba9f7ad64c287719948c0a920fb32668",
+      "/opt/lean-observatory/compose.tools.yaml": "e6e890630471172f783e89f6b040d891669eac79bfebedb63fffcb810d413bdb",
+      "/opt/lean-observatory/compose.smoke.yaml": "40ed7e4c558a9999efa5446108bcefb816258971b7527e08302bf0f6762f887d",
+      "/opt/lean-observatory/.data/ops/nginx-tls.conf": "f915af8ec18922ce9c776b6cac6b4defd2aa4820669edad3d5bf4f07bcfdd4c5",
+      "/etc/apparmor.d/lean-observatory-worker": "3351e03ae3d972a553ece2a2b65897f63561bfc80f7811312c3c4a7e4e2d9692"
+    }
+  },
+  "after": {
+    "lean-observatory-api-1": {
+      "id": "65b9a04186cb7689790a80460817569755180d667bb87ff4f775e01e3798fb9f",
+      "pid": 9385,
+      "startedAt": "2026-11-21T14:51:27.113102006Z",
+      "image": "sha256:36fcd238725356a09654ffccc7348df3c570363f1841652f9cfcf5e3b8382cf9",
+      "ConfigSha256": "b45e690b72a0fe867ed01d879c98157a2010533a1509137480673a2709185f79",
+      "HostConfigSha256": "28a014974ed76301d0752bc8a884c544eace928b42934ff37bd53b785c380d1f",
+      "MountsSha256": "8199c1c130dfec74a03147af2c354603e4575609f8105d89be916f37209155fa"
+    },
+    "lean-observatory-nginx-1": {
+      "id": "697f9c760d3ef0fd37811232529c899a242553fccd78872c507352196d209b2d",
+      "pid": 29826,
+      "startedAt": "2026-11-21T15:09:20.263571297Z",
+      "image": "sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236",
+      "ConfigSha256": "e4643f0814040d79362c6feff6ea842d57b7959be8882dc356714389c5c50d06",
+      "HostConfigSha256": "cd8f02be3c252a02ffe162b1f3a27322c60e98d2d0b64bf94699c7e9c57bc86a",
+      "MountsSha256": "cc285a348ddd3232c0570be741b0eaa0c82a494606fcdcb701a3eff09f9c95d5"
+    },
+    "lean-observatory-worker-1": {
+      "id": "f214289894a9e3925cf95cdbde108b65d8075660da5821aa42e0e67ad001f651",
+      "pid": 15538,
+      "startedAt": "2026-11-21T15:04:04.120575095Z",
+      "image": "sha256:97c552eb0c7263ca5ce065a7eff02359ebcb2f4f051fc8bb5a46b5cf1b96f50c",
+      "ConfigSha256": "204901d8434f43144d6cb256f83929e02558a06b1a75ed6d90b050edb9603c0d",
+      "HostConfigSha256": "a35492490d39a2fe72b1ecdd902373ce6097dabb11b9db38280b4287974f56a3",
+      "MountsSha256": "c04736ce851c4605007644eff3a457bc7fff967e90956e6806584cde56b0d34b"
+    },
+    "RHFiles": {
+      "/opt/lean-observatory/.env": "b1d0978a8d6c1d095f71b0ca6a0bfa8389801e76682f6e9ffa2fc78582c19639",
+      "/opt/lean-observatory/compose.amd64.yaml": "2adf703e9a8fd500f2955600c0df6b4a5abee0833833211c803aa467b854f999",
+      "/opt/lean-observatory/compose.yaml": "4dbf841480421bac52f0121dd193c50951b4d24b99c591daad0c604d75aeb83e",
+      "/opt/lean-observatory/compose.tls.yaml": "f2b9daa4377e746e2e74ff9fc3ef4403966362d0e39315d57221c286311a945d",
+      "/opt/lean-observatory/compose.acme.yaml": "cd641aaf96a300e2dfd1750d111fff4eba9f7ad64c287719948c0a920fb32668",
+      "/opt/lean-observatory/compose.tools.yaml": "e6e890630471172f783e89f6b040d891669eac79bfebedb63fffcb810d413bdb",
+      "/opt/lean-observatory/compose.smoke.yaml": "40ed7e4c558a9999efa5446108bcefb816258971b7527e08302bf0f6762f887d",
+      "/opt/lean-observatory/.data/ops/nginx-tls.conf": "f915af8ec18922ce9c776b6cac6b4defd2aa4820669edad3d5bf4f07bcfdd4c5",
+      "/etc/apparmor.d/lean-observatory-worker": "3351e03ae3d972a553ece2a2b65897f63561bfc80f7811312c3c4a7e4e2d9692"
+    }
+  },
+  "RHUnchanged": true,
+  "commandsPreserved": [
+    {
+      "stage": "dependencies",
+      "argv": [
+        "/bin/bash",
+        "/opt/ns-queue/build-tools.sh"
+      ],
+      "cwd": "/sandbox/work/ns/tools",
+      "status": "FAILED",
+      "startedAt": 1795322831.125849,
+      "finishedAt": 1795322848.8293679,
+      "exitCode": 101,
+      "logFile": "worker/logs/0000-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "00ed449545eb80e51d3012b214afe6b39e6f2210f68a5acbfe617a67b85b0dfc"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "/bin/bash",
+        "/opt/ns-queue/build-tools.sh"
+      ],
+      "cwd": "/sandbox/work/ns/tools",
+      "status": "FAILED",
+      "startedAt": 1795323180.7227461,
+      "finishedAt": 1795323251.7365255,
+      "exitCode": 1,
+      "logFile": "worker/logs/0001-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "fc0d55f417331ac991c8447dd5150135abfbc5442189b02c6341898443633f67"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "/bin/bash",
+        "/opt/ns-queue/build-tools.sh"
+      ],
+      "cwd": "/sandbox/work/ns/tools",
+      "status": "FAILED",
+      "startedAt": 1795323528.7342222,
+      "finishedAt": 1795323529.0888858,
+      "exitCode": 128,
+      "logFile": "worker/logs/0002-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "e4701d1568c42edeb422eee7b309c9e63592abdb9d737ec5723289e95d7797c1"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "/bin/bash",
+        "/opt/ns-queue/build-tools.sh"
+      ],
+      "cwd": "/sandbox/work/ns/tools",
+      "status": "PASSED",
+      "startedAt": 1795323887.0683439,
+      "finishedAt": 1795323955.5067232,
+      "exitCode": 0,
+      "logFile": "worker/logs/0003-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "ecbb0f31d7c73d2066246c504bdccf5ad024ee15f203e05d9e0217a221cfc9f0"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/tools/landrun",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/tools",
+      "status": "PASSED",
+      "startedAt": 1795323955.5130937,
+      "finishedAt": 1795323955.6858943,
+      "exitCode": 0,
+      "logFile": "worker/logs/0004-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "9bec0d6420ec6f11d0c377afaa4445abcde09548c26e17196f86f4b52d1e2a2e"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/tools/nanoda",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/tools",
+      "status": "PASSED",
+      "startedAt": 1795323955.6921577,
+      "finishedAt": 1795323955.8596325,
+      "exitCode": 0,
+      "logFile": "worker/logs/0005-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "93b5d83f3edd847bad49e37ddcb2e4c4abf996f354c28cd1c832d2ac299ceb4c"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/tools/comparator",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/tools",
+      "status": "PASSED",
+      "startedAt": 1795323955.865912,
+      "finishedAt": 1795323956.0298417,
+      "exitCode": 0,
+      "logFile": "worker/logs/0006-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "c7462dd28ef5f3d33af04327db4f213bfb3c86e008e221bf839a8e6258238a83"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/tools/comparator/.lake/packages/lean4export",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/tools",
+      "status": "PASSED",
+      "startedAt": 1795323956.035869,
+      "finishedAt": 1795323956.2027209,
+      "exitCode": 0,
+      "logFile": "worker/logs/0007-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "e1d3cac4cdff475728f321fb479572f2fce96eba2686d2195a2fe0f34bd12a9e"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "lean",
+        "--version"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795323956.2363389,
+      "finishedAt": 1795323956.4403453,
+      "exitCode": 0,
+      "logFile": "worker/logs/0008-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "544b4920040fb4a18fbbf04c48a65f06739ab3268fc7d3c756bc1b64e823a094"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "lake",
+        "exe",
+        "cache",
+        "get"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795323956.4468558,
+      "finishedAt": 1795324038.5225968,
+      "exitCode": 0,
+      "logFile": "worker/logs/0009-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "8cb713f7b0f48ceb31139f19d7094339569c498956315a1d63863f8ab8fa8588"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/Comparator",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324038.5289087,
+      "finishedAt": 1795324038.7004735,
+      "exitCode": 0,
+      "logFile": "worker/logs/0010-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "c7462dd28ef5f3d33af04327db4f213bfb3c86e008e221bf839a8e6258238a83"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/mathlib",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324038.7064183,
+      "finishedAt": 1795324038.8733127,
+      "exitCode": 0,
+      "logFile": "worker/logs/0011-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "41f09bc99f3e50964aeb698f2d3ed1c9799aa3ded14f2291f1de701569c2fc4e"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/lean4export",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324038.879333,
+      "finishedAt": 1795324039.0461385,
+      "exitCode": 0,
+      "logFile": "worker/logs/0012-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "e1d3cac4cdff475728f321fb479572f2fce96eba2686d2195a2fe0f34bd12a9e"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/plausible",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324039.0526636,
+      "finishedAt": 1795324039.2193232,
+      "exitCode": 0,
+      "logFile": "worker/logs/0013-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "b6a42540f49efa57a0594eef5d9b032ea91e9d1f518f8c6d315390f8e117471d"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/LeanSearchClient",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324039.2257814,
+      "finishedAt": 1795324039.3939493,
+      "exitCode": 0,
+      "logFile": "worker/logs/0014-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "9b7b1670d5a90360851cf870456361d6cb42d2e22f511df05cb55c350aa1caea"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/importGraph",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324039.4019408,
+      "finishedAt": 1795324039.5684218,
+      "exitCode": 0,
+      "logFile": "worker/logs/0015-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "b9e5ed79f5452383b5c6cfcf7e933607f29a8e9f0d0539f646b929e535bec761"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/proofwidgets",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324039.5751233,
+      "finishedAt": 1795324039.7423043,
+      "exitCode": 0,
+      "logFile": "worker/logs/0016-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "dcfd86062e005c0aa2c71a18f67449a5fc4c607c4a68baf6ef07fd1e8c412661"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/aesop",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324039.7486293,
+      "finishedAt": 1795324039.9130907,
+      "exitCode": 0,
+      "logFile": "worker/logs/0017-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "080268006e85ae9cd21f6e11edd8b634ba5d46d49de94f0b4eead2f87a3a60da"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/Qq",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324039.9198427,
+      "finishedAt": 1795324040.0851517,
+      "exitCode": 0,
+      "logFile": "worker/logs/0018-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "620b6146069f1a4fe45951f7155dcb6c0844ae2c277da2817f40c8184d3b490f"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/batteries",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324040.0917711,
+      "finishedAt": 1795324040.2584786,
+      "exitCode": 0,
+      "logFile": "worker/logs/0019-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "99dc3430bf2806a9e9b2d54569fa23cc1378a8c2dec96668df5bc73a49a0bf61"
+    },
+    {
+      "stage": "dependencies",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/Cli",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324040.264977,
+      "finishedAt": 1795324040.432271,
+      "exitCode": 0,
+      "logFile": "worker/logs/0020-dependencies.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "f819c5149f1e1c10938e9d57e65d6c40a985a2932bcabd5fc2e30629522f7100"
+    },
+    {
+      "stage": "compile",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/Comparator",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324041.0577862,
+      "finishedAt": 1795324041.225566,
+      "exitCode": 0,
+      "logFile": "worker/logs/0021-compile.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "c7462dd28ef5f3d33af04327db4f213bfb3c86e008e221bf839a8e6258238a83"
+    },
+    {
+      "stage": "compile",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/mathlib",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324041.2321336,
+      "finishedAt": 1795324041.3982787,
+      "exitCode": 0,
+      "logFile": "worker/logs/0022-compile.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "41f09bc99f3e50964aeb698f2d3ed1c9799aa3ded14f2291f1de701569c2fc4e"
+    },
+    {
+      "stage": "compile",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/lean4export",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324041.4052615,
+      "finishedAt": 1795324041.571656,
+      "exitCode": 0,
+      "logFile": "worker/logs/0023-compile.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "e1d3cac4cdff475728f321fb479572f2fce96eba2686d2195a2fe0f34bd12a9e"
+    },
+    {
+      "stage": "compile",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/plausible",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324041.578897,
+      "finishedAt": 1795324041.7442157,
+      "exitCode": 0,
+      "logFile": "worker/logs/0024-compile.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "b6a42540f49efa57a0594eef5d9b032ea91e9d1f518f8c6d315390f8e117471d"
+    },
+    {
+      "stage": "compile",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/LeanSearchClient",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324041.7507064,
+      "finishedAt": 1795324041.9141037,
+      "exitCode": 0,
+      "logFile": "worker/logs/0025-compile.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "9b7b1670d5a90360851cf870456361d6cb42d2e22f511df05cb55c350aa1caea"
+    },
+    {
+      "stage": "compile",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/importGraph",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324041.920575,
+      "finishedAt": 1795324042.0855796,
+      "exitCode": 0,
+      "logFile": "worker/logs/0026-compile.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "b9e5ed79f5452383b5c6cfcf7e933607f29a8e9f0d0539f646b929e535bec761"
+    },
+    {
+      "stage": "compile",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/proofwidgets",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324042.092246,
+      "finishedAt": 1795324042.2568433,
+      "exitCode": 0,
+      "logFile": "worker/logs/0027-compile.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "dcfd86062e005c0aa2c71a18f67449a5fc4c607c4a68baf6ef07fd1e8c412661"
+    },
+    {
+      "stage": "compile",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/aesop",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324042.2635257,
+      "finishedAt": 1795324042.4306464,
+      "exitCode": 0,
+      "logFile": "worker/logs/0028-compile.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "080268006e85ae9cd21f6e11edd8b634ba5d46d49de94f0b4eead2f87a3a60da"
+    },
+    {
+      "stage": "compile",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/Qq",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324042.4374378,
+      "finishedAt": 1795324042.6018782,
+      "exitCode": 0,
+      "logFile": "worker/logs/0029-compile.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "620b6146069f1a4fe45951f7155dcb6c0844ae2c277da2817f40c8184d3b490f"
+    },
+    {
+      "stage": "compile",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/batteries",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324042.608706,
+      "finishedAt": 1795324042.7744923,
+      "exitCode": 0,
+      "logFile": "worker/logs/0030-compile.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "99dc3430bf2806a9e9b2d54569fa23cc1378a8c2dec96668df5bc73a49a0bf61"
+    },
+    {
+      "stage": "compile",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/project/.lake/packages/Cli",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324042.7812626,
+      "finishedAt": 1795324042.9468482,
+      "exitCode": 0,
+      "logFile": "worker/logs/0031-compile.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "f819c5149f1e1c10938e9d57e65d6c40a985a2932bcabd5fc2e30629522f7100"
+    },
+    {
+      "stage": "compile",
+      "argv": [
+        "lake",
+        "build"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795324042.9536307,
+      "finishedAt": 1795324802.0551105,
+      "exitCode": 0,
+      "logFile": "worker/logs/0032-compile.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "e8849ef49700219e02ea84b6a24cea03db732f193140f647d85337b9379537a3"
+    },
+    {
+      "stage": "audit",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "/work/ns/evidence/audit.lean"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "FAILED",
+      "startedAt": 1795324815.179299,
+      "finishedAt": 1795324820.176723,
+      "exitCode": 1,
+      "logFile": "worker/logs/0033-audit.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "54181bb0cb8019c0334e0f0b2f1ed5d7f0b3a161588d5d0274536bf73e2b03f7"
+    },
+    {
+      "stage": "audit",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "/work/ns/evidence/audit.lean"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795331532.4054186,
+      "finishedAt": 1795331537.474696,
+      "exitCode": 0,
+      "logFile": "worker/logs/0034-audit.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "e2a49af58c983661e3bbc3752ccb9dc640eecb14a85d1493b4e095eb2ab2b5af"
+    },
+    {
+      "stage": "kernel",
+      "argv": [
+        "lake",
+        "env",
+        "/work/ns/tools/comparator/.lake/packages/lean4export/.lake/build/bin/lean4export",
+        "NavierStokes.ComparatorSolution",
+        "--",
+        "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+        "NavierStokes.Comparator.navier_stokes_breakdown_periodic"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795331537.5231543,
+      "finishedAt": 1795331613.8125422,
+      "exitCode": 0,
+      "logFile": "worker/logs/0035-kernel.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "kernel",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "--run",
+        "/work/ns/evidence/replay.lean",
+        "/work/ns/evidence/solution.ndjson"
+      ],
+      "cwd": "/sandbox/work/ns/tools/comparator",
+      "status": "FAILED",
+      "startedAt": 1795331614.2205732,
+      "finishedAt": 1795331615.2371688,
+      "exitCode": 1,
+      "logFile": "worker/logs/0036-kernel.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "c3d7ab11322bb188156fef783352398068b2014e3dafe7df2ca900534fdc97d1"
+    },
+    {
+      "stage": "kernel",
+      "argv": [
+        "lake",
+        "env",
+        "/work/ns/tools/comparator/.lake/packages/lean4export/.lake/build/bin/lean4export",
+        "NavierStokes.ComparatorSolution",
+        "--",
+        "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+        "NavierStokes.Comparator.navier_stokes_breakdown_periodic"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795332872.8703043,
+      "finishedAt": 1795332947.7465327,
+      "exitCode": 0,
+      "logFile": "worker/logs/0037-kernel.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "kernel",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "--run",
+        "/work/ns/evidence/replay.lean",
+        "/work/ns/evidence/solution.ndjson"
+      ],
+      "cwd": "/sandbox/work/ns/tools/comparator",
+      "status": "PASSED",
+      "startedAt": 1795332948.4176586,
+      "finishedAt": 1795333475.6796713,
+      "exitCode": 0,
+      "logFile": "worker/logs/0038-kernel.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "e718a8d9bed66606cf6bf5beeb01e4f994370d8043611af152c560b6e742f229"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "lake",
+        "exe",
+        "cache",
+        "get"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333478.0617733,
+      "finishedAt": 1795333559.6491187,
+      "exitCode": 0,
+      "logFile": "worker/logs/0039-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "df5f3b0f5da4da09d556abe63f259b14fe1a76fe0fba7553f0ca89b309102160"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/checker/.lake/packages/Comparator",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333559.65675,
+      "finishedAt": 1795333559.8308012,
+      "exitCode": 0,
+      "logFile": "worker/logs/0040-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "c7462dd28ef5f3d33af04327db4f213bfb3c86e008e221bf839a8e6258238a83"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/checker/.lake/packages/mathlib",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333559.8388526,
+      "finishedAt": 1795333560.0082552,
+      "exitCode": 0,
+      "logFile": "worker/logs/0041-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "41f09bc99f3e50964aeb698f2d3ed1c9799aa3ded14f2291f1de701569c2fc4e"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/checker/.lake/packages/lean4export",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333560.0158782,
+      "finishedAt": 1795333560.1830666,
+      "exitCode": 0,
+      "logFile": "worker/logs/0042-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "e1d3cac4cdff475728f321fb479572f2fce96eba2686d2195a2fe0f34bd12a9e"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/checker/.lake/packages/plausible",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333560.1903296,
+      "finishedAt": 1795333560.3598654,
+      "exitCode": 0,
+      "logFile": "worker/logs/0043-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "b6a42540f49efa57a0594eef5d9b032ea91e9d1f518f8c6d315390f8e117471d"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/checker/.lake/packages/LeanSearchClient",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333560.3678117,
+      "finishedAt": 1795333560.5338404,
+      "exitCode": 0,
+      "logFile": "worker/logs/0044-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "9b7b1670d5a90360851cf870456361d6cb42d2e22f511df05cb55c350aa1caea"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/checker/.lake/packages/importGraph",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333560.5413742,
+      "finishedAt": 1795333560.7078545,
+      "exitCode": 0,
+      "logFile": "worker/logs/0045-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "b9e5ed79f5452383b5c6cfcf7e933607f29a8e9f0d0539f646b929e535bec761"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/checker/.lake/packages/proofwidgets",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333560.7151153,
+      "finishedAt": 1795333560.8807478,
+      "exitCode": 0,
+      "logFile": "worker/logs/0046-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "dcfd86062e005c0aa2c71a18f67449a5fc4c607c4a68baf6ef07fd1e8c412661"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/checker/.lake/packages/aesop",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333560.8900752,
+      "finishedAt": 1795333561.056129,
+      "exitCode": 0,
+      "logFile": "worker/logs/0047-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "080268006e85ae9cd21f6e11edd8b634ba5d46d49de94f0b4eead2f87a3a60da"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/checker/.lake/packages/Qq",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333561.0636964,
+      "finishedAt": 1795333561.2312357,
+      "exitCode": 0,
+      "logFile": "worker/logs/0048-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "620b6146069f1a4fe45951f7155dcb6c0844ae2c277da2817f40c8184d3b490f"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/checker/.lake/packages/batteries",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333561.2388313,
+      "finishedAt": 1795333561.4095733,
+      "exitCode": 0,
+      "logFile": "worker/logs/0049-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "99dc3430bf2806a9e9b2d54569fa23cc1378a8c2dec96668df5bc73a49a0bf61"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "git",
+        "-C",
+        "/work/ns/checker/.lake/packages/Cli",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333561.4178343,
+      "finishedAt": 1795333561.5845795,
+      "exitCode": 0,
+      "logFile": "worker/logs/0050-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "f819c5149f1e1c10938e9d57e65d6c40a985a2932bcabd5fc2e30629522f7100"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "python3",
+        "/opt/ns-queue/child.py",
+        "--probe-af-unix"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333561.6907103,
+      "finishedAt": 1795333561.8840907,
+      "exitCode": 0,
+      "logFile": "worker/logs/0051-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "88679d120dc986880aafba6b6268d8f596ebf7c714f945b00dcd4822b0392375"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "python3",
+        "/opt/ns-queue/child.py",
+        "--probe-landlock"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333561.8963168,
+      "finishedAt": 1795333562.0913136,
+      "exitCode": 0,
+      "logFile": "worker/logs/0052-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "bd63a71d2cdb7d830e51b487905129e83c66d556937f08a27d6d1d3dc10b8872"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "python3",
+        "-c",
+        "open('/work/ns/evidence/landlock-write-probe',\"w\").write(\"baseline\")"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333562.0991447,
+      "finishedAt": 1795333562.2755377,
+      "exitCode": 0,
+      "logFile": "worker/logs/0053-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "independent",
+      "argv": [
+        "/usr/local/bin/comparator-landrun",
+        "--ro",
+        "/",
+        "--rox",
+        "/usr",
+        "-ldd",
+        "-add-exec",
+        "--",
+        "python3",
+        "-c",
+        "import sys\ntry: open('/work/ns/evidence/landlock-write-probe',\"w\").write(\"escaped\")\nexcept PermissionError: print(\"NS_LANDLOCK_DENIED\"); sys.exit(0)\nsys.exit(11)"
+      ],
+      "cwd": "/sandbox/work/ns/checker",
+      "status": "PASSED",
+      "startedAt": 1795333562.2840788,
+      "finishedAt": 1795333562.4927936,
+      "exitCode": 0,
+      "logFile": "worker/logs/0054-independent.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "5af0f45df3fb3bf4ec916a318b555f86757869e04aa17c996b4758de8c3a5993"
+    }
+  ],
+  "preservedStages": {
+    "source": {
+      "id": "source",
+      "status": "PASSED",
+      "exitCode": 0,
+      "startedAt": 1795332867.8519638,
+      "finishedAt": 1795332868.0775003,
+      "error": null,
+      "restored": true,
+      "checkpointSha256": "6ddb23126baa64700f67bfe96611303e166cb0ea10ba1cb330dc5c7592d607e4"
+    },
+    "dependencies": {
+      "id": "dependencies",
+      "status": "PASSED",
+      "exitCode": 0,
+      "startedAt": 1795332868.8166673,
+      "finishedAt": 1795332869.0686414,
+      "error": null,
+      "restored": true,
+      "checkpointSha256": "44d2c9d2469bbc9648a7c6b4809b27ff7542d6d08aa7f40deb3dcb5b5ab3a039"
+    },
+    "compile": {
+      "id": "compile",
+      "status": "PASSED",
+      "exitCode": 0,
+      "startedAt": 1795332869.8005848,
+      "finishedAt": 1795332871.4051776,
+      "error": null,
+      "restored": true,
+      "checkpointSha256": "7c6b01e4eb15c44ef69d0aa1cf823901b57b4088e71fd2c8bebe9303fc842be6"
+    },
+    "audit": {
+      "id": "audit",
+      "status": "PASSED",
+      "exitCode": 0,
+      "startedAt": 1795332872.133657,
+      "finishedAt": 1795332872.1376522,
+      "error": null,
+      "restored": true,
+      "checkpointSha256": "323f33b0550079b733b174ce17b55ecd4cb4f4f22238bc00dc2973e21f6dfb1e"
+    },
+    "kernel": {
+      "id": "kernel",
+      "status": "PASSED",
+      "exitCode": 0,
+      "startedAt": 1795332872.8626337,
+      "finishedAt": 1795333477.0916884,
+      "error": null,
+      "restored": false,
+      "checkpointSha256": "1437ae6fa019e788d3b08543d57bc104b6ab5bed0eab5fb0238eb9573eb4ea46"
+    }
+  },
+  "migration": {
+    "id": "independent-policy-v1",
+    "scope": "independent policy only: measured layered guard and exact ABI4 warning; preserve five passed stages",
+    "manifestPath": "worker/checkpoints/migrations/independent-policy-v1/independent-policy-v1.manifest.json",
+    "manifestSha256": "268240def0806f89d836b4b0dfa709376908e7c991d161b4ae77463214e793b7",
+    "receipts": {
+      "source": {
+        "originalSha256": "6ddb23126baa64700f67bfe96611303e166cb0ea10ba1cb330dc5c7592d607e4",
+        "proposedSha256": "00b3ce199fa0117f064bba53bee3b505f76dd38139cbaede9b74471b22525f52"
+      },
+      "dependencies": {
+        "originalSha256": "44d2c9d2469bbc9648a7c6b4809b27ff7542d6d08aa7f40deb3dcb5b5ab3a039",
+        "proposedSha256": "d5a09ac3a8dc8fd64653e00496f6cf88530f1100f93429ca5a94b07756b3b6fa"
+      },
+      "compile": {
+        "originalSha256": "7c6b01e4eb15c44ef69d0aa1cf823901b57b4088e71fd2c8bebe9303fc842be6",
+        "proposedSha256": "b46f61f254f8f5d37535f3cdb7a20b12d1981c91280c39386a3a74ab21b0e93c"
+      },
+      "audit": {
+        "originalSha256": "323f33b0550079b733b174ce17b55ecd4cb4f4f22238bc00dc2973e21f6dfb1e",
+        "proposedSha256": "7a7d03dccba1d6f661494d484b5f0dcb7a959f019f12c6f937e7db0892754b00"
+      },
+      "kernel": {
+        "originalSha256": "1437ae6fa019e788d3b08543d57bc104b6ab5bed0eab5fb0238eb9573eb4ea46",
+        "proposedSha256": "1f9400f5e2987ac0678f7a6005b267c61cb244ceda89f06b00dbfe1ba4c8718e"
+      }
+    }
+  },
+  "sandboxPolicySmoke": {
+    "profile": "landlock+namespaces+seccomp",
+    "nativeLandlockAbi": 4,
+    "guards": {
+      "capEff": 0,
+      "devices": {
+        "null": [
+          1,
+          3
+        ],
+        "urandom": [
+          1,
+          9
+        ]
+      },
+      "filesystemWriteDenied": true,
+      "gid": 10002,
+      "ipv4TcpDenied": true,
+      "ipv4UdpDenied": true,
+      "ipv6TcpDenied": true,
+      "ipv6UdpDenied": true,
+      "landlockAbi": 4,
+      "noIpv4Routes": true,
+      "noNewPrivs": 1,
+      "noSys": true,
+      "pid1SameRoot": true,
+      "pid1Uid": 10002,
+      "safeFds": true,
+      "seccomp": 2,
+      "uid": 10002,
+      "unixSocketDenied": true,
+      "unixSocketpairDenied": true,
+      "userNamespaceDenied": true
+    },
+    "devicePolicy": "null-and-urandom-only; no-sensitive-inherited-fds",
+    "nativeFeatureLimitations": [
+      "ioctl restriction unavailable before ABI 5",
+      "UNIX socket and signal scoping unavailable before ABI 6/9",
+      "UDP restriction unavailable before ABI 10"
+    ],
+    "limitations": [
+      "ioctl syscall is not disabled; only null/urandom devices and pipe/null inherited fds are exposed",
+      "signal isolation is provided by the private PID namespace, not a per-Landlock-domain signal scope"
+    ],
+    "nativeWarnings": [
+      "[landrun:warn] 2026/11/22 08:10:51 kernel supports Landlock ABI v4, so these default restrictions are not enforced: device ioctl (ABI v5), pathname UNIX socket connections (ABI v9), UDP bind/connect/send (ABI v10), abstract UNIX socket and signal scoping (ABI v6)"
+    ],
+    "kind": "ACTUAL_PINNED_LANDRUN_SCOPE_PROBE",
+    "exitCode": 0,
+    "logSha256": "ad26694e99fa9abd8ba61c4785df0a804977ec70a6e88561a7ec4047d8c3b156",
+    "proofAccepted": false
+  },
+  "newImageId": "sha256:c2f22c7a024bcf6ee1625f13a519ff9edc62721c2bce866a71006bf1f570c997",
+  "trustedRuntimeLayersUnchanged": true,
+  "proofAccepted": false
+}
