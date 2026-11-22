@@ -1,0 +1,24 @@
+{
+  "sampledAt": "2026-11-22T05:06:46.081Z",
+  "sourceSha256": "1c053d36c33c05529bf66e2a1d2bb259bd06a5aa64e90d0eff7f3cec63f444ae",
+  "NS": {
+    "status": "RUNNING",
+    "phase": "dependencies",
+    "resources": {
+      "source": "docker_stats",
+      "cpuPercent": 177.14,
+      "memoryBytes": 819986432,
+      "sampledAt": 1795324001.7248125
+    }
+  },
+  "RH": {
+    "status": "running",
+    "phase": "replay"
+  },
+  "controllerOnline": true,
+  "readOnly": true,
+  "errors": [],
+  "writes": [],
+  "execution": "PENDING",
+  "proofAccepted": false
+}
