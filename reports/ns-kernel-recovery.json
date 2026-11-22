@@ -1,0 +1,293 @@
+{
+  "sampledAt": 1795332851.8213203,
+  "sourceSha256": "47d3350cc2e4c5a0a20fb25e26aa323ef93f649e1583d434d50a7f328dc1fc61",
+  "before": {
+    "lean-observatory-api-1": {
+      "id": "65b9a04186cb7689790a80460817569755180d667bb87ff4f775e01e3798fb9f",
+      "pid": 9385,
+      "startedAt": "2026-11-21T14:51:27.113102006Z",
+      "image": "sha256:36fcd238725356a09654ffccc7348df3c570363f1841652f9cfcf5e3b8382cf9",
+      "ConfigSha256": "b45e690b72a0fe867ed01d879c98157a2010533a1509137480673a2709185f79",
+      "HostConfigSha256": "28a014974ed76301d0752bc8a884c544eace928b42934ff37bd53b785c380d1f",
+      "MountsSha256": "8199c1c130dfec74a03147af2c354603e4575609f8105d89be916f37209155fa"
+    },
+    "lean-observatory-nginx-1": {
+      "id": "697f9c760d3ef0fd37811232529c899a242553fccd78872c507352196d209b2d",
+      "pid": 29826,
+      "startedAt": "2026-11-21T15:09:20.263571297Z",
+      "image": "sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236",
+      "ConfigSha256": "e4643f0814040d79362c6feff6ea842d57b7959be8882dc356714389c5c50d06",
+      "HostConfigSha256": "cd8f02be3c252a02ffe162b1f3a27322c60e98d2d0b64bf94699c7e9c57bc86a",
+      "MountsSha256": "cc285a348ddd3232c0570be741b0eaa0c82a494606fcdcb701a3eff09f9c95d5"
+    },
+    "lean-observatory-worker-1": {
+      "id": "f214289894a9e3925cf95cdbde108b65d8075660da5821aa42e0e67ad001f651",
+      "pid": 15538,
+      "startedAt": "2026-11-21T15:04:04.120575095Z",
+      "image": "sha256:97c552eb0c7263ca5ce065a7eff02359ebcb2f4f051fc8bb5a46b5cf1b96f50c",
+      "ConfigSha256": "204901d8434f43144d6cb256f83929e02558a06b1a75ed6d90b050edb9603c0d",
+      "HostConfigSha256": "a35492490d39a2fe72b1ecdd902373ce6097dabb11b9db38280b4287974f56a3",
+      "MountsSha256": "c04736ce851c4605007644eff3a457bc7fff967e90956e6806584cde56b0d34b"
+    },
+    "RHFiles": {
+      "/opt/lean-observatory/.env": "b1d0978a8d6c1d095f71b0ca6a0bfa8389801e76682f6e9ffa2fc78582c19639",
+      "/opt/lean-observatory/compose.amd64.yaml": "2adf703e9a8fd500f2955600c0df6b4a5abee0833833211c803aa467b854f999",
+      "/opt/lean-observatory/compose.yaml": "4dbf841480421bac52f0121dd193c50951b4d24b99c591daad0c604d75aeb83e",
+      "/opt/lean-observatory/compose.tls.yaml": "f2b9daa4377e746e2e74ff9fc3ef4403966362d0e39315d57221c286311a945d",
+      "/opt/lean-observatory/compose.acme.yaml": "cd641aaf96a300e2dfd1750d111fff4eba9f7ad64c287719948c0a920fb32668",
+      "/opt/lean-observatory/compose.tools.yaml": "e6e890630471172f783e89f6b040d891669eac79bfebedb63fffcb810d413bdb",
+      "/opt/lean-observatory/compose.smoke.yaml": "40ed7e4c558a9999efa5446108bcefb816258971b7527e08302bf0f6762f887d",
+      "/opt/lean-observatory/.data/ops/nginx-tls.conf": "f915af8ec18922ce9c776b6cac6b4defd2aa4820669edad3d5bf4f07bcfdd4c5",
+      "/etc/apparmor.d/lean-observatory-worker": "3351e03ae3d972a553ece2a2b65897f63561bfc80f7811312c3c4a7e4e2d9692"
+    }
+  },
+  "after": {
+    "lean-observatory-api-1": {
+      "id": "65b9a04186cb7689790a80460817569755180d667bb87ff4f775e01e3798fb9f",
+      "pid": 9385,
+      "startedAt": "2026-11-21T14:51:27.113102006Z",
+      "image": "sha256:36fcd238725356a09654ffccc7348df3c570363f1841652f9cfcf5e3b8382cf9",
+      "ConfigSha256": "b45e690b72a0fe867ed01d879c98157a2010533a1509137480673a2709185f79",
+      "HostConfigSha256": "28a014974ed76301d0752bc8a884c544eace928b42934ff37bd53b785c380d1f",
+      "MountsSha256": "8199c1c130dfec74a03147af2c354603e4575609f8105d89be916f37209155fa"
+    },
+    "lean-observatory-nginx-1": {
+      "id": "697f9c760d3ef0fd37811232529c899a242553fccd78872c507352196d209b2d",
+      "pid": 29826,
+      "startedAt": "2026-11-21T15:09:20.263571297Z",
+      "image": "sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236",
+      "ConfigSha256": "e4643f0814040d79362c6feff6ea842d57b7959be8882dc356714389c5c50d06",
+      "HostConfigSha256": "cd8f02be3c252a02ffe162b1f3a27322c60e98d2d0b64bf94699c7e9c57bc86a",
+      "MountsSha256": "cc285a348ddd3232c0570be741b0eaa0c82a494606fcdcb701a3eff09f9c95d5"
+    },
+    "lean-observatory-worker-1": {
+      "id": "f214289894a9e3925cf95cdbde108b65d8075660da5821aa42e0e67ad001f651",
+      "pid": 15538,
+      "startedAt": "2026-11-21T15:04:04.120575095Z",
+      "image": "sha256:97c552eb0c7263ca5ce065a7eff02359ebcb2f4f051fc8bb5a46b5cf1b96f50c",
+      "ConfigSha256": "204901d8434f43144d6cb256f83929e02558a06b1a75ed6d90b050edb9603c0d",
+      "HostConfigSha256": "a35492490d39a2fe72b1ecdd902373ce6097dabb11b9db38280b4287974f56a3",
+      "MountsSha256": "c04736ce851c4605007644eff3a457bc7fff967e90956e6806584cde56b0d34b"
+    },
+    "RHFiles": {
+      "/opt/lean-observatory/.env": "b1d0978a8d6c1d095f71b0ca6a0bfa8389801e76682f6e9ffa2fc78582c19639",
+      "/opt/lean-observatory/compose.amd64.yaml": "2adf703e9a8fd500f2955600c0df6b4a5abee0833833211c803aa467b854f999",
+      "/opt/lean-observatory/compose.yaml": "4dbf841480421bac52f0121dd193c50951b4d24b99c591daad0c604d75aeb83e",
+      "/opt/lean-observatory/compose.tls.yaml": "f2b9daa4377e746e2e74ff9fc3ef4403966362d0e39315d57221c286311a945d",
+      "/opt/lean-observatory/compose.acme.yaml": "cd641aaf96a300e2dfd1750d111fff4eba9f7ad64c287719948c0a920fb32668",
+      "/opt/lean-observatory/compose.tools.yaml": "e6e890630471172f783e89f6b040d891669eac79bfebedb63fffcb810d413bdb",
+      "/opt/lean-observatory/compose.smoke.yaml": "40ed7e4c558a9999efa5446108bcefb816258971b7527e08302bf0f6762f887d",
+      "/opt/lean-observatory/.data/ops/nginx-tls.conf": "f915af8ec18922ce9c776b6cac6b4defd2aa4820669edad3d5bf4f07bcfdd4c5",
+      "/etc/apparmor.d/lean-observatory-worker": "3351e03ae3d972a553ece2a2b65897f63561bfc80f7811312c3c4a7e4e2d9692"
+    }
+  },
+  "RHUnchanged": true,
+  "compileCommandPreserved": {
+    "stage": "compile",
+    "argv": [
+      "lake",
+      "build"
+    ],
+    "cwd": "/sandbox/work/ns/project",
+    "status": "PASSED",
+    "startedAt": 1795324042.9536307,
+    "finishedAt": 1795324802.0551105,
+    "exitCode": 0,
+    "logFile": "worker/logs/0032-compile.log",
+    "sandbox": true,
+    "buildUid": 10002,
+    "termination": null,
+    "logSha256": "e8849ef49700219e02ea84b6a24cea03db732f193140f647d85337b9379537a3"
+  },
+  "migration": {
+    "id": "kernel-lean-api-v1",
+    "scope": "REPLAY: four Lean API compatibility changes; preserve source/dependencies/compile/audit execution",
+    "manifestPath": "worker/checkpoints/migrations/kernel-lean-api-v1/kernel-lean-api-v1.manifest.json",
+    "manifestSha256": "b32a8fca59d1a37b7e661a522d462018b2a8f43f6cb4e6fee9108ddc61dc7d08",
+    "receipts": {
+      "source": {
+        "originalSha256": "6fd586488438ff3d330d1ede8bbd2d9bb62bc74bed27c89511e5376d3c70e0b5",
+        "proposedSha256": "6ddb23126baa64700f67bfe96611303e166cb0ea10ba1cb330dc5c7592d607e4"
+      },
+      "dependencies": {
+        "originalSha256": "1fca72c4fe6273ad4cd40c14f7f9fd861b02b3dd515880eb86bae64d8ddf5ab1",
+        "proposedSha256": "44d2c9d2469bbc9648a7c6b4809b27ff7542d6d08aa7f40deb3dcb5b5ab3a039"
+      },
+      "compile": {
+        "originalSha256": "b20ab8ed1af91e9c6fbd16b0a405913386d45bb2a9577f83552840e1c13a2822",
+        "proposedSha256": "7c6b01e4eb15c44ef69d0aa1cf823901b57b4088e71fd2c8bebe9303fc842be6"
+      },
+      "audit": {
+        "originalSha256": "37196bf849b99932a2071853565bce7b54312c5d15fefe9d0d54037700383eab",
+        "proposedSha256": "323f33b0550079b733b174ce17b55ecd4cb4f4f22238bc00dc2973e21f6dfb1e"
+      }
+    }
+  },
+  "kernelTemplateSmoke": {
+    "kind": "TEMPLATE_TYPECHECK",
+    "exitCode": 0,
+    "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scriptSha256": "54090ac91fc448a4f523802a4cc45f8ddcfb33d1b9838f8513117d28cf69b92a",
+    "fullKernelReplay": "PENDING",
+    "proofAccepted": false
+  },
+  "newImageId": "sha256:6c4666328e6ec8533c96a1cd074a9b6762d37fef7b245a738cfb0c494acf5cbb",
+  "trustedRuntimeLayersUnchanged": true,
+  "proofAccepted": false,
+  "observedAt": 1795333078.9939754,
+  "NS": {
+    "status": "RUNNING",
+    "phase": "kernel",
+    "reason": "running",
+    "error": null,
+    "compile": {
+      "expectedTotal": 2659,
+      "total": 2659,
+      "succeeded": 2659,
+      "failed": 0,
+      "rate": 0,
+      "etaSeconds": null,
+      "currentModule": "Euler.Solution",
+      "jobs": 60
+    },
+    "audits": [
+      {
+        "name": "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+        "type": "PASSED",
+        "axioms": "PASSED",
+        "dependencies": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "kernel": "PENDING",
+        "independent": "PENDING"
+      },
+      {
+        "name": "NavierStokes.Comparator.navier_stokes_breakdown_periodic",
+        "type": "PASSED",
+        "axioms": "PASSED",
+        "dependencies": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "kernel": "PENDING",
+        "independent": "PENDING"
+      }
+    ],
+    "stages": [
+      {
+        "id": "source",
+        "status": "PASSED",
+        "exitCode": 0,
+        "startedAt": 1795332867.8519638,
+        "finishedAt": 1795332868.0775003,
+        "error": null,
+        "restored": true,
+        "checkpointSha256": "6ddb23126baa64700f67bfe96611303e166cb0ea10ba1cb330dc5c7592d607e4"
+      },
+      {
+        "id": "dependencies",
+        "status": "PASSED",
+        "exitCode": 0,
+        "startedAt": 1795332868.8166673,
+        "finishedAt": 1795332869.0686414,
+        "error": null,
+        "restored": true,
+        "checkpointSha256": "44d2c9d2469bbc9648a7c6b4809b27ff7542d6d08aa7f40deb3dcb5b5ab3a039"
+      },
+      {
+        "id": "compile",
+        "status": "PASSED",
+        "exitCode": 0,
+        "startedAt": 1795332869.8005848,
+        "finishedAt": 1795332871.4051776,
+        "error": null,
+        "restored": true,
+        "checkpointSha256": "7c6b01e4eb15c44ef69d0aa1cf823901b57b4088e71fd2c8bebe9303fc842be6"
+      },
+      {
+        "id": "audit",
+        "status": "PASSED",
+        "exitCode": 0,
+        "startedAt": 1795332872.133657,
+        "finishedAt": 1795332872.1376522,
+        "error": null,
+        "restored": true,
+        "checkpointSha256": "323f33b0550079b733b174ce17b55ecd4cb4f4f22238bc00dc2973e21f6dfb1e"
+      },
+      {
+        "id": "kernel",
+        "status": "RUNNING",
+        "exitCode": null,
+        "startedAt": 1795332872.8626337,
+        "finishedAt": null,
+        "error": null
+      },
+      {
+        "id": "independent",
+        "status": "PENDING",
+        "exitCode": null,
+        "startedAt": null,
+        "finishedAt": null
+      },
+      {
+        "id": "persist",
+        "status": "PENDING",
+        "exitCode": null,
+        "startedAt": null,
+        "finishedAt": null
+      }
+    ],
+    "proofAccepted": false
+  },
+  "latestCommands": [
+    {
+      "stage": "kernel",
+      "argv": [
+        "lake",
+        "env",
+        "/work/ns/tools/comparator/.lake/packages/lean4export/.lake/build/bin/lean4export",
+        "NavierStokes.ComparatorSolution",
+        "--",
+        "NavierStokes.Comparator.navier_stokes_breakdown_R3",
+        "NavierStokes.Comparator.navier_stokes_breakdown_periodic"
+      ],
+      "cwd": "/sandbox/work/ns/project",
+      "status": "PASSED",
+      "startedAt": 1795332872.8703043,
+      "finishedAt": 1795332947.7465327,
+      "exitCode": 0,
+      "logFile": "worker/logs/0037-kernel.log",
+      "sandbox": true,
+      "buildUid": 10002,
+      "termination": null,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "kernel",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "--run",
+        "/work/ns/evidence/replay.lean",
+        "/work/ns/evidence/solution.ndjson"
+      ],
+      "cwd": "/sandbox/work/ns/tools/comparator",
+      "status": "RUNNING",
+      "startedAt": 1795332948.4176586,
+      "finishedAt": null,
+      "exitCode": null,
+      "logFile": "worker/logs/0038-kernel.log",
+      "sandbox": true,
+      "buildUid": 10002
+    }
+  ],
+  "RH": {
+    "status": "running",
+    "phase": "replay",
+    "error": null
+  }
+}
