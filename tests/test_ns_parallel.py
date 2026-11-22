@@ -78,6 +78,47 @@ class ParallelControllerTests(unittest.TestCase):
         self.controller.tick();self.assertEqual(self.driver.launches,1)
         self.assertEqual(self.driver.stops,0)
 
+    def authorize_rh_pause(self):
+        self.store.mutate(lambda s:s.update(rhPauseAuthorization={
+            'runId':RH_ID,'nsRunId':s['id'],'action':'pause_replay','continueNs':True,
+            'requestedAt':self.controller.clock(),'finalSuccess':False}))
+
+    def pause_rh_snapshot(self):
+        self.rh.data['run'].update(status='paused',desired='paused')
+        self.rh.data['run']['stages'][-1]['status']='paused'
+
+    def test_explicit_user_rh_pause_keeps_existing_ns_running_without_claiming_success(self):
+        self.controller.tick();self.authorize_rh_pause();self.pause_rh_snapshot()
+        self.controller.tick();self.controller.tick()
+        state=self.store.snapshot()
+        self.assertEqual(state['status'],'RUNNING');self.assertEqual(self.driver.stops,0)
+        self.assertEqual(self.driver.launches,1);self.assertEqual(self.driver.promotions,0)
+        self.assertEqual(state['rh']['status'],'paused');self.assertFalse(state['rhEvidence']['persisted'])
+        self.assertFalse(state['parallelAdmission']['finalSuccess']);self.assertEqual(self.rh.downloads,0)
+        self.assertEqual(self.rh.data['run']['status'],'paused')
+
+    def test_pause_authorization_cannot_launch_a_new_ns_job(self):
+        self.authorize_rh_pause();self.pause_rh_snapshot();self.controller.tick()
+        self.assertEqual(self.driver.launches,0)
+        self.assertFalse(self.store.snapshot()['rhEvidence']['persisted'])
+        self.assertEqual(self.store.snapshot()['status'],'QUEUED')
+
+    def test_unapproved_or_invalid_rh_pause_still_stops_ns(self):
+        for fault in ('absent','other_run','no_intent','compile','audit','admission','failed','stopped'):
+            with self.subTest(fault=fault):
+                self.setUp();self.controller.tick();self.authorize_rh_pause();self.pause_rh_snapshot()
+                if fault=='absent':self.store.mutate(lambda s:s.pop('rhPauseAuthorization'))
+                elif fault=='other_run':self.store.mutate(lambda s:s['rhPauseAuthorization'].update(runId='wrong'))
+                elif fault=='no_intent':self.rh.data['run']['desired']='running'
+                elif fault=='compile':self.rh.data['run']['compile']['succeeded']-=1
+                elif fault=='audit':self.rh.data['run']['audits'][0]['axioms']='pending'
+                elif fault=='admission':
+                    path=Path(self.temp.name)/self.store.snapshot()['parallelAdmission']['snapshotPath'];path.write_text('{}')
+                elif fault=='failed':self.rh.data['run']['status']='failed'
+                elif fault=='stopped':self.driver.rh_running=lambda:False
+                self.controller.tick();self.assertEqual(self.driver.stops,1)
+                self.assertEqual(self.store.snapshot()['status'],'PAUSED')
+
     def test_rh_failure_stops_only_ns_and_alerts(self):
         self.controller.tick();self.rh.data['run']['status']='failed';self.controller.tick()
         self.assertEqual(self.driver.stops,1)

@@ -1,6 +1,7 @@
 """Successor controller. RH is observed via GET; only the NS driver can mutate containers."""
 import argparse
 import contextlib
+import copy
 import fcntl
 import hashlib
 import json
@@ -15,7 +16,7 @@ import urllib.error
 from pathlib import Path
 
 from .gates import rh_gate, start_gate, validate_result
-from .admission import dependency_gate, verify_parallel
+from .admission import dependency_gate, verify_parallel, validate_admission
 from .notify import DEFAULT_WEBHOOK, deliver
 from .store import QueueStore
 from .budget import normalize, runtime_usage
@@ -125,6 +126,36 @@ class Controller:
             resourceProfile={'cpus':60,'memoryBytes':220000000000,'mode':'rh_overlap'}),'parallel_admitted')
         self.store.log('scheduler','管理员已授权 RH 内核重放期间并行 NS；编译与公理审计已通过，RH 重放和最终结果仍未完成。')
 
+    def authorized_replay_pause(self, state, payload, ledger):
+        """Continue an already admitted NS job during an explicit operator RH pause.
+
+        This is continuation authorization, never final RH evidence or permission
+        to launch a new job. Validate every other current admission condition;
+        normalization exists only in a private validation copy, never in storage.
+        """
+        auth=state.get('rhPauseAuthorization');run=payload.get('run') or {}
+        if not (isinstance(auth,dict) and state.get('status') in ('RUNNING','STARTING') and
+                auth.get('runId')==state['rhRunId'] and auth.get('nsRunId')==state['id'] and
+                auth.get('action')=='pause_replay' and auth.get('continueNs') is True and
+                auth.get('finalSuccess') is False and type(auth.get('requestedAt')) in (int,float) and
+                0<auth['requestedAt']<=self.clock()+60 and
+                run.get('status')=='paused' and run.get('desired')=='paused' and run.get('phase')=='replay'):
+            return False
+        try:
+            verify_parallel(self.store.root,state)
+            validation=copy.deepcopy(payload)
+            validation['run']['status']='running'
+            for stage in validation['run']['stages']:
+                if stage['id']=='replay':
+                    if stage['status']!='paused':return False
+                    stage['status']='running'
+            validate_admission({'payload':validation,'ledger':ledger},state['rhRunId'])
+        except (ValueError,KeyError,TypeError):return False
+        if not auth.get('observedAt'):
+            self.store.mutate(lambda s:s['rhPauseAuthorization'].update(observedAt=self.clock()),'rh_user_pause_observed')
+            self.store.log('scheduler','RH 重放由管理员主动暂停；按明确授权继续现有 NS 进程，RH 重放未完成且未计为通过。')
+        return True
+
     def monitor_parallel(self, state):
         """Observe RH while NS runs; only the owned NS container can be stopped."""
         if state.get('schedulingMode')!='parallel_replay' or (state.get('rhEvidence',{}).get('persisted') and
@@ -139,6 +170,8 @@ class Controller:
                     return False
                 self.store.alert(state['id']+':'+gate['reason'],'RH 验证异常',
                     'RH 失败或异常停止；NS 现有结果与暂停状态保留，RH 日志未修改。','error',{'RH':state['rhRunId']})
+                return True
+            if gate['decision']=='WAIT' and self.authorized_replay_pause(state,payload,ledger):
                 return True
             if gate['decision']=='WAIT' and payload['run'].get('status')!='checks_completed' and state['status'] in ('RUNNING','STARTING'):
                 self.driver.stop(state)

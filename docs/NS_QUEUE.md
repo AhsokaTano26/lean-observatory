@@ -100,3 +100,17 @@ Do not delete successful checkpoints or restart RH to apply this repair.
 `tests/ns-sandbox-policy.test.mjs` uses real Linux Landlock/namespace/seccomp
 controls and rejects removed filesystem or socket restrictions. The deployment
 also runs the pinned server Landrun probe before committing the migration.
+
+### Operator pause of RH while NS is already running
+
+A root-only durable `rhPauseAuthorization` can permit an already admitted,
+currently running NS worker to continue when the user deliberately pauses RH
+replay. It binds both run IDs, the pause action, explicit continuation consent,
+a request timestamp, and `finalSuccess=false`. The controller verifies the old
+immutable parallel admission and every other current compile/audit/provenance
+condition. A private validation copy accounts only for the intentional pause;
+the observed RH snapshot remains `paused`, with replay incomplete. Failure,
+stopped RH worker, changed evidence, missing authorization, or a different run
+still stop NS. This exception cannot launch a new NS job, promote memory, or
+substitute for final RH results. Pausing preserves process memory and uses the
+existing RH host CLI; it does not free RAM or mark replay as passed.

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "createdAt": "2026-11-22T08:09:21.698Z",
-  "sourceSha256": "fb3ba6f729a1907d154a15bde7afb39f329ca21a65d37b6691fdbe8939a86973",
+  "createdAt": "2026-11-22T08:28:46.734Z",
+  "sourceSha256": "5aea8445d48dd7382ad33614b80ed149e9b4a223758630a384a8ce49d646c4ba",
   "scope": "Local platform and real Lean fixture tests only; no RH/NS proof execution; same command groups as deploy/ns/local_acceptance.py",
   "executionMode": "parallel independent groups",
   "checks": {

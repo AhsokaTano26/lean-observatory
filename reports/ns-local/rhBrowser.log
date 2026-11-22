@@ -1,23 +1,23 @@
 
 Running 13 tests using 1 worker
 
-(node:79740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:83297) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
 
-  ✓   1 tests/browser/charts.spec.ts:23:1 › all chart geometry is undistorted and supports pointer and keyboard inspection (2.8s)
+  ✓   1 tests/browser/charts.spec.ts:23:1 › all chart geometry is undistorted and supports pointer and keyboard inspection (2.3s)
 
-  ✓   2 tests/browser/charts.spec.ts:108:3 › touch charts › mobile charts stay legible, scroll freely and expose values on tap (883ms)
-  ✓   3 tests/browser/dashboard.spec.ts:11:1 › desktop full dashboard, navigation, theme, logs and downloads (10.6s)
-  ✓   4 tests/browser/dashboard.spec.ts:91:3 › failure failure states persist and resume (8.4s)
+  ✓   2 tests/browser/charts.spec.ts:108:3 › touch charts › mobile charts stay legible, scroll freely and expose values on tap (828ms)
+  ✓   3 tests/browser/dashboard.spec.ts:11:1 › desktop full dashboard, navigation, theme, logs and downloads (10.5s)
+  ✓   4 tests/browser/dashboard.spec.ts:91:3 › failure failure states persist and resume (9.6s)
   ✓   5 tests/browser/dashboard.spec.ts:91:3 › interruption failure states persist and resume (9.5s)
-  ✓   6 tests/browser/dashboard.spec.ts:91:3 › resource failure states persist and resume (9.5s)
-  ✓   7 tests/browser/dashboard.spec.ts:126:3 › responsive 320px and mobile navigation (560ms)
-  ✓   8 tests/browser/dashboard.spec.ts:126:3 › responsive 390px and mobile navigation (592ms)
-  ✓   9 tests/browser/dashboard.spec.ts:126:3 › responsive 768px and mobile navigation (558ms)
-  ✓  10 tests/browser/dashboard.spec.ts:126:3 › responsive 1280px and mobile navigation (579ms)
-  ✓  11 tests/browser/dashboard.spec.ts:161:1 › SSE disconnect reconnect and live data recovery (493ms)
-  ✓  12 tests/browser/dashboard.spec.ts:175:1 › read-only dashboard never exposes task controls or sends writes (823ms)
+  ✓   6 tests/browser/dashboard.spec.ts:91:3 › resource failure states persist and resume (10.3s)
+  ✓   7 tests/browser/dashboard.spec.ts:126:3 › responsive 320px and mobile navigation (649ms)
+  ✓   8 tests/browser/dashboard.spec.ts:126:3 › responsive 390px and mobile navigation (641ms)
+  ✓   9 tests/browser/dashboard.spec.ts:126:3 › responsive 768px and mobile navigation (567ms)
+  ✓  10 tests/browser/dashboard.spec.ts:126:3 › responsive 1280px and mobile navigation (714ms)
+  ✓  11 tests/browser/dashboard.spec.ts:161:1 › SSE disconnect reconnect and live data recovery (504ms)
+  ✓  12 tests/browser/dashboard.spec.ts:175:1 › read-only dashboard never exposes task controls or sends writes (828ms)
 
   ✓  13 tests/browser/theme.spec.ts:5:1 › editorial theme defaults to paper and adapts from phone to desktop (1.7s)
 
-  13 passed (50.6s)
+  13 passed (51.8s)
