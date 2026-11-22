@@ -1,0 +1,16 @@
+services:
+  permissions:
+    image: python:3.13-slim-bookworm
+    user: '0:10001'
+    working_dir: /app
+    command: [python3, /fixture/check.py]
+    environment: {PYTHONDONTWRITEBYTECODE: '1', PYTHONPATH: /app}
+    volumes:
+      - ../../../ns_queue:/app/ns_queue:ro
+      - ./check.py:/fixture/check.py:ro
+    read_only: true
+    tmpfs: ['/tmp:size=16m,mode=1777']
+    network_mode: none
+    cap_drop: [ALL]
+    cap_add: [CHOWN, DAC_OVERRIDE]
+    security_opt: ['no-new-privileges:true']

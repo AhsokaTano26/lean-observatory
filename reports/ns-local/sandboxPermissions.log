@@ -1,0 +1,11 @@
+ Container lean-ns-supervisor-test-permissions-run-33e84e463707 Creating 
+ Container lean-ns-supervisor-test-permissions-run-33e84e463707 Created 
+✔ Real restricted Linux supervisor prepares and reopens UID10002 directories without FOWNER (1180.413375ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1325.93375

@@ -34,6 +34,7 @@ def main():
         'charts':['node','--test','tests/chart-math.test.ts'],
         'browser':['node','--test','tests/ns-addon-browser.test.mjs'],
         'parallelBrowser':['node','--test','tests/ns-parallel-browser.test.mjs'],
+        'sandboxPermissions':['node','--test','tests/ns-supervisor-permissions.test.mjs'],
         'entryBrowser':['node','--test','tests/entry-browser.test.mjs'],
         'sharedHTTPS':['node','--test','tests/shared-https-browser.test.mjs'],
         'rhBrowser':['node','node_modules/@playwright/test/cli.js','test'],

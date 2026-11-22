@@ -22,7 +22,11 @@ def prepare(root, original, name='project'):
     for path in [project / '.lake', workspace / ('home-' + name), workspace / 'evidence']:
         path.mkdir(exist_ok=True)
         if path.is_symlink(): raise ValueError('symlink writable sandbox path')
-        os.chown(path, BUILD_UID, BUILD_UID); os.chmod(path, 0o700 if 'home-' in path.name else 0o755)
+        # chmod requires ownership when CAP_FOWNER is intentionally absent.
+        # Reclaim an existing build-owned directory before restoring its mode.
+        os.chown(path, 0, 0)
+        os.chmod(path, 0o700 if 'home-' in path.name else 0o755)
+        os.chown(path, BUILD_UID, BUILD_UID)
     resolver = root / 'etc/resolv.conf'
     if resolver.is_symlink(): resolver.unlink()
     shutil.copyfile('/etc/resolv.conf', resolver)

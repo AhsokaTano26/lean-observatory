@@ -312,7 +312,7 @@ class NSWorker:
         self._beat(); cwd = Path(cwd or self.project)
         home = cwd.parent / ('home-' + cwd.name)
         if not home.exists():
-            home.mkdir(); os.chown(home, sandbox.BUILD_UID, sandbox.BUILD_UID); home.chmod(0o700)
+            home.mkdir(mode=0o700); os.chown(home, sandbox.BUILD_UID, sandbox.BUILD_UID)
         actual = sandbox.command(self.sandbox_root, cwd, argv, network=network, home=home,
                                  environment=environment)
         state = self.store.snapshot(); index = len(state.get('commands', []))
@@ -579,7 +579,7 @@ class NSWorker:
                 self.stage = stage; self._beat()
                 def start(s):
                     row = next(row for row in s['stages'] if row['id'] == stage)
-                    row.update(status='RUNNING', startedAt=time.time(), finishedAt=None, exitCode=None)
+                    row.update(status='RUNNING', startedAt=time.time(), finishedAt=None, exitCode=None, error=None)
                     s['phase'] = stage
                 self.store.mutate(start, 'stage_started')
                 def action():
