@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "createdAt": "2026-11-22T05:02:49.582Z",
-  "sourceSha256": "1c053d36c33c05529bf66e2a1d2bb259bd06a5aa64e90d0eff7f3cec63f444ae",
+  "createdAt": "2026-11-22T07:02:40.953Z",
+  "sourceSha256": "bb61ae4b6db6e8ce2f9fe490e762f3a47deb25897b8b097af5a1f8738abab583",
   "scope": "Local platform tests only; no real proof execution; same command groups as deploy/ns/local_acceptance.py",
   "executionMode": "parallel independent groups",
   "checks": {
@@ -13,15 +13,6 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/compile.log"
-    },
-    "charts": {
-      "command": [
-        "node",
-        "--test",
-        "tests/chart-math.test.ts"
-      ],
-      "exitCode": 0,
-      "log": "reports/ns-local/charts.log"
     },
     "compose": {
       "command": [
@@ -36,6 +27,15 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/compose.log"
+    },
+    "charts": {
+      "command": [
+        "node",
+        "--test",
+        "tests/chart-math.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/charts.log"
     },
     "resources": {
       "command": [
@@ -63,6 +63,15 @@
       ],
       "exitCode": 0,
       "log": "reports/ns-local/sandboxPermissions.log"
+    },
+    "leanAudit": {
+      "command": [
+        "node",
+        "--test",
+        "tests/ns-audit-lean.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "reports/ns-local/leanAudit.log"
     },
     "browser": {
       "command": [

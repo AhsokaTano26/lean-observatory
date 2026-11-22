@@ -652,8 +652,8 @@ run_cmd do
     let axioms ← Lean.collectAxioms decl
     unless axioms.all (fun ax => allowed.contains ax) do
       throwError "unpermitted proof axioms: {axioms}"
-    logInfo m!"NS_TYPE_OK|{decl}"
-    logInfo m!"NS_AXIOMS|{decl}|{String.intercalate "," (axioms.toList.map toString)}"
+    Lean.logInfo m!"NS_TYPE_OK|{decl}"
+    Lean.logInfo m!"NS_AXIOMS|{decl}|{String.intercalate "," (axioms.toList.map toString)}"
 '''
 
 

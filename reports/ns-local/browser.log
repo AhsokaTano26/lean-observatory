@@ -1,5 +1,5 @@
 {"scope":"Local NS queued fixture only","browser":"Playwright; Browser plugin not available","viewports":[1440,390,320],"writes":[],"errors":[],"passed":true}
-✔ NS queued page: desktop, mobile, theme, logs, readonly requests and reconnect (5149.555625ms)
+✔ NS queued page: desktop, mobile, theme, logs, readonly requests and reconnect (4686.485292ms)
 ℹ tests 1
 ℹ suites 0
 ℹ pass 1
@@ -7,4 +7,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 5485.333959
+ℹ duration_ms 5037.635708

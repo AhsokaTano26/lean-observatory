@@ -1,0 +1,19 @@
+services:
+  lean-audit:
+    image: lean-observatory-worker:latest
+    build: {context: ../../.., dockerfile: Dockerfile, target: worker}
+    user: '0:10001'
+    working_dir: /app
+    command: [python3, /fixture/check.py]
+    environment: {PYTHONDONTWRITEBYTECODE: '1', PYTHONPATH: /app}
+    volumes:
+      - ../../../ns_queue:/app/ns_queue:ro
+      - ./check.py:/fixture/check.py:ro
+      - /dev/null:/sandbox/dev/null
+      - /dev/urandom:/sandbox/dev/urandom:ro
+    read_only: true
+    tmpfs: ['/sandbox/tmp:size=16m,mode=1777', '/tmp:size=16m,mode=1777']
+    network_mode: none
+    cap_drop: [ALL]
+    cap_add: [SYS_CHROOT, SETUID, SETGID, SYS_ADMIN]
+    security_opt: ['no-new-privileges:true', 'apparmor=unconfined']
